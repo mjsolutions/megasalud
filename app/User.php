@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace MegaSalud;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 

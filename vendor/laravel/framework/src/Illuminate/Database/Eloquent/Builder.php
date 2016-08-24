@@ -233,7 +233,9 @@ class Builder
      */
     public function firstOrNew(array $attributes)
     {
-        if (! is_null($instance = $this->where($attributes)->first())) {
+        $mutatedAttributes = $this->model->newInstance($attributes)->getAttributes();
+
+        if (! is_null($instance = $this->where($mutatedAttributes)->first())) {
             return $instance;
         }
 
@@ -248,7 +250,9 @@ class Builder
      */
     public function firstOrCreate(array $attributes)
     {
-        if (! is_null($instance = $this->where($attributes)->first())) {
+        $mutatedAttributes = $this->model->newInstance($attributes)->getAttributes();
+
+        if (! is_null($instance = $this->where($mutatedAttributes)->first())) {
             return $instance;
         }
 
@@ -490,7 +494,7 @@ class Builder
 
         $total = $query->getCountForPagination();
 
-        $results = $total ? $this->forPage($page, $perPage)->get($columns) : [];
+        $results = $total ? $this->forPage($page, $perPage)->get($columns) : new Collection;
 
         return new LengthAwarePaginator($results, $total, $perPage, $page, [
             'path' => Paginator::resolveCurrentPath(),
@@ -1299,7 +1303,7 @@ class Builder
     /**
      * Get the underlying query builder instance.
      *
-     * @return \Illuminate\Database\Query\Builder|static
+     * @return \Illuminate\Database\Query\Builder
      */
     public function getQuery()
     {

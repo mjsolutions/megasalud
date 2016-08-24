@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752
+class ComposerStaticInit60796eeada49df5660ef746f20908cd6
 {
     public static $files = array (
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
@@ -59,6 +59,7 @@ class ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752
         'M' => 
         array (
             'Monolog\\' => 8,
+            'MegaSalud\\' => 10,
         ),
         'L' => 
         array (
@@ -81,10 +82,6 @@ class ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752
         array (
             'ClassPreloader\\' => 15,
             'Carbon\\' => 7,
-        ),
-        'A' => 
-        array (
-            'App\\' => 4,
         ),
     );
 
@@ -183,6 +180,10 @@ class ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'MegaSalud\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app',
+        ),
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
@@ -210,10 +211,6 @@ class ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
-        ),
-        'App\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/app',
         ),
     );
 
@@ -264,51 +261,7 @@ class ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752
     );
 
     public static $classMap = array (
-        'CreateAdministradoresTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_204055_create_administradores_table.php',
-        'CreateDoctoresTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_204244_create_doctores_table.php',
-        'CreateEstudiosPacientesTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_222513_create_estudios_pacientes_table.php',
-        'CreateHisclinicCsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224139_create_hisclinic_cs_table.php',
-        'CreateHisclinicIdiagTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224321_create_hisclinic_idiag_table.php',
-        'CreateHisclinicPa1Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224349_create_hisclinic_pa1_table.php',
-        'CreateHisclinicPa2Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224356_create_hisclinic_pa2_table.php',
-        'CreateHisclinicPa3Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224409_create_hisclinic_pa3_table.php',
-        'CreateHisclinicPmTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224428_create_hisclinic_pm_table.php',
-        'CreateHisclinicTratTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224446_create_hisclinic_trat_table.php',
-        'CreateObservacTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224622_create_observac_table.php',
-        'CreatePacientesTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224811_create_pacientes_table.php',
-        'CreatePacientespTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224819_create_pacientesp_table.php',
-        'CreatePaqueteriaTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224845_create_paqueteria_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreatePedidoFactTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225016_create_pedido_fact_table.php',
-        'CreatePedidoItemsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225027_create_pedido_items_table.php',
-        'CreatePedidosTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225041_create_pedidos_table.php',
-        'CreatePedidsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225111_create_pedids_table.php',
-        'CreateProdsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225125_create_prods_table.php',
-        'CreateTsubsidioTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225145_create_tsubsidio_table.php',
-        'CreateHelpEautoinmunTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224127_create_help_eautoinmun_table.php',
-        'CreateHelpIasTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224151_create_help_ias_table.php',
-        'CreateHisclinicAhf1Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224358_create_hisclinic_ahf1_table.php',
-        'CreateHisclinicAhf22Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224436_create_hisclinic_ahf22_table.php',
-        'CreateHisclinicAhf2Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224420_create_hisclinic_ahf2_table.php',
-        'CreateHisclinicApgo1Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224501_create_hisclinic_apgo1_table.php',
-        'CreateHisclinicApgo2Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224515_create_hisclinic_apgo2_table.php',
-        'CreateHisclinicApnp4rTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224619_create_hisclinic_apnp_4r_table.php',
-        'CreateHisclinicApnpTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224546_create_hisclinic_apnp_table.php',
-        'CreateHisclinicApp1Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224714_create_hisclinic_app1_table.php',
-        'CreateHisclinicApp2Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224726_create_hisclinic_app2_table.php',
-        'CreateHisclinicApp3Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224738_create_hisclinic_app3_table.php',
-        'CreateHisclinicApp4Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224749_create_hisclinic_app4_table.php',
-        'CreateHisclinicApp5Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224812_create_hisclinic_app5_table.php',
-        'CreateHisclinicApp6Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224825_create_hisclinic_app6_table.php',
-        'CreateHisclinicApp7Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224834_create_hisclinic_app7_table.php',
-        'CreateHisclinicApp8Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224853_create_hisclinic_app8_table.php',
-        'CreateHisclinicApp9Table' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_224909_create_hisclinic_app9_table.php',
-        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreateProductosTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225018_create_productos_table.php',
-        'CreatePromotorTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225047_create_promotor_table.php',
-        'CreateProspectsTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225105_create_prospects_table.php',
-        'CreateSucursalesTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225123_create_sucursales_table.php',
-        'CreateTimpuestoTable' => __DIR__ . '/../..' . '/database/migrations/2016_08_09_225150_create_timpuesto_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -778,6 +731,7 @@ class ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'Productos' => __DIR__ . '/../..' . '/database/migrations/2016_08_24_161220_productos.php',
         'SebastianBergmann\\Comparator\\ArrayComparator' => __DIR__ . '/..' . '/sebastian/comparator/src/ArrayComparator.php',
         'SebastianBergmann\\Comparator\\Comparator' => __DIR__ . '/..' . '/sebastian/comparator/src/Comparator.php',
         'SebastianBergmann\\Comparator\\ComparisonFailure' => __DIR__ . '/..' . '/sebastian/comparator/src/ComparisonFailure.php',
@@ -821,10 +775,10 @@ class ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitd12ddd4fcf9a661812f216cf9a707752::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit60796eeada49df5660ef746f20908cd6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit60796eeada49df5660ef746f20908cd6::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit60796eeada49df5660ef746f20908cd6::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit60796eeada49df5660ef746f20908cd6::$classMap;
 
         }, null, ClassLoader::class);
     }

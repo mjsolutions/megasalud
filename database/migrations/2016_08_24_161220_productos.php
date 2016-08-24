@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHisclinicIdiagTable extends Migration
+class Productos extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateHisclinicIdiagTable extends Migration
      */
     public function up()
     {
-        Schema::create('hisclinic_idiag', function (Blueprint $table) {
+        Schema::create('productos', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ class CreateHisclinicIdiagTable extends Migration
      */
     public function down()
     {
-        Schema::drop('hisclinic_idiag');
+        Schema::drop('productos');
     }
 }

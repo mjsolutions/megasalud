@@ -10,7 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('nombre/{nombre}', function($nombre){
+	return "Hola mi nombre es ".$nombre;
+});
+Route::get('controlador','PruebaController@index');
+Route::get('controlador/{nombre}','PruebaController@nombre');
+Route::resource('movie','MovieController');
