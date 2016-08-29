@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Productos extends Migration
+class HelpEautoinmun extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,12 @@ class Productos extends Migration
      */
     public function up()
     {
-        Schema::create('productos', function (Blueprint $table) {
+        Schema::create('help_eautoinmun', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
-            $table->string('descripcion');
-            $table->float('precio');
-            $table->integer('existencia');
+            $table->integer('pid');
+            $table->integer('childs');
+            $table->string('data');
             $table->timestamps();
-            $table->boolean('status');
         });
     }
 
@@ -30,6 +28,6 @@ class Productos extends Migration
      */
     public function down()
     {
-        Schema::drop('productos');
+        Schema::drop('help_eautoinmun');
     }
 }

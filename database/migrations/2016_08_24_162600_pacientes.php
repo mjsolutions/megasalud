@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class Pacientes extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-            $table->string('name');
+        Schema::create('pacientes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nombre');
             $table->string('apellido_p');
             $table->string('apellido_m');
             $table->string('email')->unique();
-            $table->string('password');
             $table->string('fecha_nacimiento');
             $table->enum('sexo',['Masculino,Femenino']);
+            $table->string('municipio_o');
+            $table->string('estado_o');
+            $table->string('pais_o');
             $table->string('municipio');
             $table->string('estado');
             $table->string('pais');
@@ -32,15 +34,11 @@ class CreateUsersTable extends Migration
             $table->string('telefono_a');
             $table->string('telefono_b');
             $table->string('clave_bancaria');
-            $table->string('contrasena');
-            $table->enum('tipo_usuario',['Administrador','Medico']);
-            $table->string('cedula');
-            $table->string('especialidad');
-            $table->string('cuenta_bancaria');
-            $table->string('banco');
-            $table->boolean('status');
-            $table->rememberToken();
+            $table->string('religion');
+            $table->string('ocupacion');
+            $table->string('foto');
             $table->timestamps();
+            $table->boolean('status');
         });
     }
 
@@ -51,6 +49,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::drop('pacientes');
     }
 }
