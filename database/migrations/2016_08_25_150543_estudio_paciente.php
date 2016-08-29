@@ -14,12 +14,12 @@ class EstudioPaciente extends Migration
     {
         Schema::create('estudio_paciente', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_paciente')->unsigned();
+            $table->integer('paciente_id')->unsigned();
             $table->string('nombre_estudio');
             $table->string('ruta_documento');
             $table->timestamp('fecha');
             $table->timestamps();
-            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
         });
     }
 

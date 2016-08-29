@@ -14,7 +14,7 @@ class Agenda extends Migration
     {
         Schema::create('agenda', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_sucursal')->unsigned();
+            $table->integer('sucursales_id')->unsigned();
             $table->string('nombre');
             $table->string('apellido_p');
             $table->string('apellido_m');
@@ -23,7 +23,7 @@ class Agenda extends Migration
             $table->string('comentario');
             $table->timestamps();
             $table->boolean('status');
-            $table->foreign('id_sucursal')->references('id')->on('sucursales')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('sucursales_id')->references('id')->on('sucursales')->onDetele('cascade')->onUpdate('cascade');
         });
     }
 

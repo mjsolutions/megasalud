@@ -14,14 +14,14 @@ class Citas extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_paciente')->unsigned();
-            $table->integer('id_medico')->unsigned();
+            $table->integer('pacientes_id')->unsigned();
+            $table->integer('users_id')->unsigned();//medico
             $table->timestamp('fecha');
             $table->text('observacion');
             $table->timestamps();
             $table->integer('status')->unsigned();
-            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
-            $table->foreign('id_medico')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('pacientes_id')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('users_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
         });
     }
 

@@ -40,6 +40,14 @@ class Pacientes extends Migration
             $table->timestamps();
             $table->boolean('status');
         });
+
+        Schema::create('paciente_user', function (Blueprint $table) {
+            $table->integer('paciente_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->timestamps();
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+        });
     }
 
     /**

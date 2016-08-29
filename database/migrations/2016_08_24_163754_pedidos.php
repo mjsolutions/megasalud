@@ -14,8 +14,8 @@ class Pedidos extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_cliente')->unsigned();
-            $table->integer('id_medico')->unsigned();
+            $table->integer('paciente_id')->unsigned();
+            $table->integer('user_id')->unsigned();//medico
             $table->float('importe');
             $table->float('impuesto');
             $table->float('total');
@@ -25,8 +25,17 @@ class Pedidos extends Migration
             $table->enum('metodo',['Efectivo','Tarjeta','Paypal','OXXO','Deposito']);
             $table->string('detalle');
             $table->timestamps();
-            $table->foreign('id_cliente')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
-            $table->foreign('id_medico')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+        });
+        Schema::create('pedido_producto', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('pedido_id')->unsigned();
+            $table->integer('producto_id')->unsigned();
+            $table->integer('cantidad');
+            $table->timestamps();
+            $table->foreign('pedido_id')->references('id')->on('pedidos')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDetele('cascade')->onUpdate('cascade');
         });
     }
 

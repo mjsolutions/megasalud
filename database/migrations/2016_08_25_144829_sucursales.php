@@ -14,12 +14,19 @@ class Sucursales extends Migration
     {
         Schema::create('sucursales', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_encargado')->unsigned();
+            $table->integer('user_id')->unsigned();//encargado
             $table->string('razon_social');
             $table->string('cuenta_bancaria');
             $table->string('banco');
             $table->timestamps();
-            $table->foreign('id_encargado')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+        });
+        Schema::create('user_sucursal', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('sucursal_id')->unsigned();
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('sucursal_id')->references('id')->on('sucursales')->onDetele('cascade')->onUpdate('cascade');
         });
     }
 
