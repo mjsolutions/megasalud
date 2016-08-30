@@ -23,4 +23,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function pedido(){
+        return $this->hasMany('MegaSalud\Pedido');
+    }
+    public function pacientes(){
+        return $this->belongsToMany('MegaSalud\Paciente')->withTimestamps();
+    }
+    public function sucursal(){
+        return $this->hasOne('MegaSalud\Sucursal');
+    }
+    public function sucursales(){
+        return $this->belongsToMany('MegaSalud\Sucursal','medico_sucursal')->withTimestamps();
+    }
+    //pivote de citas
+    public function citas(){
+        return $this->belongsToMany('MegaSalud\Paciente','citas')->withPivot('paciente_id','user_id','fecha','observacion','status')->withTimestamps();
+    }
 }

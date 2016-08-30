@@ -34,6 +34,7 @@ class Pedidos extends Migration
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
             $table->timestamps();
+            $table->integer("status");
             $table->foreign('pedido_id')->references('id')->on('pedidos')->onDetele('cascade')->onUpdate('cascade');
             $table->foreign('producto_id')->references('id')->on('productos')->onDetele('cascade')->onUpdate('cascade');
         });

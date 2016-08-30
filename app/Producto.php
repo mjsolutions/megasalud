@@ -10,7 +10,7 @@ class Producto extends Model
 
     protected $fillable=['nombre','descripcion','precio','existencia','status'];
 
-    public function pedido_detalle(){
-    	return $this->belongsToMany('App\Pedido');
+    public function pedidos(){
+    	return $this->belongsToMany('MegaSalud\Pedido')->withPivot('cantidad')->withTimestamps();
     }
 }

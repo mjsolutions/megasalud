@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Agenda extends Migration
+class Agendas extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class Agenda extends Migration
      */
     public function up()
     {
-        Schema::create('agenda', function (Blueprint $table) {
+        Schema::create('agendas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('sucursales_id')->unsigned();
+            $table->integer('sucursal_id')->unsigned();
             $table->string('nombre');
             $table->string('apellido_p');
             $table->string('apellido_m');
@@ -23,7 +23,7 @@ class Agenda extends Migration
             $table->string('comentario');
             $table->timestamps();
             $table->boolean('status');
-            $table->foreign('sucursales_id')->references('id')->on('sucursales')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('sucursal_id')->references('id')->on('sucursales')->onDetele('cascade')->onUpdate('cascade');
         });
     }
 
