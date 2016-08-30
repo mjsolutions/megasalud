@@ -15,7 +15,7 @@ class Sucursal extends Model
     }
 
     public function users(){
-    	return $this->belongsToMany('MegaSalud\User','medico_sucursal')->withTimestamps();
+    	return $this->belongsToMany('MegaSalud\User','user_sucursal')->withTimestamps();
     }
     public function agendas(){
     	return $this->hasMany('MegaSalud\Agenda');

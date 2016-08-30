@@ -33,7 +33,7 @@ class User extends Authenticatable
         return $this->hasOne('MegaSalud\Sucursal');
     }
     public function sucursales(){
-        return $this->belongsToMany('MegaSalud\Sucursal','medico_sucursal')->withTimestamps();
+        return $this->belongsToMany('MegaSalud\Sucursal','user_sucursal')->withTimestamps();
     }
     //pivote de citas
     public function citas(){
