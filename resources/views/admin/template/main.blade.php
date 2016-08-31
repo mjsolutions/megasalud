@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<title>MegaSalud | @yield('title','Inicio')</title>
+	<title>MegaSalu | @yield('title','Inicio')</title>
 	<meta charset="UTF-8">
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{asset('css/materialize.min.css')}}">
