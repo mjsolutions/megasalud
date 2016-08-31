@@ -19,3 +19,9 @@ Route::get('nombre/{nombre}', function($nombre){
 Route::get('controlador','PruebaController@index');
 Route::get('controlador/{nombre}','PruebaController@nombre');
 Route::resource('movie','MovieController');
+Route::group(['prefix'=>'admin'],function(){
+	Route::get('view/{id?}',[
+			'uses'=>'PruebaController@id',
+			'name'=>'Prueba'
+		]);
+});

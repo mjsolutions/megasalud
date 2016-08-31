@@ -155,7 +155,10 @@ return [
         MegaSalud\Providers\AuthServiceProvider::class,
         MegaSalud\Providers\EventServiceProvider::class,
         MegaSalud\Providers\RouteServiceProvider::class,
-
+        /*
+         *Providers personales
+        */
+        Collective\Html\HtmlServiceProvider::class,
     ],
 
     /*
@@ -201,6 +204,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        //Alais personales
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 
