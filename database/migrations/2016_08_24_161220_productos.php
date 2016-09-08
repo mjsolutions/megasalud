@@ -17,7 +17,6 @@ class Productos extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->float('precio');
-            $table->integer('existencia');
             $table->timestamps();
             $table->boolean('status');
         });

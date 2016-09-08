@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name','apellido_p','apellido_m', 'email', 'password','fecha_nacimiento','sexo','municipio','estado','pais','direccion','colonia','cp','rfc','curp','telefono_a','telefono_b','clave_bancaria','banco','status'
     ];
 
     /**
@@ -39,4 +39,5 @@ class User extends Authenticatable
     public function citas(){
         return $this->belongsToMany('MegaSalud\Paciente','citas')->withPivot('paciente_id','user_id','fecha','observacion','status')->withTimestamps();
     }
+    //pivote 
 }
