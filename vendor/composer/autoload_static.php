@@ -65,6 +65,7 @@ class ComposerStaticInit60796eeada49df5660ef746f20908cd6
         'L' => 
         array (
             'League\\Flysystem\\' => 17,
+            'Landish\\Pagination\\' => 19,
         ),
         'I' => 
         array (
@@ -191,6 +192,10 @@ class ComposerStaticInit60796eeada49df5660ef746f20908cd6
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
+        'Landish\\Pagination\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/landish/pagination/src',
         ),
         'Illuminate\\' => 
         array (
@@ -1394,6 +1399,17 @@ class ComposerStaticInit60796eeada49df5660ef746f20908cd6
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+        'Landish\\Pagination\\Materialize' => __DIR__ . '/..' . '/landish/pagination/src/Materialize.php',
+        'Landish\\Pagination\\Pagination' => __DIR__ . '/..' . '/landish/pagination/src/Pagination.php',
+        'Landish\\Pagination\\PaginationHTML' => __DIR__ . '/..' . '/landish/pagination/src/PaginationHTML.php',
+        'Landish\\Pagination\\SemanticUI' => __DIR__ . '/..' . '/landish/pagination/src/SemanticUI.php',
+        'Landish\\Pagination\\Simple\\Materialize' => __DIR__ . '/..' . '/landish/pagination/src/Simple/Materialize.php',
+        'Landish\\Pagination\\Simple\\Pagination' => __DIR__ . '/..' . '/landish/pagination/src/Simple/Pagination.php',
+        'Landish\\Pagination\\Simple\\SemanticUI' => __DIR__ . '/..' . '/landish/pagination/src/Simple/SemanticUI.php',
+        'Landish\\Pagination\\Simple\\UIKit' => __DIR__ . '/..' . '/landish/pagination/src/Simple/UIKit.php',
+        'Landish\\Pagination\\Simple\\ZurbFoundation' => __DIR__ . '/..' . '/landish/pagination/src/Simple/ZurbFoundation.php',
+        'Landish\\Pagination\\UIKit' => __DIR__ . '/..' . '/landish/pagination/src/UIKit.php',
+        'Landish\\Pagination\\ZurbFoundation' => __DIR__ . '/..' . '/landish/pagination/src/ZurbFoundation.php',
         'League\\Flysystem\\AdapterInterface' => __DIR__ . '/..' . '/league/flysystem/src/AdapterInterface.php',
         'League\\Flysystem\\Adapter\\AbstractAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractAdapter.php',
         'League\\Flysystem\\Adapter\\AbstractFtpAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractFtpAdapter.php',
@@ -1447,6 +1463,7 @@ class ComposerStaticInit60796eeada49df5660ef746f20908cd6
         'MegaSalud\\Http\\Controllers\\Auth\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordController.php',
         'MegaSalud\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'MegaSalud\\Http\\Controllers\\MovieController' => __DIR__ . '/../..' . '/app/Http/Controllers/MovieController.php',
+        'MegaSalud\\Http\\Controllers\\ProductosController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductosController.php',
         'MegaSalud\\Http\\Controllers\\PruebaController' => __DIR__ . '/../..' . '/app/Http/Controllers/PruebaController.php',
         'MegaSalud\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'MegaSalud\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

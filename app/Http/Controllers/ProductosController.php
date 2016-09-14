@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use MegaSalud\Http\Requests;
 
+use MegaSalud\Producto;
+
 class ProductosController extends Controller
 {
     /**
@@ -15,7 +17,8 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        //
+        $productos=Producto::orderBy('nombre','ASC')->paginate(10);
+        return view('admin.productos.list')->with('productos',$productos);
     }
 
     /**
@@ -36,7 +39,8 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $producto=new Producto($request->all());
+        $producto->save();
     }
 
     /**

@@ -31,6 +31,7 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'MegaSalud\\' => array($baseDir . '/app'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
+    'Landish\\Pagination\\' => array($vendorDir . '/landish/pagination/src'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),

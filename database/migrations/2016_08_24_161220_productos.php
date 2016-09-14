@@ -18,7 +18,7 @@ class Productos extends Migration
             $table->string('descripcion');
             $table->float('precio');
             $table->timestamps();
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
         });
     }
 
