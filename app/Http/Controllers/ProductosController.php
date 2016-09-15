@@ -8,6 +8,8 @@ use MegaSalud\Http\Requests;
 
 use MegaSalud\Producto;
 
+use Laracasts\Flash\Flash;
+
 class ProductosController extends Controller
 {
     /**
@@ -41,7 +43,8 @@ class ProductosController extends Controller
     {
         $producto=new Producto($request->all());
         $producto->save();
-        return "success";
+        Flash::overlay('Se ha registrado '.$producto->nombre.' de forma exitosa.', 'Alta exitosa');
+        return redirect()->route('admin.productos.index');
     }
 
     /**
@@ -81,8 +84,7 @@ class ProductosController extends Controller
         $producto->descripcion=$request->descripcion;
         $producto->precio=$request->precio;
         $producto->save();
-        $productos=Producto::orderBy('nombre','ASC')->paginate(10);
-        return view('admin.productos.list')->with('productos',$productos);
+        return redirect()->route('admin.productos.index');
     }
 
     /**
@@ -95,7 +97,6 @@ class ProductosController extends Controller
     {
         $producto=Producto::find($id);
         $producto->delete();
-        $productos=Producto::orderBy('nombre','ASC')->paginate(10);
-        return view('admin.productos.list')->with('productos',$productos);
+        return redirect()->route('admin.productos.index');
     }
 }

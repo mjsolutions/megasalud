@@ -14,6 +14,7 @@
 	</header>
 	<main>
 		<section>
+			@include('flash::message')
 			@yield('content')
 		</section>
 	</main>
@@ -37,6 +38,9 @@
 	<script>
 		$(document).ready(function(){
 			$(".button-collapse").sideNav();
+			if($('#flash-overlay-modal')[0]){
+			    $('#flash-overlay-modal').openModal();   
+			}
 		});
 		@yield('scripts')
 	</script>
