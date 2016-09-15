@@ -41,6 +41,7 @@ class ProductosController extends Controller
     {
         $producto=new Producto($request->all());
         $producto->save();
+        return "success";
     }
 
     /**
@@ -62,7 +63,8 @@ class ProductosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $producto=Producto::find($id);
+        return view('admin.productos.edit')->with('producto',$producto);
     }
 
     /**
@@ -74,7 +76,13 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $producto=Producto::find($id);
+        $producto->nombre=$request->nombre;
+        $producto->descripcion=$request->descripcion;
+        $producto->precio=$request->precio;
+        $producto->save();
+        $productos=Producto::orderBy('nombre','ASC')->paginate(10);
+        return view('admin.productos.list')->with('productos',$productos);
     }
 
     /**
@@ -85,6 +93,9 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto=Producto::find($id);
+        $producto->delete();
+        $productos=Producto::orderBy('nombre','ASC')->paginate(10);
+        return view('admin.productos.list')->with('productos',$productos);
     }
 }

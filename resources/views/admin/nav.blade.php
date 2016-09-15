@@ -7,7 +7,7 @@
       <li><a href="badges.html">Pacientes</a></li>
       <li><a href="collapsible.html">Usuarios</a></li>
       <li><a href="mobile.html">Sucursales</a></li>
-      <li><a href="mobile.html">Productos</a></li>
+      <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
       <li><a href="mobile.html">Pedidos</a></li>
     </ul>
     <ul class="side-nav" id="mobile-demo">

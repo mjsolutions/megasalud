@@ -24,4 +24,8 @@ Route::group(['prefix'=>'admin'],function(){
 			'name'=>'Prueba'
 		]);*/
 	Route::resource('productos','ProductosController');
+	Route::get('productos/{id}/destroy',[
+			'uses'	=>	'ProductosController@destroy',
+			'as'	=>	'admin.productos.destroy'
+		]);
 });
