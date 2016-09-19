@@ -22,7 +22,7 @@ class Agendas extends Migration
             $table->string('email');
             $table->string('comentario');
             $table->timestamps();
-            $table->boolean('status');
+            $table->boolean('status')->default(1);//1-En Espera, 2.-Atendida, 3.- Reprogramada, 4.- Cancelada
             $table->foreign('sucursal_id')->references('id')->on('sucursales')->onDetele('cascade')->onUpdate('cascade');
         });
     }

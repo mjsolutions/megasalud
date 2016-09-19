@@ -38,7 +38,7 @@ class Pacientes extends Migration
             $table->string('ocupacion');
             $table->string('foto');
             $table->timestamps();
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
         });
 
         Schema::create('paciente_user', function (Blueprint $table) {

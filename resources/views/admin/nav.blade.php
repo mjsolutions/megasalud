@@ -4,7 +4,7 @@
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
       <li><a href="sass.html">Inicio</a></li>
-      <li><a href="badges.html">Pacientes</a></li>
+      <li><a href="{{ route('admin.pacientes.index') }}">Pacientes</a></li>
       <li><a href="collapsible.html">Usuarios</a></li>
       <li><a href="mobile.html">Sucursales</a></li>
       <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>

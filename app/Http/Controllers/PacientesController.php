@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 
 use MegaSalud\Http\Requests;
 
-class MovieController extends Controller
+use MegaSalud\Paciente;
+
+use Laracasts\Flash\Flash;
+
+use MegaSalud\Http\Requests\PacienteRequest;
+
+class PacientesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +21,8 @@ class MovieController extends Controller
      */
     public function index()
     {
-        return "Estoy en el indets";
+        $pacientes=Paciente::where('status',1)->orderBy('nombre','ASC')->paginate(10);
+        return view('admin.pacientes.list')->with('pacientes',$pacientes);
     }
 
     /**
@@ -25,7 +32,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        return "Este es el formulario para crear";
+        return view('admin.pacientes.create');
     }
 
     /**

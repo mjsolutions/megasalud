@@ -8,7 +8,7 @@ class Pedido extends Model
 {
     protected $table="pedidos";
 
-    protected $fillable=['cliente_id','medico_id','importe','total','impuesto','total','fecha_pedido','confirmacion','fecha_pago','metodo','detalle'];
+    protected $fillable=['cliente_id','medico_id','importe','total','impuesto','total','fecha_pedido','confirmacion','fecha_pago','metodo','detalle','status'];
 
     public function productos(){
     	return $this->belongsToMany('MegaSalud\Producto')->withPivot('cantidad')->withTimestamps();

@@ -38,7 +38,7 @@ class CreateUsersTable extends Migration
             $table->string('especialidad');
             $table->string('cuenta_bancaria');
             $table->string('banco');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

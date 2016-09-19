@@ -1,5 +1,5 @@
 @extends('main')
-@section('title','Productos | Nuevo')
+@section('title','Pacientes | Nuevo')
 @section('nav')
 	@include('admin.nav')
 @endsection
@@ -8,7 +8,7 @@
     <div class="container">
     	<div class="card-panel">
             <div class="center-align">
-                <h3>Nuevo Producto</h3>
+                <h3>Nuevo Paciente</h3>
             </div>
             <div class="row">
                 <div class="col s8 col-center divider"></div>

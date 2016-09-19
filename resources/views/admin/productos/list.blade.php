@@ -43,23 +43,3 @@
     	</div>
     </div>
 @endsection
-@section('scripts')
-/*
-$('#form').submit(function(){
-    var data=$('#form').serialize();
-    $.ajax({
-        url: "{!! route('admin.productos.store') !!}",
-        type: "POST",
-        data: data
-    }).done(function(data){
-        if(data=="success"){
-            alert("Holis");
-        }
-        else{
-            alert("no holis");
-        }
-    });
-    return false;
-});
-*/
-@endsection

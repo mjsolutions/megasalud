@@ -41,8 +41,8 @@
 			if($('#flash-overlay-modal')[0]){
 			    $('#flash-overlay-modal').openModal();   
 			}
+			@yield('scripts')
 		});
-		@yield('scripts')
 	</script>
 </body>
 </html>

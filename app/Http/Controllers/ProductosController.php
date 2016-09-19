@@ -10,6 +10,8 @@ use MegaSalud\Producto;
 
 use Laracasts\Flash\Flash;
 
+use MegaSalud\Http\Requests\ProductoRequest;
+
 class ProductosController extends Controller
 {
     /**
@@ -19,7 +21,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        $productos=Producto::orderBy('nombre','ASC')->paginate(10);
+        $productos=Producto::where('status',1)->orderBy('nombre','ASC')->paginate(10);
         return view('admin.productos.list')->with('productos',$productos);
     }
 
@@ -39,7 +41,7 @@ class ProductosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductoRequest $request)
     {
         $producto=new Producto($request->all());
         $producto->save();
@@ -77,13 +79,18 @@ class ProductosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductoRequest $request, $id)
     {
         $producto=Producto::find($id);
+        /*
+            También puede funcionar con 
+            $producto->fill($request->all());
+        */
         $producto->nombre=$request->nombre;
         $producto->descripcion=$request->descripcion;
         $producto->precio=$request->precio;
         $producto->save();
+        Flash::overlay('Se ha modificado '.$producto->nombre.' de forma exitosa.', 'Modificación exitosa');
         return redirect()->route('admin.productos.index');
     }
 
@@ -96,7 +103,8 @@ class ProductosController extends Controller
     public function destroy($id)
     {
         $producto=Producto::find($id);
-        $producto->delete();
+        $producto->status=0;
+        $producto->save();
         return redirect()->route('admin.productos.index');
     }
 }

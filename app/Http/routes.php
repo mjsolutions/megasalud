@@ -28,4 +28,5 @@ Route::group(['prefix'=>'admin'],function(){
 			'uses'	=>	'ProductosController@destroy',
 			'as'	=>	'admin.productos.destroy'
 		]);
+	Route::resource('pacientes','PacientesController');
 });
