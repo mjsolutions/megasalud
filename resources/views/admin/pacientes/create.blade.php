@@ -19,14 +19,24 @@
     			{!! Form::text('nombre', null, ['class'=>'validate','required']) !!}
 	    	</div>	
             <div class="input-field">
-                <i class="material-icons prefix">mode_edit</i>
-                {!! Form::label('desc','Descripción') !!}
-                {!! Form::textarea('descripcion', null, ['class'=>'materialize-textarea','required']) !!}
+                <i class="material-icons prefix">account_circle</i>
+                {!! Form::label('apellido_paterno','Apellido Paterno') !!}
+                {!! Form::text('apellido_p', null, ['class'=>'validate','required']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">account_circle</i>
+                {!! Form::label('apellido_materno','Apellido Materno') !!}
+                {!! Form::text('apellido_m', null, ['class'=>'validate','required']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">perm_contact_calendar</i>
+                {!! Form::label('fecha_nacimiento','Fecha de Nacimiento') !!}
+                {!! Form::date('fecha_nacimiento', null, ['class'=>'datepicker','required']) !!}
             </div> 
             <div class="input-field">
-                <i class="material-icons prefix">payment</i>
-                {!! Form::label('cost','Precio') !!}
-                {!! Form::number('precio', null, ['class'=>'validate','required']) !!}
+                <i class="material-icons prefix">perm_contact_calendar</i>
+                {!! Form::label('sexo','Sexo') !!}
+                {!! Form::select('sexo',['Masculino'=>'Masculino','Femenino'=>'Femenino'],null,['class'=>'select-dropdown']) !!}
             </div>
             <div class="input-field center-align">
                 {!! Form::submit('Crear',['class'=>'btn waves-effect waves-light']) !!}
@@ -41,4 +51,8 @@
                 Materialize.toast('{{ $error }}', 4000);
             @endforeach
         @endif
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+            });
 @endsection
