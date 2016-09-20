@@ -28,5 +28,17 @@ Route::group(['prefix'=>'admin'],function(){
 			'uses'	=>	'ProductosController@destroy',
 			'as'	=>	'admin.productos.destroy'
 		]);
+	Route::get('pacientes/pais',[
+			'uses'	=>	'PacientesController@pais',
+			'as'	=>	'admin.pacientes.pais'	
+		]);
+	Route::get('pacientes/estado',[
+		'uses'	=>	'PacientesController@estado',
+		'as'	=>	'admin.pacientes.estado'	
+	]);
+	Route::get('pacientes/ciudad',[
+		'uses'	=>	'PacientesController@ciudad',
+		'as'	=>	'admin.pacientes.ciudad'	
+	]);
 	Route::resource('pacientes','PacientesController');
 });

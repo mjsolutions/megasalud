@@ -12,6 +12,8 @@ use Laracasts\Flash\Flash;
 
 use MegaSalud\Http\Requests\PacienteRequest;
 
+use Illuminate\Support\Facades\DB;
+
 class PacientesController extends Controller
 {
     /**
@@ -89,5 +91,39 @@ class PacientesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pais()
+    {
+        $paises=DB::table('pacientes')->select('pais')->distinct()->get();
+        $data=array();
+        foreach ($paises as $pais => $value) {
+            $data[$value->pais]=null;
+        }
+        return json_encode($data);
+    }
+    public function estado()
+    {
+        $estados=DB::table('pacientes')->select('estado')->distinct()->get();
+        $data=array();
+        foreach ($estados as $estado => $value) {
+            $data[$value->estado]=null;
+        }
+        return json_encode($data);
+    }
+    public function ciudad()
+    {
+        $municipios=DB::table('pacientes')->select('municipio')->distinct()->get();
+        $data=array();
+        foreach ($municipios as $municipio => $value) {
+            $data[$value->municipio]=null;
+        }
+        return json_encode($data);
     }
 }
