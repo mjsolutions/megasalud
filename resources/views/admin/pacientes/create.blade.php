@@ -50,8 +50,43 @@
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Ciudad_o','Ciudad de Origen') !!}
-                {!! Form::text('ciudad_o',null,['class'=>'autocomplete','id'=>'ciudad_o']) !!}
+                {!! Form::label('Ciudad_o','Municipio de Origen') !!}
+                {!! Form::text('municipio_o',null,['class'=>'autocomplete','id'=>'municipio_o']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">textsms</i>
+                {!! Form::label('País','País') !!}
+                {!! Form::text('pais',null,['class'=>'autocomplete','id'=>'pais']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">textsms</i>
+                {!! Form::label('Estado','Estado') !!}
+                {!! Form::text('estado_o',null,['class'=>'autocomplete','id'=>'estado']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">textsms</i>
+                {!! Form::label('Municipio','Municipio') !!}
+                {!! Form::text('municipio',null,['class'=>'autocomplete','id'=>'municipio']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">textsms</i>
+                {!! Form::label('Dirección','Dirección') !!}
+                {!! Form::text('direccion',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">textsms</i>
+                {!! Form::label('Colonia','Colonia') !!}
+                {!! Form::text('colonia',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">textsms</i>
+                {!! Form::label('cp','Código Postal') !!}
+                {!! Form::text('cp',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">textsms</i>
+                {!! Form::label('email','Email') !!}
+                {!! Form::email('email',null,['class'=>'validate']) !!}
             </div>
             <div class="input-field center-align">
                 {!! Form::submit('Crear',['class'=>'btn waves-effect waves-light']) !!}
@@ -82,11 +117,25 @@
             $('#estado_o.autocomplete').autocomplete({
             data:JSON.parse(datos)
             });
-            alert(datos);
         });
         $.get('{!! route('admin.pacientes.ciudad') !!}').done(function(datos){
-            $('#ciudad_o.autocomplete').autocomplete({
+            $('#municipio_o.autocomplete').autocomplete({
             data:JSON.parse(datos)
             });
+        $.get('{!! route('admin.pacientes.pais') !!}').done(function(datos){
+            $('#pais.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        $.get('{!! route('admin.pacientes.estado') !!}').done(function(datos){
+            $('#estado.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        $.get('{!! route('admin.pacientes.ciudad') !!}').done(function(datos){
+            $('#municipio.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
         });
 @endsection

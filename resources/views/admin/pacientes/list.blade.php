@@ -28,18 +28,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach($pacientes as $pacientes)
+                    @foreach($pacientes as $paciente)
                         <tr>
-                            <td>{{ $pacientes->nombre }}</td>
-                            <td>{{ $pacientes->descripcion }}</td>
-                            <td>{{ $pacientes->precio }}</td>
-                            <td><a href="{!! route('admin.pacientes.edit', $pacientes->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('admin.pacientes.destroy', $pacientes->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
+                            <td>{{ $paciente->id }}</td>
+                            <td>{{ $paciente->nombre }}</td>
+                            <td></td>
+                            <td>{{ $paciente->telefono }}</td>
+                            <td><a href="{!! route('admin.pacientes.edit', $paciente->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('admin.pacientes.destroy', $paciente->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             <div class="center-align">
-                {!! (new Landish\Pagination\Materialize($pacientes))->render() /*mensajes*/ !!}
+                {!! (new Landish\Pagination\Materialize($pacientes))->render() !!}
             </div>
     	</div>
     </div>
