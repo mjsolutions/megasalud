@@ -88,6 +88,11 @@
                 {!! Form::label('email','Email') !!}
                 {!! Form::email('email',null,['class'=>'validate']) !!}
             </div>
+            <div class="input-field">
+                <i class="material-icons prefix">textsms</i>
+                {!! Form::label('email','Email') !!}
+                {!! Form::email('email',null,['class'=>'validate']) !!}
+            </div>
             <div class="input-field center-align">
                 {!! Form::submit('Crear',['class'=>'btn waves-effect waves-light']) !!}
             </div>
