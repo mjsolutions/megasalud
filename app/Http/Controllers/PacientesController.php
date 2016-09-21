@@ -8,6 +8,8 @@ use MegaSalud\Http\Requests;
 
 use MegaSalud\Paciente;
 
+use MegaSalud\User;
+
 use Laracasts\Flash\Flash;
 
 use MegaSalud\Http\Requests\PacienteRequest;
@@ -43,9 +45,16 @@ class PacientesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PacienteRequest $request)
     {
-        //
+        $medico=$request->medico;
+        unset($request->medico);
+        $ruta="/images/paciente";
+        $request->foto=$ruta;
+        $paciente=new Paciente($request->all());
+        $paciente->save();
+        Flash::overlay('Se ha registrado '.$paciente->nombre.' de forma exitosa.', 'Alta exitosa');
+        return redirect()->route('admin.pacientes.index');
     }
 
     /**
@@ -77,7 +86,7 @@ class PacientesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PacienteRequest $request, $id)
     {
         //
     }
@@ -123,6 +132,15 @@ class PacientesController extends Controller
         $data=array();
         foreach ($municipios as $municipio => $value) {
             $data[$value->municipio]=null;
+        }
+        return json_encode($data);
+    }
+    public function medico()
+    {
+        $users=User::all();
+        $data=array();
+        foreach ($users as $user => $value) {
+            $data[$value->nombre." ".$value->apellido_p." ".$value->apellido_m]=null;
         }
         return json_encode($data);
     }

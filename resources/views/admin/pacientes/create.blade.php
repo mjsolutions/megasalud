@@ -4,7 +4,7 @@
 	@include('admin.nav')
 @endsection
 @section('content')
-    {!! Form::open(['route'=>'admin.productos.store', 'method'=>'POST']) !!}
+    {!! Form::open(['route'=>'admin.pacientes.store', 'method'=>'POST','files'=>true]) !!}
     <div class="container">
     	<div class="card-panel">
             <div class="center-align">
@@ -89,9 +89,50 @@
                 {!! Form::email('email',null,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
-                <i class="material-icons prefix">textsms</i>
-                {!! Form::label('email','Email') !!}
-                {!! Form::email('email',null,['class'=>'validate']) !!}
+                <i class="material-icons prefix">perm_identity</i>
+                {!! Form::label('curp','CURP') !!}
+                {!! Form::text('curp',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">perm_identity</i>
+                {!! Form::label('rfc','RFC') !!}
+                {!! Form::text('rfc',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">phone</i>
+                {!! Form::label('Telefono','Telefono 1') !!}
+                {!! Form::number('telefono_a',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">phone</i>
+                {!! Form::label('Telefono','Telefono 2') !!}
+                {!! Form::number('telefono_b',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">account_circle</i>
+                {!! Form::label('religion','Religión') !!}
+                {!! Form::text('religion',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">group_work</i>
+                {!! Form::label('ocupación','Ocupación') !!}
+                {!! Form::text('ocupacion',null,['class'=>'validate']) !!}
+            </div>
+            <div class="input-field file-field">
+                <div class="btn">
+                    <span>
+                        Fotografía        
+                    </span>
+                    {!! Form::file('foto') !!}
+                </div>
+                <div class="file-path-wrapper">
+                    {!! Form::text('foto_1',null,['class'=>'file-path validate','placeholder'=>'Selecciona un fotografía']) !!}
+                </div>
+            </div>
+            <div class="input-field">
+                <i class="material-icons prefix">perm_identity</i>
+                {!! Form::label('medico','Médico') !!}
+                {!! Form::text('medico',null,['class'=>'autocomplete','id'=>'medico']) !!}
             </div>
             <div class="input-field center-align">
                 {!! Form::submit('Crear',['class'=>'btn waves-effect waves-light']) !!}
@@ -139,6 +180,11 @@
         });
         $.get('{!! route('admin.pacientes.ciudad') !!}').done(function(datos){
             $('#municipio.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        $.get('{!! route('admin.pacientes.medico') !!}').done(function(datos){
+            $('#medico.autocomplete').autocomplete({
             data:JSON.parse(datos)
             });
         });

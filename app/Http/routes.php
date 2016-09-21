@@ -40,5 +40,9 @@ Route::group(['prefix'=>'admin'],function(){
 		'uses'	=>	'PacientesController@ciudad',
 		'as'	=>	'admin.pacientes.ciudad'	
 	]);
+	Route::get('pacientes/medico',[
+		'uses'	=> 'PacientesController@medico',
+		'as'	=>	'admin.pacientes.medico'
+	]);
 	Route::resource('pacientes','PacientesController');
 });

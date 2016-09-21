@@ -19,7 +19,7 @@ class Pacientes extends Migration
             $table->string('apellido_m');
             $table->string('email')->unique();
             $table->string('fecha_nacimiento');
-            $table->enum('sexo',['Masculino,Femenino']);
+            $table->enum('sexo',['Masculino','Femenino']);
             $table->string('municipio_o');
             $table->string('estado_o');
             $table->string('pais_o');

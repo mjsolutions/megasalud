@@ -30,6 +30,6 @@ class EstudiosPacientes extends Migration
      */
     public function down()
     {
-        Schema::drop('estudio_paciente');
+        Schema::drop('estudios_pacientes');
     }
 }
