@@ -45,4 +45,8 @@ Route::group(['prefix'=>'admin'],function(){
 		'as'	=>	'admin.pacientes.medico'
 	]);
 	Route::resource('pacientes','PacientesController');
+	Route::get('pacientes/{id}/destroy',[
+		'uses'	=>	'PacientesController@destroy',
+		'as'	=>	'admin.pacientes.destroy'
+	]);
 });

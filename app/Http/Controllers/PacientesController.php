@@ -85,7 +85,8 @@ class PacientesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $paciente=Paciente::find($id);
+        return view('admin.pacientes.edit')->with('paciente',$paciente);
     }
 
     /**
@@ -97,7 +98,15 @@ class PacientesController extends Controller
      */
     public function update(PacienteRequest $request, $id)
     {
-        //
+        $paciente=Paciente::find($id);
+        $paciente->fill($request->all());
+        if($paciente->save()){
+            Flash::overlay('Se actualizó a  '.$paciente->nombre.' de forma exitosa.', 'Operación exitosa');
+        }
+        else{
+            Flash::overlay('Ha ocurrido un error al editar al paciente  '.$paciente->nombre, 'Error');
+        }
+        return redirect()->route('admin.pacientes.index');
     }
 
     /**
@@ -108,7 +117,15 @@ class PacientesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $paciente=Paciente::find($id);
+        $paciente->status=0;
+        if($paciente->save()){
+            Flash::overlay('Se ha eliminado a  '.$paciente->nombre.' de forma exitosa.', 'Operación exitosa');
+        }
+        else{
+            Flash::overlay('Ha ocurrido un error al eliminar al paciente  '.$paciente->nombre, 'Error');
+        }
+        return redirect()->route('admin.pacientes.index');
     }
 
     /**
