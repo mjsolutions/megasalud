@@ -49,11 +49,20 @@ class PacientesController extends Controller
     {
         $medico=$request->medico;
         unset($request->medico);
-        $ruta="/images/paciente";
-        $request->foto=$ruta;
+        $foto=$request->file('foto');
+        $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
+        $path=public_path()."/images/paciente/";
+        $request->foto=$foto_name;
         $paciente=new Paciente($request->all());
-        $paciente->save();
-        Flash::overlay('Se ha registrado '.$paciente->nombre.' de forma exitosa.', 'Alta exitosa');
+        unset($paciente->foto);
+        $paciente->foto=$foto_name;
+        if($paciente->save()){
+            $foto->move($path,$foto_name);
+            Flash::overlay('Se ha registrado '.$paciente->nombre.' de forma exitosa.', 'Alta exitosa');
+        }
+        else{
+            Flash::overlay('Ha ocurrido un error al registrar al paciente  '.$paciente->nombre, 'Error');
+        }
         return redirect()->route('admin.pacientes.index');
     }
 
