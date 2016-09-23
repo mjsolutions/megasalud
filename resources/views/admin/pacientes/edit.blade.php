@@ -135,7 +135,7 @@
             <div class="input-field">
                 <i class="material-icons prefix">perm_identity</i>
                 {!! Form::label('medico','Médico') !!}
-                {!! Form::text('medico',null,['class'=>'autocomplete','id'=>'medico']) !!}
+                {!! Form::text('medico',$paciente->users[0]->id." - ".$paciente->users[0]->nombre." ".$paciente->users[0]->apellido_p." ".$paciente->users[0]->apellido_m,['class'=>'autocomplete','id'=>'medico']) !!}
             </div>
             <div class="input-field center-align">
                 {!! Form::submit('Editar',['class'=>'btn waves-effect waves-light']) !!}

@@ -47,8 +47,12 @@ class PacientesController extends Controller
      */
     public function store(PacienteRequest $request)
     {
+        //Encontrando médico
         $medico=$request->medico;
-        unset($request->medico);
+        //dd(substr($medico,0,stripos($medico,' ')));
+        $id=intval($medico);
+        $dr=User::find($id);
+        //tratando archivos
         $foto=$request->file('foto');
         $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
         $path=public_path()."/images/paciente/";
@@ -57,6 +61,7 @@ class PacientesController extends Controller
         unset($paciente->foto);
         $paciente->foto=$foto_name;
         if($paciente->save()){
+            $paciente->users()->attach($dr);
             $foto->move($path,$foto_name);
             Flash::overlay('Se ha registrado '.$paciente->nombre.' de forma exitosa.', 'Alta exitosa');
         }
@@ -86,6 +91,7 @@ class PacientesController extends Controller
     public function edit($id)
     {
         $paciente=Paciente::find($id);
+        $paciente->users;
         return view('admin.pacientes.edit')->with('paciente',$paciente);
     }
 
@@ -99,12 +105,19 @@ class PacientesController extends Controller
     public function update(PacienteRequest $request, $id)
     {
         $paciente=Paciente::find($id);
-        $paciente->fill($request->all());
-        if($paciente->save()){
-            Flash::overlay('Se actualizó a  '.$paciente->nombre.' de forma exitosa.', 'Operación exitosa');
+        $dr_v=$paciente->users[0]->id;//obtenemos el medico que tenía asginado'
+        $paciente->fill($request->all());//aseguramos todos los cambios
+        $dr_n=intval($request->medico);//obtenemos el médico nuevo'
+        if($paciente->users()->detach($dr_v)){//borramos el médico viejo
+            $paciente->users()->attach($dr_n);//agregamos el nuevo medico
+            if($paciente->save()){//guardamos los cambios en la tabla de pacientes
+                Flash::overlay('Se actualizó a  '.$paciente->nombre.' de forma exitosa.', 'Operación exitosa');
+            }else{
+                Flash::overlay('Ha ocurrido un error al editar al paciente  '.$paciente->nombre, 'Error');
+            }
         }
         else{
-            Flash::overlay('Ha ocurrido un error al editar al paciente  '.$paciente->nombre, 'Error');
+            Flash::overlay('Ha ocurrido un error al editar el medico del paciente  '.$paciente->nombre, 'Error');
         }
         return redirect()->route('admin.pacientes.index');
     }
@@ -166,7 +179,7 @@ class PacientesController extends Controller
         $users=User::all();
         $data=array();
         foreach ($users as $user => $value) {
-            $data[$value->nombre." ".$value->apellido_p." ".$value->apellido_m]=null;
+            $data[$value->id." - ".$value->nombre." ".$value->apellido_p." ".$value->apellido_m]=null;
         }
         return json_encode($data);
     }

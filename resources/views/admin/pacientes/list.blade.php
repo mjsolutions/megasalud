@@ -33,7 +33,8 @@
                             <td>{{ $paciente->id }}</td>
                             <td>{{ $paciente->nombre }}</td>
                             <td></td>
-                            <td>{{ $paciente->telefono }}</td>
+                            <!--//$paciente->users[0]->sucursales[0]->razon_social-->
+                            <td>{{ $paciente->telefono_a }}</td>
                             <td><a href="{!! route('admin.pacientes.edit', $paciente->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('admin.pacientes.destroy', $paciente->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
                         </tr>
                     @endforeach
