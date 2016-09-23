@@ -24,7 +24,9 @@ class PacienteRequest extends Request
     public function rules()
     {
         return [
-            'medico'    =>  'required'
+            'medico'    =>  'required',
+            'foto'      =>  'size:3000',
+            'telefono_a'=>  'integer'
         ];
     }
 }
