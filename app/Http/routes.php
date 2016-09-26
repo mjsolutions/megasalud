@@ -19,8 +19,6 @@ Route::get('nombre/{nombre}', function($nombre){
 Route::get('controlador','PruebaController@index');
 Route::get('controlador/{nombre}','PruebaController@nombre');
 Route::group(['prefix'=>'admin'],function(){
-<<<<<<< HEAD
-=======
 	/*Route::get('view/{id?}',[
 			'uses'=>'PruebaController@id',
 			'name'=>'Prueba'
@@ -28,12 +26,9 @@ Route::group(['prefix'=>'admin'],function(){
 	Route::get('/', function(){
 		return view('admin.index');
 	});
-
 	Route::get('inicio', function(){
 		return view('admin.index');
 	})->name('admin.inicio');
-
->>>>>>> 18b5f1691f8b9e752b6f5241ff142110f7e265b1
 	Route::resource('productos','ProductosController');
 
 	Route::get('productos/{id}/destroy',[
