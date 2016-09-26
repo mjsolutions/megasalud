@@ -19,27 +19,36 @@
 		</section>
 	</main>
 	<footer class="page-footer blue darken-1">
-	  <div class="container">
-	    <div class="row">
-	      <div class="col l6 s12">
-	        <h5 class="white-text">MegaSalud Internacional</h5>
-	        <p class="grey-text text-lighten-4">Todos los derechos reservados.</p>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="footer-copyright">
-	    <div class="container">
-	    © 2016 Copyright Text
-	    </div>
-	  </div>
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">MegaSalud Internacional</h5>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				<div class="row">
+					<div class="col l6">
+						Todos los derechos reservados.	    			
+					</div>
+					<div class="col l6 right-align">
+						© {!! date('Y') !!}
+					</div>
+				</div>
+			</div>
+		</div>
 	</footer>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="{{asset('js/materialize.min.js')}}"></script>
 	<script>
 		$(document).ready(function(){
-			$(".button-collapse").sideNav();
+			$(".button-collapse").sideNav({
+				 edge: 'right', // Choose the horizontal origin
+				 closeOnClick: true
+				});
 			if($('#flash-overlay-modal')[0]){
-			    $('#flash-overlay-modal').openModal();   
+				$('#flash-overlay-modal').openModal();   
 			}
 			@yield('scripts')
 		});

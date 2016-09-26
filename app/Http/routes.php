@@ -23,7 +23,16 @@ Route::group(['prefix'=>'admin'],function(){
 			'uses'=>'PruebaController@id',
 			'name'=>'Prueba'
 		]);*/
+	Route::get('/', function(){
+		return view('admin.index');
+	});
+
+	Route::get('inicio', function(){
+		return view('admin.index');
+	})->name('admin.inicio');
+
 	Route::resource('productos','ProductosController');
+
 	Route::get('productos/{id}/destroy',[
 			'uses'	=>	'ProductosController@destroy',
 			'as'	=>	'admin.productos.destroy'
