@@ -19,10 +19,6 @@ Route::get('nombre/{nombre}', function($nombre){
 Route::get('controlador','PruebaController@index');
 Route::get('controlador/{nombre}','PruebaController@nombre');
 Route::group(['prefix'=>'admin'],function(){
-	/*Route::get('view/{id?}',[
-			'uses'=>'PruebaController@id',
-			'name'=>'Prueba'
-		]);*/
 	Route::resource('productos','ProductosController');
 	Route::get('productos/{id}/destroy',[
 			'uses'	=>	'ProductosController@destroy',
@@ -43,6 +39,10 @@ Route::group(['prefix'=>'admin'],function(){
 	Route::get('pacientes/medico',[
 		'uses'	=> 'PacientesController@medico',
 		'as'	=>	'admin.pacientes.medico'
+	]);
+	Route::get('pacientes/detalles',[
+		'uses'	=>	'PacientesController@detalle',
+		'as'	=>	'admin.pacientes.detalles'
 	]);
 	Route::resource('pacientes','PacientesController');
 	Route::get('pacientes/{id}/destroy',[
