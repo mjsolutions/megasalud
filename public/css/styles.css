@@ -1,4 +1,6 @@
-/* ------------Etiquetas------------ */
+/* ------------
+Labels
+------------ */
 body{
     display: flex;
     min-height: 100vh;
@@ -7,13 +9,20 @@ body{
 main{
     flex: 1 0 auto;
 }
-/* ------------Col------------ */
+/* ------------
+Col
+------------ */
 .col-center{
 	float: none!important;
 	margin-right: auto!important;
 	margin-left: auto!important;
 }
-/* ------------Margin------------ */
+/* ------------
+Margin
+------------ */
+.mt-5{
+	margin-top: 5px;
+}
 .mt-30{
 	margin-top: 30px;
 }
@@ -22,4 +31,12 @@ main{
 }
 .mr-10{
 	margin-right: 10px; 
+}
+
+/* ------------
+Heights
+------------ */
+
+.minh-400 {
+	min-height: 400px!important;
 }
