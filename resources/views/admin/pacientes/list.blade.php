@@ -40,6 +40,8 @@
                     @endforeach
                 </tbody>
             </table>
+            {!! Form::open(['route'=>['admin.pacientes.detalles',':USER_ID'], 'method'=>'GET','id'=>'form']) !!}
+            {!! Form::close() !!}
             <div id="detalles" class="modal">
                 <div class="modal-content" id="titulo">
                     
@@ -57,11 +59,11 @@
 @endsection
 @section('functions')
     function detalle(id){
-        alert("entra");
-        $.post('{!! route('admin.pacientes.detalles') !!}',{id:id}).done(function(data){
+        var form=$("#form");
+        var url=form.attr('action').replace(':USER_ID',id);
+        $.get(url).done(function(data){
             var datos=JSON.parse(data);
-            //$("#titulo").html("<h4>"+datos.nombre+"</h4>");
-            alert(data);
+            $("#titulo").html("<h4>"+datos.nombre+"</h4>");
             $("#detalles").openModal();
         });
     }

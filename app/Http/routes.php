@@ -16,8 +16,6 @@ Route::get('/', function () {
 Route::get('nombre/{nombre}', function($nombre){
 	return "Hola mi nombre es ".$nombre;
 });
-Route::get('controlador','PruebaController@index');
-Route::get('controlador/{nombre}','PruebaController@nombre');
 Route::group(['prefix'=>'admin'],function(){
 	/*Route::get('view/{id?}',[
 			'uses'=>'PruebaController@id',
@@ -51,7 +49,7 @@ Route::group(['prefix'=>'admin'],function(){
 		'uses'	=> 'PacientesController@medico',
 		'as'	=>	'admin.pacientes.medico'
 	]);
-	Route::get('pacientes/detalles',[
+	Route::get('pacientes/{id}/detalles',[
 		'uses'	=>	'PacientesController@detalle',
 		'as'	=>	'admin.pacientes.detalles'
 	]);
