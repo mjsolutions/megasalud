@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('apellido_m');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('fecha_nacimiento');
+            $table->date('fecha_nacimiento');
             $table->enum('sexo',['Masculino','Femenino']);
             $table->string('municipio');
             $table->string('estado');
@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('telefono_b');
             $table->string('clave_bancaria');
             $table->string('contrasena');
-            $table->enum('tipo_usuario',['Administrador','Medico']);
+            $table->enum('tipo_usuario',['Administrador', 'Administrador de sucursal','Medico']);
             $table->string('cedula');
             $table->string('especialidad');
             $table->string('cuenta_bancaria');
