@@ -1,5 +1,5 @@
 @extends('main')
-@section('title','Pacientes')
+@section('title','Usuarios')
 @section('nav')
 @include('admin.nav')
 @endsection
@@ -12,7 +12,7 @@
       <h4>Usuarios</h4>
 			</div>
 			<div class="col pull-s1 s1">
-				<a class="btn-floating btn-large waves-effect waves-light green modal-trigger" href="{!! route('admin.usuarios.create') !!}"><i class="material-icons">add</i></a>
+				<a class="btn-floating btn-large waves-effect waves-light green tooltipped" data-position="right" data-delay="50" data-tooltip="Nuevo Usuario" href="{!! route('admin.usuarios.create') !!}"><i class="material-icons">add</i></a>
 			</div>
 		</div>
 		<div class="row">
@@ -38,7 +38,7 @@
 					<td>{{ $usuario->email }}</td>
 					<!--//$usuario->users[0]->sucursales[0]->razon_social-->
 					<td>{{ $usuario->telefono_a }}</td>
-					<td><a href="{!! route('admin.usuarios.edit', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('admin.usuarios.destroy', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
+					<td><a href="{!! route('admin.usuarios.edit', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-10 tooltipped" data-position="right" data-delay="50" data-tooltip="Editar"><i class="material-icons">edit</i></a><a href="{!! route('admin.usuarios.destroy', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1 tooltipped" data-position="right" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a></td>
 				</tr>
 				@endforeach
 			</tbody>

@@ -142,50 +142,51 @@
     {!! Form::close() !!}
 @endsection
 @section('scripts')
-  @if($errors)
-      @foreach($errors->all() as $error)
-          Materialize.toast('{{ $error }}', 4000);
-      @endforeach
-  @endif
-  $(document).ready(function() {
-      $('select').material_select();
-  });
-  $.get('{!! route('admin.pacientes.pais') !!}').done(function(datos){
-      $('#pais_o.autocomplete').autocomplete({
-      data:JSON.parse(datos)
-      });
-  });
-  $.get('{!! route('admin.pacientes.estado') !!}').done(function(datos){
-      $('#estado_o.autocomplete').autocomplete({
-      data:JSON.parse(datos)
-      });
-  });
-  $.get('{!! route('admin.pacientes.ciudad') !!}').done(function(datos){
-      $('#municipio_o.autocomplete').autocomplete({
-      data:JSON.parse(datos)
-      });
-  $.get('{!! route('admin.pacientes.pais') !!}').done(function(datos){
-      $('#pais.autocomplete').autocomplete({
-      data:JSON.parse(datos)
-      });
-  });
-  $.get('{!! route('admin.pacientes.estado') !!}').done(function(datos){
-      $('#estado.autocomplete').autocomplete({
-      data:JSON.parse(datos)
-      });
-  });
-  $.get('{!! route('admin.pacientes.ciudad') !!}').done(function(datos){
-      $('#municipio.autocomplete').autocomplete({
-      data:JSON.parse(datos)
-      });
-  });
-  $.get('{!! route('admin.pacientes.medico') !!}').done(function(datos){
-      $('#medico.autocomplete').autocomplete({
-      data:JSON.parse(datos)
-      });
-  });
-  });
-@endsection
-@section('scripts-2')
-  <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
+        @if($errors)
+            @foreach($errors->all() as $error)
+                Materialize.toast('{{ $error }}', 4000);
+            @endforeach
+        @endif
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+        $.get('{!! route('admin.pacientes.pais') !!}').done(function(datos){
+            $('#pais_o.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        $.get('{!! route('admin.pacientes.estado') !!}').done(function(datos){
+            $('#estado_o.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        $.get('{!! route('admin.pacientes.ciudad') !!}').done(function(datos){
+            $('#municipio_o.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        $.get('{!! route('admin.pacientes.pais') !!}').done(function(datos){
+            $('#pais.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        $.get('{!! route('admin.pacientes.estado') !!}').done(function(datos){
+            $('#estado.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        $.get('{!! route('admin.pacientes.ciudad') !!}').done(function(datos){
+            $('#municipio.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        $.get('{!! route('admin.pacientes.medico') !!}').done(function(datos){
+            $('#medico.autocomplete').autocomplete({
+            data:JSON.parse(datos)
+            });
+        });
+        });
 @endsection
