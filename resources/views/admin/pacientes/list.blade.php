@@ -43,11 +43,136 @@
             {!! Form::open(['route'=>['admin.pacientes.detalles',':USER_ID'], 'method'=>'GET','id'=>'form']) !!}
             {!! Form::close() !!}
             <div id="detalles" class="modal">
-                <div class="modal-content" id="titulo">
-                    
-                </div>
-                <div class="modal-footer" id="contenido">
-
+                <div class="modal-footer">
+                    <div class="plr-5" id="contenido">
+                        <!-- ENcabezado -->
+                        <div class="col s12 m8 offset-m2 l6 offset-l3">
+                            <div class="card-panel grey lighten-5 z-depth-0">
+                              <div class="row valign-wrapper">
+                                <div class="col s4">
+                                  <img src="" alt="" id="foto" class="circle responsive-img"> 
+                                </div>
+                                <div class="col s10">
+                                  <span class="black-text" id="datos">
+                                    
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- Fin encabezado-->
+                        <!-- Información de Contacto-->
+                        <div class="col s12 m8 offset-m2 l6 offset-l3">
+                            <div class="card-panel grey lighten-5 z-depth-2">
+                              <div class="row valign-wrapper">
+                                <div class="col l12 center-align">
+                                  <legend><h5 class="c-blue-grey">Información de contacto</h5></legend>
+                                </div>
+                              </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Nombre</span>
+                                    </div>
+                                    <div class="col l8" id="nombre">
+                                    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Telefonos</span>
+                                    </div>
+                                    <div class="col l8" id="telefonos">
+                                    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Correo electronico</span>
+                                    </div>
+                                    <div class="col l8" id="mail">
+                                    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Dirección</span>
+                                    </div>
+                                    <div class="col l8" id="direccion">
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin información de contacto-->
+                        <!-- Datos Generales -->
+                        <div class="col s12 m8 offset-m2 l6 offset-l3">
+                            <div class="card-panel grey lighten-5 z-depth-2">
+                              <div class="row valign-wrapper">
+                                <div class="col l12 center-align">
+                                  <legend><h5 class="c-blue-grey">Datos generales</h5></legend>
+                                </div>
+                              </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Clave Bancaria</span>
+                                    </div>
+                                    <div class="col l8" id="clave">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">CURP</span>
+                                    </div>
+                                    <div class="col l8" id="curp">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">RFC</span>
+                                    </div>
+                                    <div class="col l8" id="rfc">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Fecha de Nacimiento</span>
+                                    </div>
+                                    <div class="col l8" id="fecha">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Sexo</span>
+                                    </div>
+                                    <div class="col l8" id="sexo">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Religión</span>
+                                    </div>
+                                    <div class="col l8" id="religion">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Ocupación</span>
+                                    </div>
+                                    <div class="col l8" id="ocupacion">
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!-- Fin datos generales -->
+                    </div>
                     <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
                 </div>
             </div>
@@ -63,8 +188,49 @@
         var url=form.attr('action').replace(':USER_ID',id);
         $.get(url).done(function(data){
             var datos=JSON.parse(data);
-            $("#titulo").html("<h4>"+datos.nombre+"</h4>");
+            $("#datos").html(
+                "<h4>"+datos.nombre+" "+datos.apellido_p+" "+datos.apellido_m+"</h4>"+
+                "<h6>"+datos.email+"</h6>"
+            );
+            $("#nombre").html(
+                "<span>"+datos.nombre+" "+datos.apellido_p+" "+datos.apellido_m+"</span>"
+            );
+            $("#telefonos").html(
+                "<span>"+datos.telefono_a+" / "+datos.telefono_b+"</span>"
+            );
+            $("#direccion").html(
+                "<span>"+datos.direccion+", "+datos.colonia+","+datos.municipio+" "+datos.estado+" "+datos.pais+". "+datos.cp+"</span>"
+            );
+            $("#cp").html(
+                "<span>"+datos.cp+"</span>"
+            );
+            $("#sexo").html(
+                "<span>"+datos.sexo+"</span>"
+            );
+            $("#curp").html(
+                "<span>"+datos.curp+"</span>"
+            );
+            $("#rfc").html(
+                "<span>"+datos.rfc+"</span>"
+            );
+            $("#mail").html(
+                "<span>"+datos.email+"</span>"
+            );
+            $("#fecha").html(
+                "<span>"+datos.fecha_nacimiento+"</span>"
+            );
+            $("#religion").html(
+                "<span>"+datos.religion+"</span>"
+            );
+            $("#ocupacion").html(
+                "<span>"+datos.ocupacion+"</span>"
+            );
+            $("#clave").html(
+                "<span>"+datos.clave_bancaria+"</span>"
+            );
+            $("#foto").attr("src",datos.ruta+"/"+datos.foto);
             $("#detalles").openModal();
+            
         });
     }
 @endsection

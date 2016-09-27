@@ -18,6 +18,15 @@ Col
 	margin-left: auto!important;
 }
 /* ------------
+Padding
+------------ */
+.plr-5{
+	padding: 0 5%;
+}
+.p-8{
+	padding: 8px;
+}
+/* ------------
 Margin
 ------------ */
 .mt-5{
@@ -39,4 +48,21 @@ Heights
 
 .minh-400 {
 	min-height: 400px!important;
+}
+
+/* ------------
+Colors
+------------ */
+.c-white{
+	color: white;
+	font-weight: 100;
+}
+.c-blue-grey{
+	color: #37474f;
+}
+/* ------------
+border radius
+------------ */
+.br-2{
+	border-radius: 2px;
 }

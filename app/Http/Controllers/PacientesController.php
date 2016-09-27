@@ -185,9 +185,9 @@ class PacientesController extends Controller
     }
     public function detalle($id){
         $paciente=Paciente::find($id);
-        $data=array(
-            'nombre'=>$paciente->nombre." ".$paciente->apellido_p." ".$paciente->apellido_m
-        );
-        return json_encode($data);
+        $paciente->ruta=asset('images/paciente/');
+        $paciente->telefono_a="(".substr($paciente->telefono_a, 0, 3).") ".substr($paciente->telefono_a, 3, 3)."-".substr($paciente->telefono_a,6);
+        $paciente->telefono_b="(".substr($paciente->telefono_b, 0, 3).") ".substr($paciente->telefono_b, 3, 3)."-".substr($paciente->telefono_b,6);
+        return json_encode($paciente);
     }
 }

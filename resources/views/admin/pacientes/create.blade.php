@@ -61,7 +61,7 @@
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
                 {!! Form::label('Estado','Estado') !!}
-                {!! Form::text('estado_o',null,['class'=>'autocomplete','id'=>'estado']) !!}
+                {!! Form::text('estado',null,['class'=>'autocomplete','id'=>'estado']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
