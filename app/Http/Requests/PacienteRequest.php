@@ -25,8 +25,8 @@ class PacienteRequest extends Request
     {
         return [
             'medico'    =>  'required',
-            'foto'      =>  'size:3000',
-            'telefono_a'=>  'integer'
+            'foto'      =>  'mimes:jpeg,jpg,png,gif|size:3000',
+            'telefono_a'=>  'integer',
         ];
     }
 }

@@ -183,4 +183,11 @@ class PacientesController extends Controller
         }
         return json_encode($data);
     }
+    public function detalle($id){
+        $paciente=Paciente::find($id);
+        $data=array(
+            'nombre'=>$paciente->nombre." ".$paciente->apellido_p." ".$paciente->apellido_m
+        );
+        return json_encode($data);
+    }
 }

@@ -50,8 +50,10 @@
 			if($('#flash-overlay-modal')[0]){
 				$('#flash-overlay-modal').openModal();   
 			}
+			$('.modal-trigger').leanModal();
 			@yield('scripts')
 		});
+		@yield('functions')
 	</script>
 </body>
 </html>
