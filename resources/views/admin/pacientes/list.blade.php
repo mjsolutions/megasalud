@@ -43,11 +43,68 @@
             {!! Form::open(['route'=>['admin.pacientes.detalles',':USER_ID'], 'method'=>'GET','id'=>'form']) !!}
             {!! Form::close() !!}
             <div id="detalles" class="modal">
-                <div class="modal-content" id="titulo">
-                    
-                </div>
-                <div class="modal-footer" id="contenido">
-
+                <div class="modal-footer">
+                    <div class="plr-5" id="contenido">
+                        <!-- ENcabezado -->
+                        <div class="col s12 m8 offset-m2 l6 offset-l3">
+                            <div class="card-panel grey lighten-5 z-depth-0">
+                              <div class="row valign-wrapper">
+                                <div class="col s4">
+                                  <img src="" alt="" id="foto" class="circle responsive-img"> 
+                                </div>
+                                <div class="col s10">
+                                  <span class="black-text" id="datos">
+                                    
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- Fin encabezado-->
+                        <!-- Datos Generales -->
+                        <div class="col s12 m8 offset-m2 l6 offset-l3">
+                            <div class="card-panel grey lighten-5 z-depth-2">
+                              <div class="row valign-wrapper">
+                                <div class="col l12 center-align">
+                                  <legend><h5 class="c-blue-grey">Datos Generales</h5></legend>
+                                </div>
+                              </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Telefonos</span>
+                                    </div>
+                                    <div class="col l8" id="telefonos">
+                                    
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Fecha de Nacimiento</span>
+                                    </div>
+                                    <div class="col l" id="fecha">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2">Sexo</span>
+                                    </div>
+                                    <div class="col l" id="sexo">
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l4 right-align">
+                                        <span class="teal lighten-2 c-white p-8 br-2"></span>
+                                    </div>
+                                    <div class="col l" id="sexo">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin datos generales -->
+                    </div>
                     <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
                 </div>
             </div>
@@ -63,8 +120,22 @@
         var url=form.attr('action').replace(':USER_ID',id);
         $.get(url).done(function(data){
             var datos=JSON.parse(data);
-            $("#titulo").html("<h4>"+datos.nombre+"</h4>");
+            $("#datos").html(
+                "<h4>"+datos.nombre+" "+datos.apellido_p+" "+datos.apellido_m+"</h4>"+
+                "<h6>"+datos.email+"</h6>"
+            );
+            $("#telefonos").html(
+                "<span>"+datos.telefono_a+" / "+datos.telefono_b+"</span>"
+            );
+            $("#fecha").html(
+                "<span>"+datos.fecha_nacimiento+"</span>"
+            );
+            $("#sexo").html(
+                "<snap>"+datos.sexo+"</snap>"
+            );
+            $("#foto").attr("src",datos.ruta+"/"+datos.foto);
             $("#detalles").openModal();
+            
         });
     }
 @endsection
