@@ -6,7 +6,7 @@
       <ul class="right hide-on-med-and-down">
         <li><a href="{{ route('admin.inicio') }}">Inicio</a></li>
         <li><a href="{{ route('admin.pacientes.index') }}">Pacientes</a></li>
-        <li><a href="collapsible.html">Usuarios</a></li>
+        <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
         <li><a href="mobile.html">Sucursales</a></li>
         <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
         <li><a href="mobile.html">Pedidos</a></li>
@@ -25,7 +25,7 @@
       </div>
       <li><a href="{{ route('admin.inicio') }}">Inicio</a></li>
       <li><a href="{{ route('admin.pacientes.index') }}">Pacientes</a></li>
-      <li><a href="collapsible.html">Usuarios</a></li>
+      <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
       <li><a href="mobile.html">Sucursales</a></li>
       <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
       <li><a href="mobile.html">Pedidos</a></li>
