@@ -16,6 +16,8 @@ use MegaSalud\Http\Requests\PacienteRequest;
 
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Storage;
+
 class PacientesController extends Controller
 {
     /**
@@ -53,16 +55,19 @@ class PacientesController extends Controller
         $id=intval($medico);
         $dr=User::find($id);
         //tratando archivos
-        $foto=$request->file('foto');
-        $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
-        $path=public_path()."/images/paciente/";
-        $request->foto=$foto_name;
         $paciente=new Paciente($request->all());
         unset($paciente->foto);
-        $paciente->foto=$foto_name;
+        if($request->file('foto')){
+            $foto=$request->file('foto');
+            $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
+            $path=public_path()."/images/paciente/";
+            $request->foto=$foto_name;
+            $paciente->foto=$foto_name;
+        }
         if($paciente->save()){
+            if($request->file('foto'))
+                $foto->move($path,$foto_name);
             $paciente->users()->attach($dr);
-            $foto->move($path,$foto_name);
             Flash::overlay('Se ha registrado '.$paciente->nombre.' de forma exitosa.', 'Alta exitosa');
         }
         else{
@@ -105,11 +110,16 @@ class PacientesController extends Controller
     public function update(PacienteRequest $request, $id)
     {
         $paciente=Paciente::find($id);
+        $foto=$paciente->foto;
+        //dd(Storage::makeDirectory("/images/paciente/"));
+        dd(Storage::has("/images/paciente/".'no_exist.jpg'));
+        //dd(public_path()."/images/paciente/".'no_exist.jpg');
         $dr_v=$paciente->users[0]->id;//obtenemos el medico que tenía asginado'
         $paciente->fill($request->all());//aseguramos todos los cambios
         $dr_n=intval($request->medico);//obtenemos el médico nuevo'
         if($paciente->users()->detach($dr_v)){//borramos el médico viejo
             $paciente->users()->attach($dr_n);//agregamos el nuevo medico
+            //if(File::exists)
             if($paciente->save()){//guardamos los cambios en la tabla de pacientes
                 Flash::overlay('Se actualizó a  '.$paciente->nombre.' de forma exitosa.', 'Operación exitosa');
             }else{
@@ -179,7 +189,7 @@ class PacientesController extends Controller
         $users=User::all();
         $data=array();
         foreach ($users as $user => $value) {
-            $data[$value->id." - ".$value->nombre." ".$value->apellido_p." ".$value->apellido_m]=null;
+            $data[$value->id." - ".$value->nombre." ".$value->apellido_p." ".$value->apellido_m]="";
         }
         return json_encode($data);
     }

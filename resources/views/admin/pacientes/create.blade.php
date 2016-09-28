@@ -133,6 +133,7 @@
                 <i class="material-icons prefix">perm_identity</i>
                 {!! Form::label('medico','Médico') !!}
                 {!! Form::text('medico',null,['class'=>'autocomplete','id'=>'medico']) !!}
+                <input type="hidden" id="medico_id" value="">
             </div>
             <div class="input-field center-align">
                 {!! Form::submit('Crear',['class'=>'btn waves-effect waves-light']) !!}
