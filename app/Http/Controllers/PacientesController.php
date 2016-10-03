@@ -57,7 +57,7 @@ class PacientesController extends Controller
         $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
         $path=public_path()."/images/paciente/";
         $request->foto=$foto_name;
-        $paciente=new Paciente($request->all());
+        $paciente=new Paciente($request->all());//pasando el array que se recibe del formulario
         unset($paciente->foto);
         $paciente->foto=$foto_name;
         if($paciente->save()){

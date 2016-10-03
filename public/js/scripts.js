@@ -1,8 +1,16 @@
 //Cambiar los settings del datepicker de materialize
+
+function initDatepicker(data) {
+
+var hoy = data.today;
+
 var date = new Date();
-$('.datepicker').pickadate({
+
+var defaults = {
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: 100, // Creates a dropdown of 15 years to control year
+    selectYears: data.selectYears, // Creates a dropdown of 15 years to control year
+    formatSubmit: 'yyyy-mm-dd',
+
     min: [date.getFullYear() - 100, date.getMonth(), date.getDate()],
     max: [date.getFullYear(), date.getMonth(), date.getDate()],
 
@@ -26,5 +34,10 @@ $('.datepicker').pickadate({
     // Today and clear
     today: 'Hoy',
     clear: 'Limpiar',
-    close: 'Cerrar',
-});
+    close: 'Cerrar'
+  
+};
+
+$('.datepicker').pickadate(defaults);
+
+}

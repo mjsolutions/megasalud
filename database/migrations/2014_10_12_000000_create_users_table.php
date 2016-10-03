@@ -32,7 +32,6 @@ class CreateUsersTable extends Migration
             $table->string('telefono_a');
             $table->string('telefono_b');
             $table->string('clave_bancaria');
-            $table->string('contrasena');
             $table->enum('tipo_usuario',['Administrador', 'Administrador de sucursal','Medico']);
             $table->string('cedula');
             $table->string('especialidad');
