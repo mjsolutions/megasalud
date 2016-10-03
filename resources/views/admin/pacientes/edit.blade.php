@@ -18,17 +18,17 @@
             </div>
 	    	<div class="input-field">
                 <i class="material-icons prefix">account_circle</i>
-	    		{!! Form::label('name','Nombre') !!}
+	    		{!! Form::label('nombre','Nombre') !!}
     			{!! Form::text('nombre',$paciente->nombre, ['class'=>'validate','required']) !!}
 	    	</div>	
             <div class="input-field">
                 <i class="material-icons prefix">account_circle</i>
-                {!! Form::label('apellido_paterno','Apellido Paterno') !!}
+                {!! Form::label('apellido_p','Apellido Paterno') !!}
                 {!! Form::text('apellido_p', $paciente->apellido_p, ['class'=>'validate','required']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">account_circle</i>
-                {!! Form::label('apellido_materno','Apellido Materno') !!}
+                {!! Form::label('apellido_m','Apellido Materno') !!}
                 {!! Form::text('apellido_m', $paciente->apellido_m, ['class'=>'validate','required']) !!}
             </div>
             <div class="input-field">
@@ -37,48 +37,58 @@
                 {!! Form::date('fecha_nacimiento', $paciente->fecha_nacimiento, ['class'=>'datepicker','required']) !!}
             </div> 
             <div class="input-field">
-                <i class="material-icons prefix">perm_contact_calendar</i>                
-                {!! Form::select('sexo',['Masculino'=>'Masculino','Femenino'=>'Femenino'],$paciente->sexo,['class'=>'select-dropdown']) !!}
-                {!! Form::label('sexo','Sexo') !!}
+                <i class="material-icons prefix">perm_contact_calendar</i>
+                @if($paciente->sexo=="Masculino")
+                    {!! Form::radio('sexo','Masculino',true,['id'=>'sexo1','class'=>'with-gap']) !!}
+                    {!! Form::label('sexo1','Masculino') !!}
+                    {!! Form::radio('sexo','Femenino',false,['id'=>'sexo2','class'=>'with-gap']) !!}
+                    {!! Form::label('sexo2','Femenino') !!}
+                @else
+                    {!! Form::radio('sexo','Masculino',false,['id'=>'sexo1','class'=>'with-gap']) !!}
+                    {!! Form::label('sexo1','Masculino') !!}
+                    {!! Form::radio('sexo','Femenino',true,['id'=>'sexo2','class'=>'with-gap']) !!}
+                    {!! Form::label('sexo2','Femenino') !!}
+                @endif              
+                
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('País_o','País de Origen') !!}
+                {!! Form::label('pais_o','País de Origen') !!}
                 {!! Form::text('pais_o',$paciente->pais_o,['class'=>'autocomplete','id'=>'pais_o']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Estado_o','Estado de Origen') !!}
+                {!! Form::label('estado_o','Estado de Origen') !!}
                 {!! Form::text('estado_o',$paciente->estado_o,['class'=>'autocomplete','id'=>'estado_o']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Ciudad_o','Municipio de Origen') !!}
+                {!! Form::label('municipio_o','Municipio de Origen') !!}
                 {!! Form::text('municipio_o',$paciente->municipio_o,['class'=>'autocomplete','id'=>'municipio_o']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('País','País') !!}
+                {!! Form::label('pais','País') !!}
                 {!! Form::text('pais',$paciente->pais,['class'=>'autocomplete','id'=>'pais']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Estado','Estado') !!}
+                {!! Form::label('estado','Estado') !!}
                 {!! Form::text('estado',$paciente->estado,['class'=>'autocomplete','id'=>'estado']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Municipio','Municipio') !!}
+                {!! Form::label('municipio','Municipio') !!}
                 {!! Form::text('municipio',$paciente->municipio,['class'=>'autocomplete','id'=>'municipio']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Dirección','Dirección') !!}
+                {!! Form::label('direccion','Dirección') !!}
                 {!! Form::text('direccion',$paciente->direccion,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Colonia','Colonia') !!}
+                {!! Form::label('colonia','Colonia') !!}
                 {!! Form::text('colonia',$paciente->colonia,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
@@ -103,12 +113,12 @@
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">phone</i>
-                {!! Form::label('Telefono','Telefono 1') !!}
+                {!! Form::label('telefono_a','Telefono 1') !!}
                 {!! Form::number('telefono_a',$paciente->telefono_a,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">phone</i>
-                {!! Form::label('Telefono','Telefono 2') !!}
+                {!! Form::label('telefono_b','Telefono 2') !!}
                 {!! Form::number('telefono_b',$paciente->telefono_b,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
@@ -118,7 +128,7 @@
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">group_work</i>
-                {!! Form::label('ocupación','Ocupación') !!}
+                {!! Form::label('ocupacion','Ocupación') !!}
                 {!! Form::text('ocupacion',$paciente->ocupacion,['class'=>'validate']) !!}
             </div>
             <div class="input-field file-field">

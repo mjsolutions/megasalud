@@ -13,19 +13,19 @@
             <div class="row">
                 <div class="col s8 col-center divider"></div>
             </div>
-	    	<div class="input-field">
-                <i class="material-icons prefix">account_circle</i>
-	    		{!! Form::label('name','Nombre') !!}
-    			{!! Form::text('nombre', null, ['class'=>'validate','required']) !!}
-	    	</div>	
+    	    	<div class="input-field">
+                    <i class="material-icons prefix">account_circle</i>
+    	    		{!! Form::label('nombre','Nombre') !!}
+        			{!! Form::text('nombre', null, ['class'=>'validate','required']) !!}
+    	    	</div>	
             <div class="input-field">
                 <i class="material-icons prefix">account_circle</i>
-                {!! Form::label('apellido_paterno','Apellido Paterno') !!}
+                {!! Form::label('apellido_p','Apellido Paterno') !!}
                 {!! Form::text('apellido_p', null, ['class'=>'validate','required']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">account_circle</i>
-                {!! Form::label('apellido_materno','Apellido Materno') !!}
+                {!! Form::label('apellido_m','Apellido Materno') !!}
                 {!! Form::text('apellido_m', null, ['class'=>'validate','required']) !!}
             </div>
             <div class="input-field">
@@ -34,48 +34,50 @@
                 {!! Form::date('fecha_nacimiento', null, ['class'=>'datepicker','required']) !!}
             </div> 
             <div class="input-field">
-                <i class="material-icons prefix">perm_contact_calendar</i>                
-                {!! Form::select('sexo',['Masculino'=>'Masculino','Femenino'=>'Femenino'],null,['class'=>'select-dropdown']) !!}
-                {!! Form::label('sexo','Sexo') !!}
+                <i class="material-icons prefix">perm_contact_calendar</i>              
+                {!! Form::radio('sexo','Masculino',false,['id'=>'sexo1','class'=>'with-gap']) !!}
+                {!! Form::label('sexo1','Masculino') !!}
+                {!! Form::radio('sexo','Femenino',false,['id'=>'sexo2','class'=>'with-gap']) !!}
+                {!! Form::label('sexo2','Femenino') !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('País_o','País de Origen') !!}
+                {!! Form::label('pais_o','País de Origen') !!}
                 {!! Form::text('pais_o',null,['class'=>'autocomplete','id'=>'pais_o']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Estado_o','Estado de Origen') !!}
+                {!! Form::label('estado_o','Estado de Origen') !!}
                 {!! Form::text('estado_o',null,['class'=>'autocomplete','id'=>'estado_o']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Ciudad_o','Municipio de Origen') !!}
+                {!! Form::label('municipio_o','Municipio de Origen') !!}
                 {!! Form::text('municipio_o',null,['class'=>'autocomplete','id'=>'municipio_o']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('País','País') !!}
+                {!! Form::label('pais','País') !!}
                 {!! Form::text('pais',null,['class'=>'autocomplete','id'=>'pais']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Estado','Estado') !!}
+                {!! Form::label('estado','Estado') !!}
                 {!! Form::text('estado',null,['class'=>'autocomplete','id'=>'estado']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Municipio','Municipio') !!}
+                {!! Form::label('municipio','Municipio') !!}
                 {!! Form::text('municipio',null,['class'=>'autocomplete','id'=>'municipio']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Dirección','Dirección') !!}
+                {!! Form::label('direccion','Dirección') !!}
                 {!! Form::text('direccion',null,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">textsms</i>
-                {!! Form::label('Colonia','Colonia') !!}
+                {!! Form::label('colonia','Colonia') !!}
                 {!! Form::text('colonia',null,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
@@ -100,12 +102,12 @@
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">phone</i>
-                {!! Form::label('Telefono','Telefono 1') !!}
+                {!! Form::label('telefono_a','Telefono 1') !!}
                 {!! Form::number('telefono_a',null,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">phone</i>
-                {!! Form::label('Telefono','Telefono 2') !!}
+                {!! Form::label('telefono_b','Telefono 2') !!}
                 {!! Form::number('telefono_b',null,['class'=>'validate']) !!}
             </div>
             <div class="input-field">
@@ -115,7 +117,7 @@
             </div>
             <div class="input-field">
                 <i class="material-icons prefix">group_work</i>
-                {!! Form::label('ocupación','Ocupación') !!}
+                {!! Form::label('ocupacion','Ocupación') !!}
                 {!! Form::text('ocupacion',null,['class'=>'validate']) !!}
             </div>
             <div class="input-field file-field">
@@ -165,6 +167,7 @@
       $('#municipio_o.autocomplete').autocomplete({
       data:JSON.parse(datos)
       });
+  });
   $.get('{!! route('admin.pacientes.pais') !!}').done(function(datos){
       $('#pais.autocomplete').autocomplete({
       data:JSON.parse(datos)
@@ -184,7 +187,6 @@
       $('#medico.autocomplete').autocomplete({
       data:JSON.parse(datos)
       });
-  });
   });
 @endsection
 @section('scripts-2')

@@ -7,9 +7,9 @@
         <li><a href="{{ route('admin.inicio') }}">Inicio</a></li>
         <li><a href="{{ route('admin.pacientes.index') }}">Pacientes</a></li>
         <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
-        <li><a href="mobile.html">Sucursales</a></li>
+        <li><a href="{{ route('admin.sucursales.index') }}">Sucursales</a></li>
         <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
-        <li><a href="mobile.html">Pedidos</a></li>
+        <li><a href="{{ route('admin.pedidos.index') }}">Pedidos</a></li>
       </ul>
     </div>
     <ul class="center-align side-nav" id="mobile-demo">
@@ -26,9 +26,9 @@
       <li><a href="{{ route('admin.inicio') }}">Inicio</a></li>
       <li><a href="{{ route('admin.pacientes.index') }}">Pacientes</a></li>
       <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
-      <li><a href="mobile.html">Sucursales</a></li>
+      <li><a href="{{ route('admin.sucursales.index') }}">Sucursales</a></li>
       <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
-      <li><a href="mobile.html">Pedidos</a></li>
+      <li><a href="{{ route('admin.pedidos.index') }}">Pedidos</a></li>
     </ul>
   </div>
 </nav>

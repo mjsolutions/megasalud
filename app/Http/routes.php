@@ -61,4 +61,6 @@ Route::group(['prefix'=>'admin'],function(){
 	]);
 
 	Route::resource('usuarios','UsuariosController');
+	Route::resource('pedidos','PedidosController');
+	Route::resource('sucursales','SucursalesController');
 });
