@@ -17,10 +17,6 @@ Route::get('nombre/{nombre}', function($nombre){
 	return "Hola mi nombre es ".$nombre;
 });
 Route::group(['prefix'=>'admin'],function(){
-	/*Route::get('view/{id?}',[
-			'uses'=>'PruebaController@id',
-			'name'=>'Prueba'
-		]);*/
 	Route::get('/', function(){
 		return view('admin.index');
 	});

@@ -8,6 +8,8 @@ use MegaSalud\Http\Requests;
 
 use MegaSalud\Pedido;
 
+use Laracasts\Flash\Flash;
+
 class PedidosController extends Controller
 {
     /**
@@ -17,8 +19,8 @@ class PedidosController extends Controller
      */
     public function index()
     {  
-        //$pedidos=Pedido::list()->orderBy('fecha_pedido','ASC')->paginate(10);
-        return view('admin.pedidos.list');
+        $pedidos=Pedido::orderBy("fecha_pedido","asc")->paginate(10);
+        return view('admin.pedidos.list')->with("pedidos",$pedidos);
     }
 
     /**
@@ -28,7 +30,7 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
