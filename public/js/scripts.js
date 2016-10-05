@@ -2,17 +2,9 @@
 
 function initDatepicker(data) {
 
-var hoy = data.today;
-
-var date = new Date();
-
 var defaults = {
     selectMonths: true, // Creates a dropdown to control month
-    selectYears: data.selectYears, // Creates a dropdown of 15 years to control year
     formatSubmit: 'yyyy-mm-dd',
-
-    min: [date.getFullYear() - 100, date.getMonth(), date.getDate()],
-    max: [date.getFullYear(), date.getMonth(), date.getDate()],
 
     // The title label to use for the month nav buttons
     labelMonthNext: 'Mes siguiente',
@@ -34,10 +26,11 @@ var defaults = {
     // Today and clear
     today: 'Hoy',
     clear: 'Limpiar',
-    close: 'Cerrar'
-  
-};
+    close: 'Cerrar',
 
-$('.datepicker').pickadate(defaults);
+};
+var opciones = $.extend(defaults, data); // concatenar las opciones con las de default
+
+$('.datepicker').pickadate(opciones);
 
 }

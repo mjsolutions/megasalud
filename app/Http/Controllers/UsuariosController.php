@@ -14,6 +14,8 @@ use Laracasts\Flash\Flash;
 
 use Illuminate\Support\Facades\DB;
 
+use MegaSalud\Http\Requests\UserRequest;
+
 class UsuariosController extends Controller
 {
     /**
@@ -44,9 +46,16 @@ class UsuariosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        dd($request->all());
+        $usuario = new User($request -> all());
+        $usuario->password = bcrypt($usuario->password);
+        if($usuario -> save()) {
+            Flash::overlay('Se ha registrado '.$usuario->nombre.' de forma exitosa.', 'Alta exitosa');
+        } else {
+            Flash::overlay('Ha ocurrido un error al registrar al paciente  '.$usuario->nombre, 'Error');
+        }
+        return redirect()->route('admin.usuarios.index');
     }
 
     /**

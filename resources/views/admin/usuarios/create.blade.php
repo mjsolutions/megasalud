@@ -47,8 +47,8 @@
 
   <div class="input-field">
     <i class="material-icons prefix">lock</i>
-    {!! Form::label('password2', 'Verifique contraseña') !!}
-    {!! Form::password('password2', ['class' => 'validate', 'required']) !!}
+    {!! Form::label('password_confirmation', 'Verifique contraseña') !!}
+    {!! Form::password('password_confirmation', ['class' => 'validate', 'required']) !!}
   </div>
 
   <div class="input-field">
@@ -201,9 +201,14 @@ $.get('{!! route('admin.usuarios.banco') !!}').done(function(datos){
 @section('scripts-2')
   <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
   <script type="text/javascript">
+    var date = new Date();
     initDatepicker({
-        selectYears: 100
-    });
+        selectYears: 100,
+        min: [date.getFullYear() - 100, date.getMonth(), date.getDate()],
+        max: [date.getFullYear(), date.getMonth(), date.getDate()],
+        hiddenName: 'fecha',
+        hiddenSuffix: '_nacimiento'
+            });
     
   </script>
 @endsection
