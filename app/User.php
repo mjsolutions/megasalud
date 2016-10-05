@@ -29,9 +29,6 @@ class User extends Authenticatable
     public function pacientes(){
         return $this->belongsToMany('MegaSalud\Paciente')->withTimestamps();
     }
-    public function sucursal(){
-        return $this->hasOne('MegaSalud\Sucursal');
-    }
     public function sucursales(){
         return $this->belongsToMany('MegaSalud\Sucursal','user_sucursal')->withTimestamps();
     }

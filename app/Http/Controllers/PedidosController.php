@@ -30,7 +30,7 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        
+        return view('admin.pedidos.create');
     }
 
     /**
@@ -51,8 +51,21 @@ class PedidosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   
+        $pedidos=Pedido::find($id);
+        $pedidos->productos;
+        $pedidos->paciente;
+        $pedidos->user;
+        $pedidos->user->sucursales;
+        $pedidos->paciente->telefono_a="(".substr($pedidos->paciente->telefono_a, 0, 3).") ".substr($pedidos->paciente->telefono_a, 3, 3)."-".substr($pedidos->paciente->telefono_a,6);
+        $pedidos->paciente->telefono_b="(".substr($pedidos->paciente->telefono_b, 0, 3).") ".substr($pedidos->paciente->telefono_b, 3, 3)."-".substr($pedidos->paciente->telefono_b,6);
+        setlocale(LC_MONETARY,'en_US');
+        $pedidos->importe=money_format("%(#10n",$pedidos->importe);
+        $pedidos->impuesto=money_format("%(#10n",$pedidos->impuesto);
+        $pedidos->total=money_format("%(#10n",$pedidos->total);
+        for($i=0;$i<sizeof($pedidos->productos);$i++)
+            $pedidos->productos[$i]->precio=money_format('%(#10n',$pedidos->productos[$i]->precio);
+        return json_encode($pedidos);
     }
 
     /**
