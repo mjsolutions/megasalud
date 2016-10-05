@@ -13,9 +13,7 @@
 Route::get('/', function () {
 	return view('welcome');
 });
-Route::get('nombre/{nombre}', function($nombre){
-	return "Hola mi nombre es ".$nombre;
-});
+
 Route::group(['prefix'=>'admin'],function(){
 
 	Route::get('/', function(){
@@ -98,4 +96,6 @@ Route::group(['prefix'=>'admin'],function(){
 		]);
 
 	Route::resource('usuarios','UsuariosController');
+	Route::resource('pedidos','PedidosController');
+	Route::resource('sucursales','SucursalesController');
 });

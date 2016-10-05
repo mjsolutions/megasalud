@@ -19,7 +19,7 @@ class Pedidos extends Migration
             $table->float('importe');
             $table->float('impuesto');
             $table->float('total');
-            $table->timestamp('fecha_pedido');
+            $table->timestamp('fecha_pedido')->default("0000-00-00 00:00:00");
             $table->string('confirmacion');
             $table->timestamp('fecha_pago');
             $table->enum('metodo',['Efectivo','Tarjeta','Paypal','OXXO','Deposito']);

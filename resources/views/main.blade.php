@@ -51,6 +51,7 @@
 				$('#flash-overlay-modal').openModal();   
 			}
 			$('.modal-trigger').leanModal();
+			$('select').material_select();
 			@yield('scripts')
 		});
 		@yield('functions')
