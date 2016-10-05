@@ -55,7 +55,11 @@ class PacientesController extends Controller
         $id=intval($medico);
         $dr=User::find($id);
         //tratando archivos
-        $paciente=new Paciente($request->all());
+        $foto=$request->file('foto');
+        $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
+        $path=public_path()."/images/paciente/";
+        $request->foto=$foto_name;
+        $paciente=new Paciente($request->all());//pasando el array que se recibe del formulario
         unset($paciente->foto);
         //creando clave bancaria
         $count=Paciente::count();
