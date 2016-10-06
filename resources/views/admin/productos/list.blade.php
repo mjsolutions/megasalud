@@ -32,7 +32,7 @@
                             <td>{{ $producto->nombre }}</td>
                             <td>{{ $producto->descripcion }}</td>
                             <td>{{ $producto->precio }}</td>
-                            <td><a href="{!! route('admin.productos.edit', $producto->id) !!}" data-position="right" data-delay="50" data-tooltip="Editar Producto" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('admin.productos.destroy', $producto->id) !!}" data-position="right" data-delay="50" data-tooltip="Eliminar producto" class="tooltipped btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
+                            <td><a href="{!! route('admin.productos.edit', $producto->id) !!}" data-position="right" data-delay="50" data-tooltip="Editar" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('admin.productos.destroy', $producto->id) !!}" data-position="right" data-delay="50" data-tooltip="Eliminar" class="tooltipped btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -8,6 +8,8 @@ use MegaSalud\Http\Requests;
 
 use MegaSalud\Pedido;
 
+use MegaSalud\Paciente;
+
 use Laracasts\Flash\Flash;
 
 class PedidosController extends Controller
@@ -30,7 +32,7 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        
+        return view('admin.pedidos.create');
     }
 
     /**
@@ -51,8 +53,21 @@ class PedidosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {   
+        $pedidos=Pedido::find($id);
+        $pedidos->productos;
+        $pedidos->paciente;
+        $pedidos->user;
+        $pedidos->user->sucursales;
+        $pedidos->paciente->telefono_a="(".substr($pedidos->paciente->telefono_a, 0, 3).") ".substr($pedidos->paciente->telefono_a, 3, 3)."-".substr($pedidos->paciente->telefono_a,6);
+        $pedidos->paciente->telefono_b="(".substr($pedidos->paciente->telefono_b, 0, 3).") ".substr($pedidos->paciente->telefono_b, 3, 3)."-".substr($pedidos->paciente->telefono_b,6);
+        setlocale(LC_MONETARY,'en_US');
+        $pedidos->importe=money_format("%(#10n",$pedidos->importe);
+        $pedidos->impuesto=money_format("%(#10n",$pedidos->impuesto);
+        $pedidos->total=money_format("%(#10n",$pedidos->total);
+        for($i=0;$i<sizeof($pedidos->productos);$i++)
+            $pedidos->productos[$i]->precio=money_format('%(#10n',$pedidos->productos[$i]->precio);
+        return json_encode($pedidos);
     }
 
     /**
@@ -87,5 +102,19 @@ class PedidosController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function busqueda_pacientes($data)
+    {
+        $pacientes=Paciente::where('nombre','like',$data.'%')
+                    ->orwhere('apellido_p','like',$data.'%')
+                    ->orwhere('apellido_m','like',$data.'%')
+                    ->orwhere('id','like',$data.'%')
+                    ->take(10)
+                    ->get();
+        foreach ($pacientes as $paciente) {
+            $paciente->users;
+            $paciente->users[0]->sucursales;
+        }
+        return json_encode($pacientes);
     }
 }

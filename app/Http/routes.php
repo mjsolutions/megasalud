@@ -101,6 +101,14 @@ Route::group(['prefix'=>'admin'],function(){
 		'as' => 'admin.usuarios.destroy'
 		]); // se debe declarar despues del resource
 
+	/*
+	| Rutas pedidos
+	*/
+
+	Route::get('pedidos/{data}/busqueda_pacientes',[
+			'uses'	=>	'PedidosController@busqueda_pacientes',
+			'as'	=>	'admin.pedidos.busqueda_pacientes'
+		]);
+
 	Route::resource('pedidos','PedidosController');
-	Route::resource('sucursales','SucursalesController');
 });
