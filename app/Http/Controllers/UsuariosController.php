@@ -77,7 +77,8 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = User::find($id);
+        return view('admin.usuarios.edit')->with('usuario', $usuario);
     }
 
     /**
@@ -87,9 +88,17 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $usuario = User::find($id);
+        $usuario->fill($request->all());//funcion para sustituir datos diferentes
+        if ($usuario->save()) {//guardamos los cambios en la tabla de pacientes
+            Flash::overlay('Se actualizó a  '.$usuario->nombre.' de forma exitosa.', 'Operación exitosa');
+        }else{
+            Flash::overlay('Ha ocurrido un error al editar al usuario  '.$usuario->nombre, 'Error');
+        }
+        return redirect()->route('admin.usuarios.index');
+
     }
 
     /**
@@ -100,7 +109,15 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $usuario = User::find($id);
+        $usuario->status = 0;
+        if($usuario->save()) {
+            Flash::overlay('Se ha eliminado ' . $usuario->nombre . ' de forma exitosa', 'Operación exitosa');
+        } else {
+            Flash::overlay('Ha ocurrido un erro al eliminar al paciente ' . $usuario->nombre, 'Error');
+        }
+
+        return redirect()->route('admin.usuarios.index');
     }
 
     public function pais()

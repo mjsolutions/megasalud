@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nombre','apellido_p','apellido_m', 'email', 'password','fecha_nacimiento','sexo','municipio','estado','pais','direccion','colonia','cp','rfc','curp','telefono_a','telefono_b','clave_bancaria','banco','status'
+        'nombre','apellido_p','apellido_m', 'email', 'password','fecha_nacimiento','sexo','municipio','estado','pais','direccion','colonia','cp','rfc','curp','telefono_a','telefono_b','clave_bancaria', 'tipo_usuario', 'cedula', 'especialidad', 'cuenta_bancaria', 'banco','status'
     ];
 
     /**
@@ -29,9 +29,7 @@ class User extends Authenticatable
     public function pacientes(){
         return $this->belongsToMany('MegaSalud\Paciente')->withTimestamps();
     }
-    public function sucursal(){
-        return $this->hasOne('MegaSalud\Sucursal');
-    }
+
     public function sucursales(){
         return $this->belongsToMany('MegaSalud\Sucursal','user_sucursal')->withTimestamps();
     }

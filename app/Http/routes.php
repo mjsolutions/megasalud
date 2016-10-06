@@ -94,8 +94,13 @@ Route::group(['prefix'=>'admin'],function(){
 		'uses' => 'UsuariosController@banco',
 		'as' => 'admin.usuarios.banco'
 		]);
-
 	Route::resource('usuarios','UsuariosController');
+
+	Route::get('usuarios/{id}/destroy', [
+		'uses' => 'UsuariosController@destroy',
+		'as' => 'admin.usuarios.destroy'
+		]); // se debe declarar despues del resource
+
 	Route::resource('pedidos','PedidosController');
 	Route::resource('sucursales','SucursalesController');
 });
