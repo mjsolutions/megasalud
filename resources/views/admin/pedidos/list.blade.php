@@ -8,7 +8,7 @@
         <div class="card-panel">
             <div class="row">
                 <div class="col push-s1 s10 center-align">
-                    <h4>Pedidos Globales</h4>
+                    <h4>Pedidos</h4>
                 </div>
                 <div class="col pull-s1 s1">
                     <a class="btn-floating btn-large waves-effect waves-light green modal-trigger tooltipped" href="{!! route('admin.pedidos.create') !!}" data-position="right" data-delay="50" data-tooltip="Nuevo Pedido" ><i class="material-icons">add</i></a>

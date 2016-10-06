@@ -8,6 +8,8 @@ use MegaSalud\Http\Requests;
 
 use MegaSalud\Pedido;
 
+use MegaSalud\Paciente;
+
 use Laracasts\Flash\Flash;
 
 class PedidosController extends Controller
@@ -100,5 +102,19 @@ class PedidosController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function busqueda_pacientes($data)
+    {
+        $pacientes=Paciente::where('nombre','like',$data.'%')
+                    ->orwhere('apellido_p','like',$data.'%')
+                    ->orwhere('apellido_m','like',$data.'%')
+                    ->orwhere('id','like',$data.'%')
+                    ->take(10)
+                    ->get();
+        foreach ($pacientes as $paciente) {
+            $paciente->users;
+            $paciente->users[0]->sucursales;
+        }
+        return json_encode($pacientes);
     }
 }

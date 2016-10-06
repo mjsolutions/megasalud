@@ -96,5 +96,15 @@ Route::group(['prefix'=>'admin'],function(){
 		]);
 
 	Route::resource('usuarios','UsuariosController');
+
+	/*
+	| Rutas pedidos
+	*/
+
+	Route::get('pedidos/{data}/busqueda_pacientes',[
+			'uses'	=>	'PedidosController@busqueda_pacientes',
+			'as'	=>	'admin.pedidos.busqueda_pacientes'
+		]);
+
 	Route::resource('pedidos','PedidosController');
 });
