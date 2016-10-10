@@ -229,7 +229,6 @@
         var url=form.attr('action').replace(':USER_ID',id);
         $.get(url).done(function(data){
             var datos=JSON.parse(data);
-            console.log(datos);
             $("#nombre").html(
                 "<span>"+datos.paciente.nombre+" "+datos.paciente.apellido_p+" "+datos.paciente.apellido_m+"</span>"
             );

@@ -109,6 +109,10 @@ Route::group(['prefix'=>'admin'],function(){
 			'uses'	=>	'PedidosController@busqueda_pacientes',
 			'as'	=>	'admin.pedidos.busqueda_pacientes'
 		]);
+	Route::get('pedidos/productos',[
+			'uses'	=>	'PedidosController@productos',
+			'as'	=>	'admin.pedidos.productos'
+		]);
 
 	Route::resource('pedidos','PedidosController');
 });
