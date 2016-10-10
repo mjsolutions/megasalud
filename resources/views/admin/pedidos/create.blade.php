@@ -106,14 +106,16 @@
     function productos(){
         $.get('{!! route('admin.pedidos.productos') !!}',{}).done(function(data){
             var datos=JSON.parse(data);
-            console.log(datos);
-            $("#productos").html(
-                "<tr>"+
-                    "<td>"+datos[i].id+"</td>"+
-                    "<td>"+datos[i].nombre+"</td>"+
-                    "<td>"+datos[i].users[0].sucursales[0]+"</td>"+
-                "</tr>"
-            );
+            for(var i=0;i<datos.length;i++){
+                $("#productos").append(
+                    "<tr>"+
+                        "<td>"+datos[i].id+"</td>"+
+                        "<td>"+datos[i].nombre+"</td>"+
+                        "<td>"+datos[i].producto_sucursal[i].pivot.existencia+"</td>"+
+                        "<td><a class=\"waves-effect waves-light btn tooltipped\" data-position=\"right\" data-delay=\"50\" data-tooltip=\"Agregar al carrito\" onclick=\"seleccionar("+datos[i].id+")\">Agregar</a></td>"+
+                    "</tr>"
+                );
+            }
         });
     }
 @endsection
