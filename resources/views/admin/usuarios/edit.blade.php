@@ -303,11 +303,11 @@ $.get('{!! route('admin.usuarios.banco') !!}').done(function(datos){
         hiddenSuffix: '_nacimiento',
         now: '1983-09-28'
             });
-        $('form').submit(function(){
-          alert(date);
-          // alert($(this).serialize());
-          return false;
-        })
+        // $('form').submit(function(){
+        //   alert(date);
+        //   // alert($(this).serialize());
+        //   return false;
+        // })
     
   </script>
 @endsection

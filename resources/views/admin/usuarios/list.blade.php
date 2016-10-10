@@ -253,17 +253,18 @@ function detalle(id) {
 	            "<span>"+datos.clave_bancaria+"</span>"
 	        );
         }else{
-        	$(#clave).parent().hide();
+        	$("#clave").parent().hide();
         }
         $("#banco").html(
             "<span>"+datos.banco+"</span>"
         );
         $("#cedula").html(
             "<span>"+datos.cedula+"</span>"
-        );
+        ); 
 
 		$('#detalles').openModal();
 	});
+    {{-- alert(id); --}}
 
 
 }
