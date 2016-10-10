@@ -25,9 +25,13 @@ class UserRequest extends Request
     {
         return [
             'nombre' => 'required',
-            'email' => 'unique:users,email|required',
-            'password' => 'confirmed|required'
+            'email' => 'required'
 
         ];
     }
+
+    /**
+     * 'email' => 'unique:users,email|required',
+            'password' => 'confirmed|required'
+    **/
 }

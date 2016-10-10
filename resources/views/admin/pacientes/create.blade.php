@@ -45,8 +45,8 @@
               <div class="col l4">
                 <div class="input-field">
                     <i class="material-icons prefix">perm_contact_calendar</i>
-                    {!! Form::label('fecha_nacimiento','Fecha de Nacimiento') !!}
-                    {!! Form::date('fecha_nacimiento', null, ['class'=>'datepicker','required']) !!}
+                    {!! Form::label('fecha','Fecha de Nacimiento') !!}
+                    {!! Form::date('fecha', null, ['class'=>'datepicker','required']) !!}
                 </div> 
               </div>
               <div class="col l4">
@@ -263,4 +263,15 @@
 @endsection
 @section('scripts-2')
   <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
+  <script type="text/javascript">
+    var date = new Date();
+    initDatepicker({
+        selectYears: 100,
+        min: [date.getFullYear() - 100, date.getMonth(), date.getDate()],
+        max: [date.getFullYear(), date.getMonth(), date.getDate()],
+        hiddenName: 'fecha',
+        hiddenSuffix: '_nacimiento'
+            });
+    
+  </script>
 @endsection

@@ -33,4 +33,5 @@ var opciones = $.extend(defaults, data); // concatenar las opciones con las de d
 
 $('.datepicker').pickadate(opciones);
 
+
 }
