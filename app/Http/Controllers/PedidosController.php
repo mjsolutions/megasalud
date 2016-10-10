@@ -8,6 +8,8 @@ use MegaSalud\Http\Requests;
 
 use MegaSalud\Pedido;
 
+use MegaSalud\Producto;
+
 use MegaSalud\Paciente;
 
 use Laracasts\Flash\Flash;
@@ -92,7 +94,7 @@ class PedidosController extends Controller
     {
         //
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -109,6 +111,7 @@ class PedidosController extends Controller
                     ->orwhere('apellido_p','like',$data.'%')
                     ->orwhere('apellido_m','like',$data.'%')
                     ->orwhere('id','like',$data.'%')
+                    ->orwhere('clave_bancaria','like',$data.'%')
                     ->take(10)
                     ->get();
         foreach ($pacientes as $paciente) {
@@ -116,5 +119,13 @@ class PedidosController extends Controller
             $paciente->users[0]->sucursales;
         }
         return json_encode($pacientes);
+    }
+    public function productos()
+    {
+        $productos=Producto::all();
+        foreach ($productos as $producto) {
+            $producto->producto_sucursal;
+        }
+        return json_encode($productos);
     }
 }
