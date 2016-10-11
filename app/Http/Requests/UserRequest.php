@@ -22,12 +22,23 @@ class UserRequest extends Request
      * @return array
      */
     public function rules()
-    {
-        return [
-            'nombre' => 'required',
-            'email' => 'required'
-
-        ];
+    {   
+        switch($this->method()) {
+            case 'POST':
+            {
+                return [
+                    'nombre' => 'required',
+                    'email' => 'unique:users,email,'
+                ];
+            }
+            case 'PUT':
+            {
+                return [
+                    'nombre' => 'required',
+                    'email' => 'unique:users,email,'.$this->segment(3),
+                ];
+            }
+        }
     }
 
     /**
