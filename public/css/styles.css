@@ -41,7 +41,9 @@ Margin
 .mr-10{
 	margin-right: 10px; 
 }
-
+.mb-0{
+	margin-bottom: 0!important;
+}
 /* ------------
 Heights
 ------------ */

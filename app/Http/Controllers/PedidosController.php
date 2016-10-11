@@ -34,7 +34,11 @@ class PedidosController extends Controller
      */
     public function create()
     {
-        return view('admin.pedidos.create');
+        $productos=Producto::all();
+        //foreach ($productos as $producto) {
+         //   $producto->producto_sucursal;
+        //}
+        return view('admin.pedidos.create')->with("productos",$productos);
     }
 
     /**

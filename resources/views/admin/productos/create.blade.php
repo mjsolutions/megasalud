@@ -15,17 +15,17 @@
             </div>
 	    	<div class="input-field">
                 <i class="material-icons prefix">account_circle</i>
-	    		{!! Form::label('name','Nombre') !!}
+	    		{!! Form::label('nombre','Nombre') !!}
     			{!! Form::text('nombre', null, ['class'=>'validate','required']) !!}
 	    	</div>	
             <div class="input-field">
                 <i class="material-icons prefix">mode_edit</i>
-                {!! Form::label('desc','Descripción') !!}
+                {!! Form::label('descripcion','Descripción') !!}
                 {!! Form::textarea('descripcion', null, ['class'=>'materialize-textarea','required']) !!}
             </div> 
             <div class="input-field">
                 <i class="material-icons prefix">payment</i>
-                {!! Form::label('cost','Precio') !!}
+                {!! Form::label('precio','Precio') !!}
                 {!! Form::number('precio', null, ['class'=>'validate','required']) !!}
             </div>
             <div class="input-field center-align">

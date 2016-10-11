@@ -4,7 +4,7 @@
 	@include('admin.nav')
 @endsection
 @section('content')
-    {!! Form::open(['route'=>'admin.productos.store', 'method'=>'POST']) !!}
+    {!! Form::open(['route'=>'admin.pedidos.store', 'method'=>'POST']) !!}
     <div class="container">
     	<div class="card-panel">
             <div class="center-align">
@@ -44,19 +44,32 @@
             <div class="left-align">
                 <h4>Productos</h4>
             </div>
-            <div class="row">
+            <div class="row" id="productos">
                 <div class="col l12">
-                    <table class="responsive-table centered">
+                    <table class="responsive-table centered striped">
                         <thead>
                           <tr>
                               <th data-field="id">#</th>
                               <th data-field="producto">Producto</th>
+                              <th data-field="precio">Precio</th>
                               <th data-field="existencia">Existencias</th>
-                              <th data-field="option">Opción</th>
+                              <th data-field="option">Cantidad</th>
                           </tr>
                         </thead>
                         <tbody id="productos">
-                            
+                            @foreach($productos as $producto)
+                                <tr>
+                                    <td>{{ $producto->id }}</td>
+                                    <td>{{ $producto->nombre }}</td>
+                                    <td>{{ $producto->precio }}</td>
+                                    <td>{{ $producto->producto_sucursal[0]->pivot->existencia }}</td>
+                                    <td>
+                                        <div class="col l4 s12 offset-l4">
+                                            {!! Form::number($producto->id,0,['class'=>'validate mb-0 center-align','id'=>$producto->id,'min'=>'0','max'=>$producto->producto_sucursal[0]->pivot->existencia]) !!}
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -98,6 +111,7 @@
     });
 @endsection
 @section('functions')
+    var carrito=[];
     function seleccionar(id){
         $("tr").css('background-color','');
         $('#'+id).parents("tr").css('background-color','#c8e6c9');
@@ -106,16 +120,33 @@
     function productos(){
         $.get('{!! route('admin.pedidos.productos') !!}',{}).done(function(data){
             var datos=JSON.parse(data);
+            $("#productos").html("");
             for(var i=0;i<datos.length;i++){
                 $("#productos").append(
                     "<tr>"+
                         "<td>"+datos[i].id+"</td>"+
                         "<td>"+datos[i].nombre+"</td>"+
-                        "<td>"+datos[i].producto_sucursal[i].pivot.existencia+"</td>"+
-                        "<td><a class=\"waves-effect waves-light btn tooltipped\" data-position=\"right\" data-delay=\"50\" data-tooltip=\"Agregar al carrito\" onclick=\"seleccionar("+datos[i].id+")\">Agregar</a></td>"+
+                        "<td>"+datos[i].id+datos[i].producto_sucursal[i].pivot.existencia+"</td>"+
+                        "<td><a class=\"waves-effect waves-light btn tooltipped\" data-position=\"right\" data-delay=\"50\" data-tooltip=\"Agregar al carrito\" onclick=\"agregar("+datos[i].id+","+datos[i].producto_sucursal[i].pivot.existencia+")\">Agregar</a></td>"+
                     "</tr>"
                 );
             }
         });
+    }
+    function agregar(id){
+        console.log(carrito.length);
+        for(var i=0;i<carrito.length;i++)
+            if(carrito[i].id==id){
+                var pos=i;
+                break; 
+            }
+        if(pos>=0){
+            carrito[pos]['cantidad']+=1;
+        }
+        else{
+            var local={id:id,cantidad:1};
+            carrito.push(local);
+        }
+        console.log(carrito);
     }
 @endsection
