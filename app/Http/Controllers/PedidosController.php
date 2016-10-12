@@ -124,12 +124,4 @@ class PedidosController extends Controller
         }
         return json_encode($pacientes);
     }
-    public function productos()
-    {
-        $productos=Producto::all();
-        foreach ($productos as $producto) {
-            $producto->producto_sucursal;
-        }
-        return json_encode($productos);
-    }
 }
