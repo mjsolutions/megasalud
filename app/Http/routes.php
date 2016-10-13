@@ -105,6 +105,11 @@ Route::group(['prefix'=>'admin'],function(){
 	| Rutas pedidos
 	*/
 
+	Route::POST('pedidos/forma_pago', [
+		'uses'	=>	'PedidosController@forma_pago',
+		'as'	=>	'admin.pedidos.forma_pago'
+		]);
+
 	Route::get('pedidos/{data}/busqueda_pacientes',[
 			'uses'	=>	'PedidosController@busqueda_pacientes',
 			'as'	=>	'admin.pedidos.busqueda_pacientes'

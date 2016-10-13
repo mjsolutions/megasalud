@@ -35,9 +35,6 @@ class PedidosController extends Controller
     public function create()
     {
         $productos=Producto::all();
-        //foreach ($productos as $producto) {
-         //   $producto->producto_sucursal;
-        //}
         return view('admin.pedidos.create')->with("productos",$productos);
     }
 
@@ -49,7 +46,7 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->session());
     }
 
     /**
@@ -123,5 +120,38 @@ class PedidosController extends Controller
             $paciente->users[0]->sucursales;
         }
         return json_encode($pacientes);
+    }
+    public function forma_pago(Request $request){
+        $request->session()->reflash();
+        $request->session()->put('producto',$request->paciente_id);
+        $x=Producto::count();//numero de productos
+        $suma=0;
+        for($i=1;$i<=$x;$i++){
+            $suma+=$request->$i;
+            $producto=Producto::find($i);
+            $existencia=$producto->producto_sucursal[0]->pivot->existencia;
+            if($request->$i<=$existencia)
+                $bandera=true;
+            else{
+                $bandera=false;
+                break;
+            }
+        }
+        if($suma>0){
+            if($bandera){
+                $paciente=Paciente::find($request->paciente_id);
+                $productos=Producto::all();
+                return view('admin.pedidos.forma_pago')->with('pacientes',$paciente)->with('productos',$productos);
+            }
+            else{
+                Flash::overlay('No debes exceder el limite de productos en inventario', '¡Ocurrio un problema!');
+                return redirect()->route('admin.pedidos.create');
+            }
+            
+        }
+        else{
+            Flash::overlay('Debes agregar al menos un producto', '¡Ocurrio un problema!');
+            return redirect()->route('admin.pedidos.create');
+        }
     }
 }

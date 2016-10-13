@@ -4,7 +4,7 @@
 	@include('admin.nav')
 @endsection
 @section('content')
-    {!! Form::open(['route'=>'admin.pedidos.store', 'method'=>'POST']) !!}
+    {!! Form::open(['route'=>'admin.pedidos.forma_pago','id'=>'formulario', 'method'=>'POST']) !!}
     <div class="container">
     	<div class="card-panel">
             <div class="center-align">
@@ -12,6 +12,17 @@
             </div>
             <div class="row">
                 <div class="col s8 col-center divider"></div>
+            </div>
+            <div class="row">
+                <div class="col l12">
+                    <nav>
+                        <div class="nav-wrapper blue darken-1">
+                          <div class="col s12">
+                            <a href="#!" class="breadcrumb">Generar Pedido</a>
+                          </div>
+                        </div>
+                    </nav>
+                </div>
             </div>
 	    	<div class="row">
                 <div class="left-align col l6">
@@ -74,6 +85,12 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l12 center-align">
+                        <button type="submit" class="waves-effect waves-light btn green lighten-2 mr-10"><i class="material-icons left">done</i>Generar</button>
+                        <a class="waves-effect waves-light btn deep-orange lighten-2"><i class="material-icons left">replay</i>Cancelar</a>
                     </div>
                 </div>
             </div>
