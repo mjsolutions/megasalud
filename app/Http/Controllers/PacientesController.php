@@ -202,7 +202,7 @@ class PacientesController extends Controller
     }
     public function medico()
     {
-        $users=User::all();
+        $users=User::all()->where('tipo_usuario','Medico');
         $data=array();
         foreach ($users as $user => $value) {
             $data[$value->id." - ".$value->nombre." ".$value->apellido_p." ".$value->apellido_m]="";
