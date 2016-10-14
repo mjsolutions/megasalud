@@ -184,18 +184,24 @@
               </div>
             </div>
             <div class="row">
-              <div class="col l6">
+              <div class="col l4">
                 <div class="input-field">
                     <i class="material-icons prefix">group_work</i>
                     {!! Form::label('ocupacion','Ocupación') !!}
                     {!! Form::text('ocupacion',null,['class'=>'validate']) !!}
                 </div>
               </div>
-              <div class="col l6">
+              <div class="col l4">
                 <div class="input-field">
                     <i class="material-icons prefix">perm_identity</i>
-                    {!! Form::label('medico','Médico Asignado') !!}
-                    {!! Form::text('medico',null,['class'=>'autocomplete','id'=>'medico']) !!}
+                    {!! Form::select('sucursal',$sucursales,null,['id'=>'sucursal','placeholder'=>'Elige una sucursal']) !!}
+                    <input type="hidden" id="medico_id" value="">
+                </div>
+              </div>
+              <div class="col l4">
+                <div class="input-field">
+                    <i class="material-icons prefix">perm_identity</i>
+                    {!! Form::select('medico',[],null,['id'=>'medico','placeholder'=>'Elige un médico']) !!}
                     <input type="hidden" id="medico_id" value="">
                 </div>
               </div>
@@ -217,6 +223,8 @@
             </div>
     	</div>
     </div>
+    {!! Form::close() !!}
+    {!! Form::open(['route'=>['admin.pacientes.medico',':USER_ID'], 'method'=>'GET','id'=>'form']) !!}
     {!! Form::close() !!}
 @endsection
 @section('scripts')
@@ -255,9 +263,18 @@
       data:JSON.parse(datos)
       });
   });
-  $.get('{!! route('admin.pacientes.medico') !!}').done(function(datos){
-      $('#medico.autocomplete').autocomplete({
-      data:JSON.parse(datos)
+  $("#sucursal").change(function(){
+      var form=$("#form");
+      var url=form.attr('action').replace(':USER_ID',$("#sucursal").val());
+      $('#medico').material_select('destroy');
+      $('#medico').html("<option value='0'>Selecciona un médico</option>");
+      $.get(url).done(function(data){
+        $.each(data,function(ind,elem){
+          $("#medico").append(
+              "<option value='"+ind+"'>"+elem+"</option>"
+          );
+        });
+        $('#medico').material_select('update');
       });
   });
 @endsection
