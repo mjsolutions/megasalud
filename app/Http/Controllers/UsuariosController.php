@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use MegaSalud\User;
 
+use MegaSalud\Sucursal;
+
 use MegaSalud\Http\Requests;
 
 use MegaSalud\Http\Controllers\Controller;
@@ -37,7 +39,9 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        return view('admin.usuarios.create');
+        $sucursales = Sucursal::all()->lists('razon_social','id');
+        // dd($sucursales);
+        return view('admin.usuarios.create')->with('sucursales', $sucursales);
     }
 
     /**

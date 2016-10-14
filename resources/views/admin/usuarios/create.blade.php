@@ -247,13 +247,20 @@
       <div class="col l6">
         <div class="input-field">
           <i class="material-icons prefix">perm_identity</i>
-          {!! Form::select('tipo_usuario', ['Administrador' => 'Administrador', 'Administrador de sucursal' => 'Administrador de sucursal', 'Medico' => 'Médico'],'Medico', ['class' => 'select-dropdown', 'required']) !!}
+          {!! Form::select('tipo_usuario', ['Administrador' => 'Administrador', 'Administrador de sucursal' => 'Administrador de sucursal', 'Medico' => 'Médico'],'Medico', ['class' => 'select-dropdown', 'required', 'id' => 'tipo_usuario']) !!}
           {!! Form::label('tipo_usuario','Tipo de Usuario') !!}
         </div>
       </div>
 
-      <div class="col l6">
+      <div class="col l6" id="hidden-div">
         {{-- En caso de seleccionar Administrador de sucursal se mostrara la lista de sucusales --}}
+        <div class="input-field">
+          <div class="input-field">
+            <i class="material-icons prefix">perm_identity</i>
+            {!! Form::select('sucursal', $sucursales, null, ['class' => 'select-dropdown', 'required', 'id' => 'sucursal']) !!}
+            {!! Form::label('sucursal','Sucursal') !!}
+          </div>
+        </div>
       </div>
 
     </div>
@@ -273,6 +280,18 @@
   @endif
 
 $('select').material_select();
+
+$("#hidden-div").hide();
+
+$("select#tipo_usuario").change(function() {
+  if ($(this).val() == "Administrador de sucursal"){
+    $("#hidden-div").fadeIn('slow');
+  }else{
+    $("#hidden-div").hide();
+  }
+});
+
+
 
 $.get('{!! route('admin.usuarios.pais') !!}').done(function(datos){
   $('#pais.autocomplete').autocomplete({
@@ -297,6 +316,11 @@ $.get('{!! route('admin.usuarios.banco') !!}').done(function(datos){
     data:JSON.parse(datos)
   });
 });
+
+$('form').submit(function(e){
+  e.preventDefault();
+  alert($(this).serialize());
+})
 
 @endsection
 @section('scripts-2')
