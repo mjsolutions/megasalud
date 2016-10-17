@@ -39,8 +39,8 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        $sucursales = Sucursal::all()->lists('razon_social','id');
-        // dd($sucursales);
+        $sucursales = DB::table('sucursales')->select('razon_social','id')->whereNotIn('id', DB::table('user_sucursal')->select('user_id')->distinct()->pluck('user_id'))->pluck('razon_social','id');
+        // array_merge($sucursales, $opc);
         return view('admin.usuarios.create')->with('sucursales', $sucursales);
     }
 

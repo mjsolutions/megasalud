@@ -252,22 +252,36 @@
         </div>
       </div>
 
-      <div class="col l6" id="hidden-div">
+      <div class="col l5 hidden-div">
         {{-- En caso de seleccionar Administrador de sucursal se mostrara la lista de sucusales --}}
         <div class="input-field">
-          <div class="input-field">
-            <i class="material-icons prefix">perm_identity</i>
-            {!! Form::select('sucursal', $sucursales, null, ['class' => 'select-dropdown', 'required', 'id' => 'sucursal']) !!}
-            {!! Form::label('sucursal','Sucursal') !!}
-          </div>
+          <i class="material-icons prefix">perm_identity</i>
+          {!! Form::select('sucursal', $sucursales, null, ['class' => 'select-dropdown', 'id' => 'sucursal', 'placeholder' => 'Seleccione una opción']) !!} 
+          {!! Form::label('sucursal','Sucursal') !!}
+        </div>
+      </div>
+
+      <div class="col l1 hidden-div">
+        <div class="input-field">
+          <a class="btn-floating waves-effect waves-light light-blue accent-3 modal-trigger tooltipped" href="#add_sucursal" data-position="top" data-delay="50" data-tooltip="Nueva sucursal"><i class="material-icons">add</i></a>
         </div>
       </div>
 
     </div>
 
     <div class="input-field center-align">
-      {!! Form::submit('Crear',['class'=>'btn waves-effect waves-light']) !!}
+      {!! Form::submit('Guardar',['class'=>'btn btn-large waves-effect waves-light']) !!}
     </div>
+  </div>
+
+  <div id="add_sucursal" class="modal">
+      <div class="modal-footer">
+          <div class="plr-5" id="contenido">
+             <h5>Agregar Sucursal</h5>
+             <div class="divider"></div>
+          </div>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
+      </div>
   </div>
 </div>
 {!! Form::close() !!}
@@ -279,19 +293,16 @@
     @endforeach
   @endif
 
-$('select').material_select();
-
-$("#hidden-div").hide();
+$(".hidden-div").hide();
 
 $("select#tipo_usuario").change(function() {
   if ($(this).val() == "Administrador de sucursal"){
-    $("#hidden-div").fadeIn('slow');
+    $(".hidden-div").fadeIn('slow');
   }else{
-    $("#hidden-div").hide();
+    $(".hidden-div").hide();
+    $('#sucursal').val("");
   }
 });
-
-
 
 $.get('{!! route('admin.usuarios.pais') !!}').done(function(datos){
   $('#pais.autocomplete').autocomplete({
