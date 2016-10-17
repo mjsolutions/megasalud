@@ -54,7 +54,7 @@ Route::group(['prefix'=>'admin'],function(){
 		'as'	=>	'admin.pacientes.ciudad'	
 		]);
 
-	Route::get('pacientes/medico',[
+	Route::get('pacientes/{id}/medico',[
 		'uses'	=> 'PacientesController@medico',
 		'as'	=>	'admin.pacientes.medico'
 		]);
@@ -105,14 +105,14 @@ Route::group(['prefix'=>'admin'],function(){
 	| Rutas pedidos
 	*/
 
+	Route::POST('pedidos/forma_pago', [
+		'uses'	=>	'PedidosController@forma_pago',
+		'as'	=>	'admin.pedidos.forma_pago'
+		]);
+
 	Route::get('pedidos/{data}/busqueda_pacientes',[
 			'uses'	=>	'PedidosController@busqueda_pacientes',
 			'as'	=>	'admin.pedidos.busqueda_pacientes'
 		]);
-	Route::get('pedidos/productos',[
-			'uses'	=>	'PedidosController@productos',
-			'as'	=>	'admin.pedidos.productos'
-		]);
-
 	Route::resource('pedidos','PedidosController');
 });

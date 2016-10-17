@@ -10,6 +10,8 @@ use MegaSalud\Paciente;
 
 use MegaSalud\User;
 
+use MegaSalud\Sucursal;
+
 use Laracasts\Flash\Flash;
 
 use MegaSalud\Http\Requests\PacienteRequest;
@@ -38,7 +40,12 @@ class PacientesController extends Controller
      */
     public function create()
     {
-        return view('admin.pacientes.create');
+        $sucursales=Sucursal::all();
+        $arr=array();
+        foreach ($sucursales as $sucursal) {
+            $arr[$sucursal->id]=$sucursal->razon_social;
+        }
+        return view('admin.pacientes.create')->with('sucursales',$arr);
     }
 
     /**
@@ -50,35 +57,33 @@ class PacientesController extends Controller
     public function store(PacienteRequest $request)
     {
         //Encontrando médico
-        $medico=$request->medico;
-        //dd(substr($medico,0,stripos($medico,' ')));
-        $id=intval($medico);
+        $id=$request->medico;
         $dr=User::find($id);
-        //tratando archivos
-        $foto=$request->file('foto');
-        $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
-        $path=public_path()."/images/paciente/";
-        $request->foto=$foto_name;
         $paciente=new Paciente($request->all());//pasando el array que se recibe del formulario
         unset($paciente->foto);
         //creando clave bancaria
         $count=Paciente::count();
         $paciente->clave_bancaria=PacientesController::clave($request->estado,$count+1,"P");
-        if($request->file('foto')){
-            $foto=$request->file('foto');
-            $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
-            $path=public_path()."/images/paciente/";
-            $request->foto=$foto_name;
-            $paciente->foto=$foto_name;
-        }
-        if($paciente->save()){
-            if($request->file('foto'))
-                $foto->move($path,$foto_name);
-            $paciente->users()->attach($dr);
-            Flash::overlay('Se ha registrado '.$paciente->nombre.' de forma exitosa.', 'Alta exitosa');
+        if($id!=0){
+            if($request->file('foto')){
+                $foto=$request->file('foto');
+                $foto_name=$request->nombre.time().'.'.$foto->getClientOriginalExtension();
+                $path=public_path()."/images/paciente/";
+                $request->foto=$foto_name;
+                $paciente->foto=$foto_name;
+            }
+            if($paciente->save()){
+                if($request->file('foto'))
+                    $foto->move($path,$foto_name);
+                $paciente->users()->attach($dr);
+                Flash::overlay('Se ha registrado '.$paciente->nombre.' de forma exitosa.', 'Alta exitosa');
+            }
+            else{
+                Flash::overlay('Ha ocurrido un error al registrar al paciente  '.$paciente->nombre, 'Error');
+            }
         }
         else{
-            Flash::overlay('Ha ocurrido un error al registrar al paciente  '.$paciente->nombre, 'Error');
+            Flash::overlay('Debes seleccionar un médico registrado.', 'Error');
         }
         return redirect()->route('admin.pacientes.index');
     }
@@ -200,14 +205,16 @@ class PacientesController extends Controller
         }
         return json_encode($data);
     }
-    public function medico()
+    public function medico($id)
     {
-        $users=User::all();
+        $sucursales=Sucursal::find($id);
         $data=array();
-        foreach ($users as $user => $value) {
-            $data[$value->id." - ".$value->nombre." ".$value->apellido_p." ".$value->apellido_m]="";
-        }
-        return json_encode($data);
+        //dd(sizeOf($sucursales->users));
+        $sucursales=$sucursales->users->lists('nombre','id');
+        // for($i=0;$i<sizeOf($sucursales->users);$i++){
+        //     $data[$sucursales->users[$i]->id]=$sucursales->nombre;
+        // }
+        return $sucursales;
     }
     public function detalle($id){
         $paciente=Paciente::find($id);
