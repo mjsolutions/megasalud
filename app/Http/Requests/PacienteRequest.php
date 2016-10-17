@@ -24,8 +24,8 @@ class PacienteRequest extends Request
     public function rules()
     {
         return [
-            'medico'    =>  'required',
-            'foto'      =>  'mimes:jpeg,jpg,png,gif|max:3000',
+            'medico'    =>  'required|min:1',
+            'foto'      =>  'mimes:jpeg,jpg,png,gif|max:3000'
         ];
     }
 }

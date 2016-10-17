@@ -123,25 +123,27 @@ class PedidosController extends Controller
     }
     public function forma_pago(Request $request){
         $request->session()->reflash();
-        $request->session()->put('producto',$request->paciente_id);
+        $request->session()->put('paciente',$request->paciente_id);//seteado del id del usuario en la variable de sesion
         $x=Producto::count();//numero de productos
         $suma=0;
-        for($i=1;$i<=$x;$i++){
+        for($i=1;$i<=$x;$i++){//se comprueba que no se exceda el limite de existencia de los productos
             $suma+=$request->$i;
             $producto=Producto::find($i);
-            $existencia=$producto->producto_sucursal[0]->pivot->existencia;
-            if($request->$i<=$existencia)
+            $existencia=$producto->producto_sucursal[0]->pivot->existencia;//obteniendo existencias de un producto
+            if($request->$i<=$existencia){
                 $bandera=true;
+                $request->session()->put($i,$request->$i);//seteado de productos con cantidades en variable de sesion
+            }
             else{
                 $bandera=false;
                 break;
             }
         }
-        if($suma>0){
-            if($bandera){
+        if($suma>0){//comprobar que al menos se haya seleccionado un producto
+            if($bandera){//comprobar si excede limite de inventarios
                 $paciente=Paciente::find($request->paciente_id);
                 $productos=Producto::all();
-                return view('admin.pedidos.forma_pago')->with('pacientes',$paciente)->with('productos',$productos);
+                return view('admin.pedidos.forma_pago')->with('paciente',$paciente)->with('productos',$productos);
             }
             else{
                 Flash::overlay('No debes exceder el limite de productos en inventario', '¡Ocurrio un problema!');

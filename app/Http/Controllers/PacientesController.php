@@ -109,7 +109,10 @@ class PacientesController extends Controller
     {
         $paciente=Paciente::find($id);
         $paciente->users;
-        return view('admin.pacientes.edit')->with('paciente',$paciente);
+        $sucursales=Sucursal::all()->lists('razon_social','id');
+        $medicos=Sucursal::find($paciente->users[0]->sucursales[0]->id);
+        $medicos=$medicos->users->lists('nombre','id');
+        return view('admin.pacientes.edit')->with('paciente',$paciente)->with('sucursales',$sucursales)->with('medicos',$medicos);
     }
 
     /**
