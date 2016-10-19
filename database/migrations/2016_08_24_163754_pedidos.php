@@ -22,7 +22,7 @@ class Pedidos extends Migration
             $table->timestamp('fecha_pedido')->default("0000-00-00 00:00:00");
             $table->string('confirmacion');
             $table->timestamp('fecha_pago');
-            $table->enum('metodo',['Efectivo','Tarjeta','Paypal','OXXO','Deposito']);
+            $table->enum('metodo',['Efectivo','Tarjeta','OXXO','Deposito']);
             $table->string('detalle');
             $table->integer('status')->default(1);//1.- En Espera, 2.- Pagado, 3.- Cancelado
             $table->timestamps();
