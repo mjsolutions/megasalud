@@ -54,7 +54,7 @@
         <div class="input-field">
           <i class="material-icons prefix">perm_contact_calendar</i>
           {!! Form::label('fecha','Fecha de nacimiento') !!}
-          {!! Form::date('fecha', null, ['class'=>'datepicker','required']) !!}
+          {!! Form::date('fecha_nacimiento', null, ['class'=>'datepicker']) !!}
         </div>
       </div>
 
@@ -328,10 +328,10 @@ $.get('{!! route('admin.usuarios.banco') !!}').done(function(datos){
   });
 });
 
-$('form').submit(function(e){
+{{-- $('form').submit(function(e){
   e.preventDefault();
   alert($(this).serialize());
-})
+}) --}}
 
 @endsection
 @section('scripts-2')
@@ -342,8 +342,7 @@ $('form').submit(function(e){
         selectYears: 100,
         min: [date.getFullYear() - 100, date.getMonth(), date.getDate()],
         max: [date.getFullYear(), date.getMonth(), date.getDate()],
-        hiddenName: 'fecha',
-        hiddenSuffix: '_nacimiento'
+        hiddenName: true, //enviar con el formato dado (no necesita input hidden)
             });
     
   </script>
