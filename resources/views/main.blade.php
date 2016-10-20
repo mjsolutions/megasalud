@@ -7,6 +7,7 @@
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{asset('css/materialize.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('css/styles.css')}}">
+	<link href="https://file.myfontastic.com/p33ryNdn2ug99gf3MgkiUK/icons.css" rel="stylesheet">
 </head>
 <body>
 	<header>

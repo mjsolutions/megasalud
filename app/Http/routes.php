@@ -104,7 +104,10 @@ Route::group(['prefix'=>'admin'],function(){
 	/*
 	| Rutas pedidos
 	*/
-
+	Route::POST('pedidos/confirmar',[
+		'uses'	=>	'PedidosController@confirmacion',
+		'as'	=>	'admin.pedidos.confirmacion'
+		]);
 	Route::POST('pedidos/forma_pago', [
 		'uses'	=>	'PedidosController@forma_pago',
 		'as'	=>	'admin.pedidos.forma_pago'

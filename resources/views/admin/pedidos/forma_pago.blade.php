@@ -4,7 +4,7 @@
 	@include('admin.nav')
 @endsection
 @section('content')
-    {!! Form::open(['route'=>'admin.pedidos.store', 'method'=>'POST']) !!}
+    {!! Form::open(['route'=>'admin.pedidos.store', 'method'=>'POST', 'id'=>'formulario']) !!}
     <div class="container">
     	<div class="card-panel">
             <div class="center-align">
@@ -60,58 +60,97 @@
             <div class="input-field center-align">
                 {!! Form::submit('Crear',['class'=>'btn waves-effect waves-light']) !!}
             </div> --}}
-            <div class="row">
-                <div id="paypal_p" class="col l2 offset-l2 br-2 center-align">
-                    <a href="#!" onclick="paypal()">
-                        <img src="{{asset('images/paypal.png')}}" class="responsive-img mt-5">
-                    </a>
-                    <h6>Paypal</h6>
-                </div>
-                <div id="oxxo_p" class="col l2 br-2 center-align">
-                    <a href="#!" onclick="oxxo()">
-                        <img src="{{asset('images/oxxo.png')}}" class="responsive-img mt-30">
-                    </a>
-                    <h6>Paypal</h6>
-                </div>
-                <div id="banco_p" class="col l2 br-2 center-align">
-                    <a href="#!" onclick="banco()">
-                        <img src="{{asset('images/banco.png')}}" alt="" class="responsive-img">
-                    </a>
-                </div>
-                <div id="efectivo_p" class="col l2 br-2 center-align">
-                    <a href="#!" onclick="efectivo()">
-                        <img src="{{asset('images/cash.png')}}" alt="" class="responsive-img">
-                    </a>
-                </div>
-            </div>
-            <div class="row" id="oxxo">
-                <div class="col l5">
-                    
-                </div>
-                <div class="col l5">
-                    
-                </div>
-            </div>
-            <div class="row" id="banco">
-                <div class="col l5">
-                    
-                </div>
-                <div class="col l5">
-                    
-                </div>
-            </div>
-            <div class="row" id="efectivo">
-                <div class="col l5">
-                    
-                </div>
-                <div class="col l5">
-                    
-                </div>
-            </div>
-            <div id="continuar" class="row">
-                <div class="col l12 center-align">
-                    <input type="hidden" name="metodo">
-                    {!! Form::submit('Continuar',['class'=>'btn waves-effect waves-light']) !!}
+            <div class="container">
+                <ul class="collapsible" data-collapsible="accordion">
+                    <li >
+                        <div class="collapsible-header" id="tarjeta">
+                            <i class="icon-credit-card"></i>Tarjeta de credito o debito
+                        </div>
+                      <div class="collapsible-body">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col l6"></div>
+                                  <div class="col l6"></div>
+                              </div>
+                              <div class="row">
+                                  <div class="col l6"></div>
+                                  <div class="col l6"></div>
+                              </div>
+                              <div class="row">
+                                  <div class="col l6"></div>
+                                  <div class="col l6"></div>
+                              </div>
+                          </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="collapsible-header" id="oxxo">
+                        <i class="iconos-OXXO_logo iconos-s-3"></i>Oxxo
+                      </div>
+                        <div class="collapsible-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col l6 right-align">
+                                        <b>Nombre</b>
+                                    </div>
+                                    <div class="col l6">
+                                        Dr. Jaime Humberto Rodriguez
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col l6 right-align">
+                                        <b>Número de cuenta</b>
+                                        </div>
+                                    <div class="col l6">
+                                        XXXXXXXXX
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="collapsible-header" id="deposito"><i class="icon-university"></i>Deposito Bancario</div>
+                      <div class="collapsible-body">
+                        <div class="container">
+                            <div class="row">
+                              <div class="col l6 right-align">
+                                  <b>Banco</b>
+                              </div>
+                              <div class="col l6">
+                                  HSBC
+                              </div>
+                          </div>
+                            <div class="row">
+                                <div class="col l6 right-align">
+                                    <b>Nombre del servicio</b>
+                                </div>
+                                <div class="col l6">
+                                    MegaSalud Internacional S.A. de C.V.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col l6 right-align">
+                                    <b>Clave de servicio</b>
+                                    </div>
+                                <div class="col l6">
+                                    8684
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="collapsible-header" id="efectivo"><i class="icon-money"></i>Efectivo</div>
+                      <div class="collapsible-body">
+                            <p>Haz elegido seleccionado efectivo</p>
+                      </div>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col l12 center-align">
+                        <input type="hidden" name="metodo" id="metodo">
+                        {!! Form::submit('Continuar',['class'=>'btn waves-effect waves-light']) !!}
+                    </div>
                 </div>
             </div>
     	</div>
@@ -124,39 +163,16 @@
                 Materialize.toast('{{ $error }}', 4000);
             @endforeach
         @endif
-        $("#continuar").hide();
-        $("#oxxo").hide();
-        $("#banco").hide();
-        $("#efectivo").hide();
+        $("li").click(function(e){
+            $("#metodo").val(e.target.id);
+        });
+        $("#formulario").submit(function(){
+            if($("#metodo").val()==null||$("#metodo").val()==""){
+                Materialize.toast("Debes elegir una forma de pago.",4000);
+            }
+            return false;
+        });
 @endsection
 @section('functions')
-    function back(){
-        window.history.back();
-    }
-    function oxxo(){
-        $("#paypal_p").css("background-color","");
-        $("#oxxo_p").css("background-color","#a5d6a7");
-        $("#banco_p").css("background-color","");
-        $("#efectivo_p").css("background-color","");
-    }
-    function paypal(){
-        $("#paypal_p").css("background-color","#a5d6a7");
-        $("#oxxo_p").css("background-color","");
-        $("#banco_p").css("background-color","");
-        $("#efectivo_p").css("background-color","");
-        $("#metodo").val(1);
-        $("#continuar").show("slow");
-    }
-    function banco(){
-        $("#paypal_p").css("background-color","");
-        $("#oxxo_p").css("background-color","");
-        $("#banco_p").css("background-color","#a5d6a7");
-        $("#efectivo_p").css("background-color","");
-    }
-    function efectivo(){
-        $("#paypal_p").css("background-color","");
-        $("#oxxo_p").css("background-color","");
-        $("#banco_p").css("background-color","");
-        $("#efectivo_p").css("background-color","#a5d6a7");
-    }
+    
 @endsection

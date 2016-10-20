@@ -156,4 +156,8 @@ class PedidosController extends Controller
             return redirect()->route('admin.pedidos.create');
         }
     }
+    public function confirmacion(Request $request){
+        //confirmación de pedido
+        
+    }
 }
