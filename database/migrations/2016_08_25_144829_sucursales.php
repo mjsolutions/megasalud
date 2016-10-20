@@ -29,16 +29,16 @@ class Sucursales extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('sucursal_id')->unsigned();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
-            $table->foreign('sucursal_id')->references('id')->on('sucursales')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('sucursal_id')->references('id')->on('sucursales')->onDelete('cascade')->onUpdate('cascade');
         });
         Schema::create('producto_sucursal', function (Blueprint $table) {
             $table->integer('producto_id')->unsigned();
             $table->integer('sucursal_id')->unsigned();
             $table->integer('existencia');
             $table->timestamps();
-            $table->foreign('producto_id')->references('id')->on('productos')->onDetele('cascade')->onUpdate('cascade');
-            $table->foreign('sucursal_id')->references('id')->on('sucursales')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('sucursal_id')->references('id')->on('sucursales')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

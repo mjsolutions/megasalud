@@ -26,8 +26,8 @@ class Pedidos extends Migration
             $table->string('detalle');
             $table->integer('status')->default(1);//1.- En Espera, 2.- Pagado, 3.- Cancelado
             $table->timestamps();
-            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
         Schema::create('pedido_producto', function (Blueprint $table) {
             $table->increments('id');
@@ -35,8 +35,8 @@ class Pedidos extends Migration
             $table->integer('producto_id')->unsigned();
             $table->integer('cantidad');
             $table->timestamps();
-            $table->foreign('pedido_id')->references('id')->on('pedidos')->onDetele('cascade')->onUpdate('cascade');
-            $table->foreign('producto_id')->references('id')->on('productos')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('pedido_id')->references('id')->on('pedidos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
