@@ -46,7 +46,10 @@ Margin
 	margin-bottom: 0px; 
 }
 .mr-10{
-	margin-right: 10px; 
+	margin-right: 10px!important; 
+}
+.ml-10{
+	margin-left: 10px;
 }
 .mb-0{
 	margin-bottom: 0!important;
