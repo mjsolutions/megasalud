@@ -20,8 +20,8 @@ class Citas extends Migration
             $table->text('observacion');
             $table->timestamps();
             $table->integer('status')->unsigned()->default(1);//1-En Espera, 2-Atendida, 3-Reprogramada, 4- Cancelada
-            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -16,7 +16,7 @@ class HisclinicTrat extends Migration
             $table->integer('id_paciente')->unsigned();
             $table->text('trat');
             $table->timestamp('fecha');
-            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

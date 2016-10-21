@@ -80,7 +80,7 @@ class HisclinicApnp extends Migration
             $table->text('apnp_31ra');
             $table->text('observacion');
             $table->timestamp('fecha');
-            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -17,7 +17,7 @@ class HisclinicApp1 extends Migration
             $table->text('enfermedad');
             $table->text('antecedente');
             $table->timestamp('fecha');
-            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('id_paciente')->references('id')->on('pacientes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -45,8 +45,8 @@ class Pacientes extends Migration
             $table->integer('paciente_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
-            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -57,6 +57,7 @@ class Pacientes extends Migration
      */
     public function down()
     {
+        Schema::drop('paciente_user');
         Schema::drop('pacientes');
     }
 }

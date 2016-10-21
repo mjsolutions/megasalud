@@ -47,6 +47,7 @@ class Pedidos extends Migration
      */
     public function down()
     {
+        Schema::drop('pedido_producto');
         Schema::drop('pedidos');
     }
 }

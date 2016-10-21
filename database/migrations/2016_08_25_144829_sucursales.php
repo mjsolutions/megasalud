@@ -49,6 +49,8 @@ class Sucursales extends Migration
      */
     public function down()
     {
+        Schema::drop('user_sucursal');
+        Schema::drop('producto_sucursal');
         Schema::drop('sucursales');
     }
 }

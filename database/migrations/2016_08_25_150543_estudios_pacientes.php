@@ -19,7 +19,7 @@ class EstudiosPacientes extends Migration
             $table->string('ruta_documento');
             $table->timestamp('fecha');
             $table->timestamps();
-            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDetele('cascade')->onUpdate('cascade');
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
