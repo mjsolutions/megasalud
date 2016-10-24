@@ -53,40 +53,53 @@ class UsuariosController extends Controller
     {   
         $validate = false;
 
-        $usuario = new User($request->all());
-        $usuario->password = bcrypt($usuario->password);         
-        if($usuario->save()){
-            $tipo = "";
-            switch($usuario->tipo_usuario){
-                case "Administrador":
-                    $tipo = "A";
-                    break;
-                case "Administrador de sucursal":
-                    $tipo = "S";
-                    break;
-                case "Medico":
-                    $tipo = "D";
-                    break;
-            }
-            $usuario->clave_bancaria = UsuariosController::clave($usuario->estado, $usuario->id, $tipo);
-            $usuario->save();
-        }
+        DB::beginTransaction();
 
-        if($request->has("sucursal")) {
-            $id = $request->sucursal;
-            // dd($id);
-            $sucursal = Sucursal::find($id);            
-            $usuario->sucursales()->attach($sucursal);
-            $validate = true;
-        }else {
-            $validate = true;
+        try {
+
+            $usuario = new User($request->all());
+            $usuario->password = bcrypt($usuario->password);         
+            if($usuario->save()){
+                $tipo = "";
+                switch($usuario->tipo_usuario){
+                    case "Administrador":
+                        $tipo = "A";
+                        break;
+                    case "Administrador de sucursal":
+                        $tipo = "S";
+                        break;
+                    case "Medico":
+                        $tipo = "D";
+                        break;
+                }
+                $usuario->clave_bancaria = UsuariosController::clave($usuario->estado, $usuario->id, $tipo);
+                $usuario->save();
+            }
+
+            if($request->has("sucursal")) {
+                $id = $request->sucursal;
+                // dd($id);
+                $sucursal = Sucursal::find($id);            
+                $usuario->sucursales()->attach($sucursal);
+                $validate = true;
+            }else {
+                $validate = true;
+            }
+
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $validate = false;
+            $fail = $e;
+            // throw $e;
         }        
 
 
         if($validate) {
             Flash::overlay('Se ha registrado '.$usuario->nombre.' de forma exitosa.', 'Alta exitosa');
         }else{
-            Flash::overlay('Ha ocurrido un error al registrar al usuario  '.$usuario->nombre, 'Error');            
+            Flash::overlay('Ha ocurrido un error al registrar al usuario  '.$usuario->nombre." : ".$fail, 'Error');            
         }
 
         
