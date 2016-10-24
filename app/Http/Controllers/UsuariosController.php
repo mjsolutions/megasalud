@@ -53,36 +53,35 @@ class UsuariosController extends Controller
     {   
         $validate = false;
 
-        DB::transaction(function(){
-            
-            $usuario = new User($request->all());
-            $usuario->password = bcrypt($usuario->password);         
-            if($usuario->save()){
-                $tipo = "";
-                switch($usuario->tipo_usuario){
-                    case "Administrador":
-                        $tipo = "A";
-                        break;
-                    case "Administrador de sucursal":
-                        $tipo = "S";
-                        break;
-                    case "Medico":
-                        $tipo = "D";
-                        break;
-                }
-                $usuario->clave_bancaria = UsuariosController::clave($usuario->estado, $usuario->id, $tipo);
-                $usuario->save();
+        $usuario = new User($request->all());
+        $usuario->password = bcrypt($usuario->password);         
+        if($usuario->save()){
+            $tipo = "";
+            switch($usuario->tipo_usuario){
+                case "Administrador":
+                    $tipo = "A";
+                    break;
+                case "Administrador de sucursal":
+                    $tipo = "S";
+                    break;
+                case "Medico":
+                    $tipo = "D";
+                    break;
             }
+            $usuario->clave_bancaria = UsuariosController::clave($usuario->estado, $usuario->id, $tipo);
+            $usuario->save();
+        }
 
-            if($request->has("sucursal")) {
-                $id = $request->sucursal;
-                // dd($id);
-                $sucursal = Sucursal::find($id);            
-                $usuario->sucursales()->attach($sucursal);
-            }
-
+        if($request->has("sucursal")) {
+            $id = $request->sucursal;
+            // dd($id);
+            $sucursal = Sucursal::find($id);            
+            $usuario->sucursales()->attach($sucursal);
             $validate = true;
-        });
+        }else {
+            $validate = true;
+        }        
+
 
         if($validate) {
             Flash::overlay('Se ha registrado '.$usuario->nombre.' de forma exitosa.', 'Alta exitosa');
