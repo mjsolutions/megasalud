@@ -51,44 +51,45 @@ class UsuariosController extends Controller
      */
     public function store(UserRequest $request)
     {   
-        $quer1 = false;
-        $quer2 = false;
+        $validate = false;
 
-        $usuario = new User($request->all());
-        $usuario->password = bcrypt($usuario->password);         
-        if($usuario->save()){
-            $tipo = "";
-            switch($usuario->tipo_usuario){
-                case "Administrador":
-                    $tipo = "A";
-                    break;
-                case "Administrador de sucursal":
-                    $tipo = "S";
-                    break;
-                case "Medico":
-                    $tipo = "D";
-                    break;
-            }
-            $usuario->clave_bancaria = UsuariosController::clave($usuario->estado, $usuario->id, $tipo);
+        DB::transaction(function(){
+            
+            $usuario = new User($request->all());
+            $usuario->password = bcrypt($usuario->password);         
             if($usuario->save()){
-                $quer1 = true;
-            }               
-        }
+                $tipo = "";
+                switch($usuario->tipo_usuario){
+                    case "Administrador":
+                        $tipo = "A";
+                        break;
+                    case "Administrador de sucursal":
+                        $tipo = "S";
+                        break;
+                    case "Medico":
+                        $tipo = "D";
+                        break;
+                }
+                $usuario->clave_bancaria = UsuariosController::clave($usuario->estado, $usuario->id, $tipo);
+                $usuario->save();
+            }
 
-        if($request->has("sucursal")) {
-            $id = $request->sucursal;
-            // dd($id);
-            $sucursal = Sucursal::find($id);            
-            if($usuario->sucursales()->attach($sucursal)){
-                $quer2 = true;
-            } 
-        }
+            if($request->has("sucursal")) {
+                $id = $request->sucursal;
+                // dd($id);
+                $sucursal = Sucursal::find($id);            
+                $usuario->sucursales()->attach($sucursal);
+            }
 
-        if($quer1 && $quer2){
+            $validate = true;
+        });
+
+        if($validate) {
             Flash::overlay('Se ha registrado '.$usuario->nombre.' de forma exitosa.', 'Alta exitosa');
         }else{
-            Flash::overlay('Ha ocurrido un error al registrar al usuario  '.$usuario->nombre, 'Error'); 
-        }        
+            Flash::overlay('Ha ocurrido un error al registrar al usuario  '.$usuario->nombre, 'Error');            
+        }
+
         
         return redirect()->route('admin.usuarios.index');
     }
