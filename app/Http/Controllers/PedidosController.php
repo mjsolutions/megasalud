@@ -146,23 +146,24 @@ class PedidosController extends Controller
         foreach($productos as $producto){
             $id_producto=$producto->id;
             $suma+=$request[$id_producto];
-            $importe+=$request->$id_producto*$producto->presio;
+            $importe+=$request[$id_producto]*$producto->precio;
             $existencia=$producto->producto_sucursal[0]->pivot->existencia;
             if($request->$id_producto<=$existencia){
                 $bandera=true;
-                $request->session()->put($id_producto,$request[$id_producto]);//seteado de productos con cantidades en variable de sesion
+                $request->session()->put("$id_producto",$request[$id_producto]);//seteado de productos con cantidades en variable de sesion
             }
             else{
                 $bandera=false;
                 break;
             }
         }
+        // Se guardar los valores en la variable de sesion y en la variable request para enviar a la vista
         $request->session()->put('importe',$importe);
         $total=($impuesto*$importe)+$importe;
-        $request->session()->put('impuesto',$impuesto);
+        $request->session()->put('impuesto',$impuesto*$importe);
         $request->session()->put('total',$total);
         $request->importe=$importe;
-        $request->impuesto=$impuesto;
+        $request->impuesto=$impuesto*$importe;
         $request->total=$total;
         //$request->session()->flush();
         if($suma>0){//comprobar que al menos se haya seleccionado un producto

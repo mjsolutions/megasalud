@@ -75,29 +75,29 @@
                                     <div class="col l6 input-field">
                                         <i class="material-icons prefix">perm_identity</i>
                                         {!! Form::label('nombre','Nombre del tarjetahabiente') !!}
-                                        {!! Form::text('nombre',null,['class'=>'validate','size'=>'20','data-conekta'=>'card[name]']) !!}
+                                        {!! Form::text('nombre',null,['class'=>'validate','size'=>'20','id'=>'nombre','data-conekta'=>'card[name]']) !!}
                                     </div>
                                     <div class="col l6 input-field">
                                         <i class="material-icons prefix">payment</i>
                                         {!! Form::label('numero','Número de la Tarjeta') !!}
-                                        {!! Form::text('numero',null,['class'=>'validate','size'=>'20','data-conekta'=>'card[number]']) !!}  
+                                        {!! Form::text('numero',null,['class'=>'validate','id'=>'numero','size'=>'20','data-conekta'=>'card[number]']) !!}  
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col l4 input-field">
                                         <i class="material-icons prefix">today</i>
                                           {!! Form::label('mes','Mes de expiración') !!}
-                                          {!! Form::text('mes',null,['class'=>'validate','size'=>'2','data-conekta'=>'card[exp_month]']) !!}
+                                          {!! Form::text('mes',null,['class'=>'validate','id'=>'mes','size'=>'2','data-conekta'=>'card[exp_month]']) !!}
                                     </div>
                                     <div class="col l4 input-field">
                                         <i class="material-icons prefix">today</i>
                                           {!! Form::label('ano','Año de expiración') !!}
-                                          {!! Form::text('ano',null,['class'=>'validate','size'=>'4','data-conekta'=>'card[exp_year]']) !!}
+                                          {!! Form::text('ano',null,['class'=>'validate','id'=>'ano','size'=>'4','data-conekta'=>'card[exp_year]']) !!}
                                     </div>
                                     <div class="col l4 input-field">
                                         <i class="material-icons prefix">account_circle</i>
                                         {!! Form::label('cvc','Código CVC') !!}
-                                        {!! Form::text('cvc',null,['class'=>'validate','size'=>'4','data-conekta'=>'card[exp_year]']) !!}
+                                        {!! Form::text('cvc',null,['class'=>'validate','id'=>'cvc','size'=>'4','data-conekta'=>'card[exp_year]']) !!}
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +169,7 @@
                 <div class="row">
                     <div class="col l12 center-align">
                         <input type="hidden" name="metodo" id="metodo">
-                        <a class="waves-effect waves-light btn modal-trigger" href="#confirmar" id="continuar">Continuar</a>
+                        <a class="waves-effect waves-light btn" id="continuar">Continuar</a>
                     </div>
                 </div>
                 {{-- Inicio Modal de confirmación --}}
@@ -257,12 +257,10 @@
                                     </thead>
                                     <tbody id="tabla">
                                       @foreach($productos as $producto)
-                                      {!! $i=$producto->id !!}
-                                        {{dd($lista)}}
-                                        @if($lista->$producto->id>0)
+                                        @if($lista[$producto->id]>0)
                                             <tr>
                                                 <td>
-                                                    {{$lista->$producto->id}}      
+                                                    {{$lista[$producto->id]}}
                                                 </td>
                                                 <td>
                                                     {{$producto->nombre}}
@@ -271,7 +269,7 @@
                                                     {{$producto->precio}}
                                                 </td>
                                                 <td>
-                                                    {{"$".$producto->precio*$lista->$producto->id }}
+                                                    {{"$".$producto->precio*$lista[$producto->id] }}
                                                 </td>
                                             </tr>
                                         @endif
@@ -286,7 +284,7 @@
                                         <span class="teal lighten-2 c-white p-8 br-2">Importe</span>
                                     </div>
                                     <div class="col l2 right-align" id="importe">
-                                        {{$lista->importe}}
+                                        {{"$".$lista->importe}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -294,7 +292,7 @@
                                         <span class="teal lighten-2 c-white p-8 br-2">Impuesto</span>
                                     </div>
                                     <div class="col l2 right-align" id="impuesto">
-                                        {{$lista->impuesto}}
+                                        {{"$".$lista->impuesto}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -302,7 +300,9 @@
                                         <span class="teal lighten-2 c-white p-8 br-2"><b>Total</b></span>
                                     </div>
                                     <div class="col l2 right-align" id="total">
-                                        {{$lista->total}}
+                                        <b>
+                                        {{"$".$lista->total}}
+                                        </b>
                                     </div>
                                 </div>
                             </div>
@@ -338,7 +338,19 @@
             }
         });
         $("#continuar").click(function(){
-            $("#forma_pago").html($("#metodo").val());
+            if($("#metodo").val()==""){
+                Materialize.toast("Debes elegir una forma de pago.",4000);
+                return false;
+            }
+            else if($("#metodo").val()=="Tarjeta"){
+                $("#nombre").attr("required","required");
+                $("#confirmar").openModal();
+            }
+            else{
+                $("#forma_pago").html($("#metodo").val());
+                $("#confirmar").openModal();
+            }
+
         });
 @endsection
 @section('functions')
