@@ -344,9 +344,18 @@
             }
             else if($("#metodo").val()=="Tarjeta"){
                 $("#nombre").attr("required","required");
+                $("#numero").attr("required","required");
+                $("#mes").attr("required","required");
+                $("#ano").attr("required","required");
+                $("#cvc").attr("required","required");
                 $("#confirmar").openModal();
             }
             else{
+                $("#nombre").removeAttr("required");
+                $("#numero").removeAttr("required");
+                $("#mes").removeAttr("required");
+                $("#ano").removeAttr("required");
+                $("#cvc").removeAttr("required");
                 $("#forma_pago").html($("#metodo").val());
                 $("#confirmar").openModal();
             }
