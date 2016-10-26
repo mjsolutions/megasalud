@@ -94,6 +94,17 @@ Route::group(['prefix'=>'admin'],function(){
 		'uses' => 'UsuariosController@banco',
 		'as' => 'admin.usuarios.banco'
 		]);
+
+	Route::get('usuarios/medicos',[
+		'uses' => 'UsuariosController@medicos',
+		'as' => 'admin.usuarios.medicos'
+ 		]);
+	
+	Route::get('usuarios/adminsucursal', [
+		'uses' => 'UsuariosController@adminsucursal',
+		'as' => 'admin.usuarios.adminsucursal'
+		]);
+
 	Route::resource('usuarios','UsuariosController');
 
 	Route::get('usuarios/{id}/destroy', [

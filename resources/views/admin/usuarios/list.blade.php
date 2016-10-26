@@ -23,9 +23,9 @@
 				<tr>
 					<th data-field="id">Id</th>
 					<th data-field="name">Nombre</th>
-					<th data-field="sucursal">Sucursal</th>
 					<th data-field="sucursal">Email</th>
-					<th data-field="telefono">Telefono</th>
+                    <th data-field="telefono">Rol</th>
+                    <th data-field="sucursal">Sucursal</th>
 					<th data-field="option">Opciones</th>
 				</tr>
 			</thead>
@@ -34,10 +34,17 @@
 				<tr>
 					<td>{{ $usuario->id }}</td>
 					<td>{{ $usuario->nombre }}</td>
-					<td></td>
 					<td>{{ $usuario->email }}</td>
-					<!--//$usuario->users[0]->sucursales[0]->razon_social-->
-					<td>{{ $usuario->telefono_a }}</td>
+                    <td>
+                        @if ($usuario->tipo_usuario == "Administrador")
+                            <span class="c-white-normal p-5 br-2 blue">{{ $usuario->tipo_usuario }}</span>
+                        @elseif ($usuario->tipo_usuario == "Medico")
+                            <span class="c-white-normal p-5 br-2 green">{{ $usuario->tipo_usuario }}</span>
+                        @else
+                            <span class="c-white-normal p-5 br-2 red">Admin. de Suc.</span>
+                        @endif
+                    </td>
+					<td></td>
 					<td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $usuario->id }})"><i class="material-icons">receipt</i></a><a href="{!! route('admin.usuarios.edit', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-10 tooltipped" data-position="right" data-delay="50" data-tooltip="Editar"><i class="material-icons">edit</i></a><a href="{!! route('admin.usuarios.destroy', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1 tooltipped" data-position="right" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a></td>
 				</tr>
 				@endforeach

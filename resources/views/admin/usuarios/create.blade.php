@@ -252,7 +252,7 @@
         </div>
       </div>
 
-      <div class="col l5 hidden-div">
+      <div class="col l5 sucursal-div">
         {{-- En caso de seleccionar Administrador de sucursal se mostrara la lista de sucusales --}}
         <div class="input-field">
           <i class="material-icons prefix">perm_identity</i>
@@ -261,7 +261,7 @@
         </div>
       </div>
 
-      <div class="col l1 hidden-div">
+      <div class="col l1 sucursal-div">
         <div class="input-field">
           <a class="btn-floating waves-effect waves-light light-blue accent-3 modal-trigger tooltipped" href="#add_sucursal" data-position="top" data-delay="50" data-tooltip="Nueva sucursal"><i class="material-icons">add</i></a>
         </div>
@@ -293,13 +293,30 @@
     @endforeach
   @endif
 
-$(".hidden-div").hide();
-
 $("select#tipo_usuario").change(function() {
-  if ($(this).val() == "Administrador de sucursal"){
-    $(".hidden-div").fadeIn('slow');
+  if ($(this).val() != "Administrador"){
+
+    var url = "";
+
+    if ($(this).val() == "Medico"){
+      url = "{{ route('admin.usuarios.medicos') }}";
+    }else{
+      url = "{{ route('admin.usuarios.adminsucursal')}}";
+    }
+    
+    $.get(url).done(function(data){
+        $("#sucursal").material_select('destroy');
+        $("#sucursal").html("<option value=''>Selecciona una opcion</option>");
+        $.each(data, function(i, elem){
+          $("#sucursal").append("<option value='" + i + "'>"+ elem +"</option>");
+        });
+        $("#sucursal").material_select('update');
+      });
+
+    $(".sucursal-div").fadeIn('slow');
+
   }else{
-    $(".hidden-div").hide();
+    $(".sucursal-div").hide();
     $('#sucursal').val("");
   }
 });

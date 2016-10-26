@@ -39,7 +39,8 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        $sucursales = DB::table('sucursales')->select('razon_social','id')->whereNotIn('id', DB::table('user_sucursal')->select('sucursal_id')->distinct()->pluck('sucursal_id'))->pluck('razon_social','id');
+        $sucursales = Sucursal::all()->pluck('razon_social', 'id');
+        // dd($sucursales);
         return view('admin.usuarios.create')->with('sucursales', $sucursales);
     }
 
@@ -211,6 +212,15 @@ class UsuariosController extends Controller
             $data[$value->banco] = null;
         }
         return json_encode($data);
+    }
+
+    public function medicos() {
+        return Sucursal::all()->pluck('razon_social', 'id');
+    }
+
+    public function adminsucursal() {
+        return DB::table('sucursales')->select('razon_social','id')->whereNotIn('id', DB::table('user_sucursal')->select('sucursal_id')->distinct()->pluck('sucursal_id'))->pluck('razon_social','id');
+        // return DB::table('sucursales')->select('razon_social','id')->whereNotIn('id', DB::table('user_sucursal')->select('sucursal_id')->where('user_id', DB::table('users')->select('id')->where('tipo_usuario', 'Administrador de sucursal'))->pluck('sucursal_id'))->pluck('razon_social','id');
     }
 
     public function clave($estado,$id,$tipo){
