@@ -12,6 +12,8 @@ use MegaSalud\Producto;
 
 use MegaSalud\Paciente;
 
+use Carbon\Carbon;
+
 use Laracasts\Flash\Flash;
 
 class PedidosController extends Controller
@@ -46,7 +48,7 @@ class PedidosController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->session());
+        //dd($request->session());
     }
 
     /**
@@ -129,20 +131,6 @@ class PedidosController extends Controller
         $suma=0;
         $impuesto=0.15;//porcentaje de impuesto a cobrar
         $importe=0;
-        // for($i=1;$i<=$x;$i++){//se comprueba que no se exceda el limite de existencia de los productos
-        //     $suma+=$request->$i;
-        //     $producto=Producto::find($i);
-        //     $importe+=$request->$i*$producto->presio;
-        //     $existencia=$producto->producto_sucursal[0]->pivot->existencia;//obteniendo existencias de un producto
-        //     if($request->$i<=$existencia){
-        //         $bandera=true;
-        //         $request->session()->put($i,$request->$i);//seteado de productos con cantidades en variable de sesion
-        //     }
-        //     else{
-        //         $bandera=false;
-        //         break;
-        //     }
-        // }
         foreach($productos as $producto){
             $id_producto=$producto->id;
             $suma+=$request[$id_producto];
@@ -185,6 +173,52 @@ class PedidosController extends Controller
     }
     public function confirmacion(Request $request){
         //confirmación de pedido
-        
+        //Almacenamento de la información para el pedido
+        $codigo_confirmacion="XXXXX";//Realizar método para cuando es en efectivo y cuando es 
+        $detalle=$request->detalle;
+        $metodo=$request->metodo;
+        $importe=session("importe");
+        $impuesto=session("impuesto");
+        $total=session("total");
+        $paciente=Paciente::find(session("paciente"));
+        $productos=Producto::all();
+        //creando pedido
+        $pedido=new Pedido();
+        $pedido->paciente_id=session("paciente");
+        $pedido->user_id=$paciente->users[0]->id;
+        $pedido->importe=$importe;
+        $pedido->impuesto=$impuesto;
+        $pedido->total=$total;
+        $pedido->metodo=$metodo;
+        $pedido->detalle=$detalle;
+        $tiempo=Carbon::now();//objeto para obtener la fecha y hora actual
+        $pedido->fecha_pedido=$tiempo;
+        switch($metodo){
+            case "Efectivo":
+            case "Tarjeta":
+                $pedido->status=2;//estado de pagado en casod e ser efectivo o tarjeta. Ya que hasta este punto ya debe estar aprobado
+                $pedido->confirmacion=$codigo_confirmacion;
+                $pedido->fecha_pago=$tiempo;
+                break;
+            default:
+                $pedido->status=1;//pago en espera
+        }
+        if($pedido->save()){//guardando pedido
+            $pedido=Pedido::where('fecha_pedido',$tiempo)
+                            ->where('paciente_id',$paciente->id)->get();
+            foreach ($productos as $producto){
+                if(session()->has($producto->id)){//comprobamos que el producto este en el carrito
+                    $producto->pedidos()->attach($pedido[0]->id,['cantidad'=>session($producto->id)]);
+                    //$producto->producto_sucursal()->updateExistingPivot()
+                }
+            }
+            dd("success");
+        }
+        else{//si no se guarda el pedido
+            Flash::overlay('No fue posible crear el pedido', '¡Ocurrio un problema!');
+            return redirect()->route("admin.pedidos.craete");
+        }
+
+        return view('admin.pedidos.confirmar');
     }
 }
