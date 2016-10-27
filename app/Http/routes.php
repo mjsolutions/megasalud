@@ -115,6 +115,10 @@ Route::group(['prefix'=>'admin'],function(){
 	/*
 	| Rutas pedidos
 	*/
+	Route::get('pedidos/{data}/productos',[
+		'uses'	=>	'PedidosController@productos',
+		'as'	=>	'admin.pedidos.productos'
+		]);
 	Route::POST('pedidos/confirmar',[
 		'uses'	=>	'PedidosController@confirmacion',
 		'as'	=>	'admin.pedidos.confirmacion'

@@ -31,7 +31,6 @@
                 <tbody>
                     @foreach($pedidos as $pedido)
                         <tr>
-                            {{dd($pedido)}}
                             <td>{{ $pedido->id }}</td>
                             <td>{{ $pedido->paciente->nombre." ".$pedido->paciente->apellido_p." ".$pedido->paciente->apellido_m }}</td>
                             <td>{{ $pedido->user->sucursales[0]->razon_social }}</td>

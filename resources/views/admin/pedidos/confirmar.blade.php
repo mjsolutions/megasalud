@@ -15,7 +15,6 @@
                 <div class="col s8 col-center divider"></div>
             </div>
             
-            
     	</div>
     </div>
 @endsection

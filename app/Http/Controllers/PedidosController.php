@@ -12,6 +12,8 @@ use MegaSalud\Producto;
 
 use MegaSalud\Paciente;
 
+use megaSalud\Sucursal;
+
 use Carbon\Carbon;
 
 use Laracasts\Flash\Flash;
@@ -127,15 +129,17 @@ class PedidosController extends Controller
         $request->session()->reflash();
         $request->session()->put('paciente',$request->paciente_id);//seteado del id del usuario en la variable de sesion
         //$x=Producto::count();//numero de productos
-        $productos=Producto::all();
         $suma=0;
         $impuesto=0.15;//porcentaje de impuesto a cobrar
         $importe=0;
-        foreach($productos as $producto){
+        $paciente=Paciente::find($request->paciente_id);
+        $sucursal=$paciente->users[0]->sucursales[0]->id;
+        $sucursal=Sucursal::find($sucursal);
+        foreach($sucursal->producto_sucursal as $producto){
             $id_producto=$producto->id;
             $suma+=$request[$id_producto];
             $importe+=$request[$id_producto]*$producto->precio;
-            $existencia=$producto->producto_sucursal[0]->pivot->existencia;
+            $existencia=$producto->pivot->existencia;
             if($request->$id_producto<=$existencia){
                 $bandera=true;
                 $request->session()->put("$id_producto",$request[$id_producto]);//seteado de productos con cantidades en variable de sesion
@@ -181,7 +185,6 @@ class PedidosController extends Controller
         $impuesto=session("impuesto");
         $total=session("total");
         $paciente=Paciente::find(session("paciente"));
-        $productos=Producto::all();
         //creando pedido
         $pedido=new Pedido();
         $pedido->paciente_id=session("paciente");
@@ -193,6 +196,7 @@ class PedidosController extends Controller
         $pedido->detalle=$detalle;
         $tiempo=Carbon::now();//objeto para obtener la fecha y hora actual
         $pedido->fecha_pedido=$tiempo;
+        $sucursal=$paciente->users[0]->sucursales[0]->id;
         switch($metodo){
             case "Efectivo":
             case "Tarjeta":
@@ -206,13 +210,17 @@ class PedidosController extends Controller
         if($pedido->save()){//guardando pedido
             $pedido=Pedido::where('fecha_pedido',$tiempo)
                             ->where('paciente_id',$paciente->id)->get();
-            foreach ($productos as $producto){
+            $sucursal=Sucursal::find($sucursal);
+            foreach ($sucursal->producto_sucursal as $producto){
+                //dd($producto->pivot->existencia);
                 if(session()->has($producto->id)){//comprobamos que el producto este en el carrito
-                    $producto->pedidos()->attach($pedido[0]->id,['cantidad'=>session($producto->id)]);
-                    //$producto->producto_sucursal()->updateExistingPivot()
+                    $actual=$producto->pivot->existencia;
+                    if($producto->producto_sucursal()->updateExistingPivot($sucursal->id,['existencia'=>$actual-session($producto->id)])){//se realiza la reducción del inventario del producto
+                        $producto->pedidos()->attach($pedido[0]->id,['cantidad'=>session($producto->id)]);// se crea el registro del producto a su respectivo pedido
+                    }
+
                 }
             }
-            dd("success");
         }
         else{//si no se guarda el pedido
             Flash::overlay('No fue posible crear el pedido', '¡Ocurrio un problema!');
@@ -220,5 +228,10 @@ class PedidosController extends Controller
         }
 
         return view('admin.pedidos.confirmar');
+    }
+    public function productos($request){
+        $paciente=Paciente::find($request);
+        $sucursal=$paciente->users[0]->sucursales[0]->id;
+        return json_encode($paciente->users[0]->sucursales[0]->producto_sucursal);
     }
 }
