@@ -30,6 +30,8 @@ class UsuariosController extends Controller
         //
         $usuarios=User::where('status',1)->orderBy('nombre','ASC')->paginate(10);
         return view('admin.usuarios.list')->with('usuarios',$usuarios);
+        // $suc = Sucursal::find($usuarios[1]->id);
+        // dd($usuarios[6]->sucursales[0]->razon_social);
     }
 
     /**
@@ -219,8 +221,9 @@ class UsuariosController extends Controller
     }
 
     public function adminsucursal() {
-        return DB::table('sucursales')->select('razon_social','id')->whereNotIn('id', DB::table('user_sucursal')->select('sucursal_id')->distinct()->pluck('sucursal_id'))->pluck('razon_social','id');
-        // return DB::table('sucursales')->select('razon_social','id')->whereNotIn('id', DB::table('user_sucursal')->select('sucursal_id')->where('user_id', DB::table('users')->select('id')->where('tipo_usuario', 'Administrador de sucursal'))->pluck('sucursal_id'))->pluck('razon_social','id');
+        //regresar los id y nombre de las sucursales que aun no tienen administrador asignado
+        
+        return DB::table('sucursales')->select('id', 'razon_social')->whereNotIn('id', DB::table('user_sucursal')->join('users', 'users.id', '=', 'user_sucursal.user_id')->select('user_sucursal.sucursal_id')->where('users.tipo_usuario', '=', 'Administrador de sucursal'))->pluck('razon_social','id');
     }
 
     public function clave($estado,$id,$tipo){

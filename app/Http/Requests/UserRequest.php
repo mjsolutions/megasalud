@@ -33,7 +33,7 @@ class UserRequest extends Request
                     'password' => 'confirmed|required',
                     'email' => 'unique:users,email,',
                     'curp' => 'regex:/^([a-z]{4})([0-9]{6})([a-z]{6})([0-9]{2})$/i',
-                    'sucursal' => 'required_if:tipo_usuario,Administrador de sucursal'
+                    'sucursal' => 'required_if:tipo_usuario,Administrador de sucursal|required_if:tipo_usuario,Medico'
                 ];
             }
             case 'PUT':

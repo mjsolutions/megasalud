@@ -44,7 +44,9 @@
                             <span class="c-white-normal p-5 br-2 red">Admin. de Suc.</span>
                         @endif
                     </td>
-					<td></td>
+					<td>
+                    {{-- {{ $usuario->sucursales[0]->razon_social }} --}}
+                    </td>
 					<td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $usuario->id }})"><i class="material-icons">receipt</i></a><a href="{!! route('admin.usuarios.edit', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-10 tooltipped" data-position="right" data-delay="50" data-tooltip="Editar"><i class="material-icons">edit</i></a><a href="{!! route('admin.usuarios.destroy', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1 tooltipped" data-position="right" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a></td>
 				</tr>
 				@endforeach
