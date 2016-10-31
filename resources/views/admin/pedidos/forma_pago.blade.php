@@ -25,41 +25,6 @@
                     </nav>
                 </div>
             </div>
-            {{-- <div class="row">
-                <div class="col l4 right-align">
-                    <span class="teal lighten-2 c-white p-8 br-2">Nombre</span>
-                </div>
-                <div class="col l8" id="nombre">
-                    {{$paciente->nombre." ".$paciente->apellido_p." ".$paciente->apellido_m}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col l4 right-align">
-                    <span class="teal lighten-2 c-white p-8 br-2">Telefonos</span>
-                </div>
-                <div class="col l8" id="telefonos">
-                    {{ "(".substr($paciente->telefono_a, 0, 3).") ".substr($paciente->telefono_a, 3, 3)."-".substr($paciente->telefono_a,6)." "."(".substr($paciente->telefono_b, 0, 3).") ".substr($paciente->telefono_b, 3, 3)."-".substr($paciente->telefono_b,6)}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col l4 right-align">
-                    <span class="teal lighten-2 c-white p-8 br-2">Correo electronico</span>
-                </div>
-                <div class="col l8" id="mail">
-                    {{$paciente->email}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col l4 right-align">
-                    <span class="teal lighten-2 c-white p-8 br-2">Sucursal</span>
-                </div>
-                <div class="col l8" id="sucursal">
-                    {{$paciente->users[0]->sucursales[0]->razon_social}}
-                </div>
-            </div>
-            <div class="input-field center-align">
-                {!! Form::submit('Crear',['class'=>'btn waves-effect waves-light']) !!}
-            </div> --}}
             <div class="container">
                 <ul class="collapsible" data-collapsible="accordion">
                     <li >

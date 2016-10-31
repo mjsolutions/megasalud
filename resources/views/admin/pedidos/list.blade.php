@@ -23,7 +23,7 @@
                       <th data-field="id">#</th>
                       <th data-field="name">Nombre</th>
                       <th data-field="sucursal">Sucursal</th>
-                      <th data-field="phone">Telefono</th>
+                      <th data-field="phone">Fecha</th>
                       <th data-field="status">Estado</th>
                       <th data-field="option">Opciones</th>
                   </tr>
@@ -34,7 +34,7 @@
                             <td>{{ $pedido->id }}</td>
                             <td>{{ $pedido->paciente->nombre." ".$pedido->paciente->apellido_p." ".$pedido->paciente->apellido_m }}</td>
                             <td>{{ $pedido->user->sucursales[0]->razon_social }}</td>
-                            <td>{{ "(".substr($pedido->paciente->telefono_a, 0, 3).") ".substr($pedido->paciente->telefono_a, 3, 3)."-".substr($pedido->paciente->telefono_a,6) }}</td>
+                            <td>{{$pedido->fecha_pedido}}</td>
                             <td> 
                                 @if($pedido->status==1)
                                     <b>En Espera</b>
@@ -44,7 +44,7 @@
                                     <b>Cancelado</b>
                                 @endif
                             </td>
-                            <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $pedido->id }})"><i class="material-icons">receipt</i></a><a href="" data-position="right" data-delay="50" data-tooltip="Editar" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="" data-position="right" data-delay="50" data-tooltip="Eliminar" class="tooltipped btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
+                            <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $pedido->id }})"><i class="material-icons">receipt</i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -72,13 +72,14 @@
                         </div>
                         <!-- Fin encabezado-->
                         <!-- Información de Contacto-->
+                        {!! Form::open(['route'=>['admin.pedidos.cambio'], 'method'=>'POST','id'=>'form_cambio']) !!}
                         <div class="col s12 m8 offset-m2 l6 offset-l3">
                             <div class="card-panel grey lighten-5 z-depth-2">
                               <div class="row valign-wrapper">
                                 <div class="col l12 center-align">
                                   <legend><h5 class="c-blue-grey">Información básica</h5></legend>
                                 </div>
-                              </div>
+                                </div>
                                 <div class="row">
                                     <div class="col l4 right-align">
                                         <span class="teal lighten-2 c-white p-8 br-2">Nombre</span>
@@ -161,6 +162,7 @@
                                 </div>
                             </div>
                         </div>
+                        {!! Form::close() !!}
                         <!-- Fin información de contacto-->
                         <!-- Datos Generales -->
                         <div class="col s12 m8 offset-m2 l6 offset-l3">

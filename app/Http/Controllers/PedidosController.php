@@ -221,14 +221,14 @@ class PedidosController extends Controller
 
                 }
             }
+            return view('admin.pedidos.confirmar')->with('pedido',$pedido[0]);
         }
         else{//si no se guarda el pedido
             Flash::overlay('No fue posible crear el pedido', '¡Ocurrio un problema!');
             return redirect()->route("admin.pedidos.craete");
-        }
-
-        return view('admin.pedidos.confirmar');
+        }     
     }
+
     public function productos($request){
         $paciente=Paciente::find($request);
         $sucursal=$paciente->users[0]->sucursales[0]->id;
