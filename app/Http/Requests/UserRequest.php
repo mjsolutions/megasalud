@@ -30,6 +30,8 @@ class UserRequest extends Request
                     'nombre' => 'required',
                     'tipo_usuario' => 'required',
                     'cp' => 'numeric',
+                    'telefono_a' => 'numeric',
+                    'telefono_b' => 'numeric|different:telefono_a',
                     'password' => 'confirmed|required',
                     'email' => 'unique:users,email,',
                     'curp' => 'regex:/^([a-z]{4})([0-9]{6})([a-z]{6})([0-9]{2})$/i',

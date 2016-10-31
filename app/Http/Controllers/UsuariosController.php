@@ -118,11 +118,22 @@ class UsuariosController extends Controller
     public function show($id)
     {
         $usuario = User::find($id);
-        $usuario->telefono_a="(".substr($usuario->telefono_a, 0, 3).") ".substr($usuario->telefono_a, 3, 3)."-".substr($usuario->telefono_a,6);
-        if(!empty($usuario->telefono_b)) {
 
-            $usuario->telefono_b="/ (".substr($usuario->telefono_b, 0, 3).") ".substr($usuario->telefono_b, 3, 3)."-".substr($usuario->telefono_b,6);
+        if(!empty($usuario->telefono_a)) {
+
+            $usuario->telefono_a="(".substr($usuario->telefono_a, 0, 3).") ".substr($usuario->telefono_a, 3, 3)."-".substr($usuario->telefono_a,6);
+
+            if(!empty($usuario->telefono_b)) {
+
+                $usuario->telefono_b=" | (".substr($usuario->telefono_b, 0, 3).") ".substr($usuario->telefono_b, 3, 3)."-".substr($usuario->telefono_b,6);
+            }
+        }elseif(!empty($usuario->telefono_b)){
+            $usuario->telefono_b="(".substr($usuario->telefono_b, 0, 3).") ".substr($usuario->telefono_b, 3, 3)."-".substr($usuario->telefono_b,6);
+        }else{
+            $usuario->telefono_a = "N/A";
         }
+
+        
         return json_encode($usuario);
     }
 
