@@ -69,8 +69,8 @@
                                   <th data-field="option">Cantidad</th>
                               </tr>
                             </thead>
-                            <tbody>
-                                @foreach($productos as $producto)
+                            <tbody id="productos_lista">
+                                {{-- @foreach($productos as $producto)
                                     <tr>
                                         <td>{{ $producto->id }}</td>
                                         <td>{{ $producto->nombre }}</td>
@@ -82,7 +82,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -98,6 +98,8 @@
     </div>
     {!! Form::close() !!}
     {!! Form::open(['route'=>['admin.pedidos.busqueda_pacientes',':DATA'], 'method'=>'GET','id'=>'form']) !!}
+    {!! Form::close() !!}
+    {!! Form::open(['route'=>['admin.pedidos.productos',':DATA'], 'method'=>'GET','id'=>'form_productos']) !!}
     {!! Form::close() !!}
 @endsection
 @section('scripts')
@@ -136,5 +138,23 @@
         $('#'+id).parents("tr").css('background-color','#c8e6c9');
         $("#productos").fadeIn("slow");
         $("#paciente_id").val(id);
+        var form=$("#form_productos");
+        var url=form.attr('action').replace(':DATA',id);
+        $.get(url).done(function(data){
+            var datos=JSON.parse(data);
+            $("#productos_lista").html("");
+            for(var i=0;i<datos.length;i++){
+                $("#productos_lista").append(
+                    "<tr>"+
+                        "<td>"+datos[i].id+"</td>"+
+                        "<td>"+datos[i].nombre+"</td>"+
+                        "<td>"+datos[i].precio+"</td>"+
+                        "<td>"+datos[i].pivot.existencia+"</td>"+
+                        "<td><div class=\"col l4 s12 offset-l4\"><input type=\"number\" class=\"validate mb-0 center-align tooltipped\" data-position=\"right\" data-delay=\"50\" data-tooltip=\"Ingrese la cantidad\" id=\""+datos[i].id+"\" min=\"0\" max=\""+datos[i].pivot.existencia+"\" name=\""+datos[i].id+"\" value=\"0\"></div></td>"
+                    +"</tr>"
+                );
+                console.log(datos[i]);
+            }
+        });
     }
 @endsection

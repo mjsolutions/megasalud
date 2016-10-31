@@ -50,7 +50,7 @@
                             <div class="card-panel grey lighten-5 z-depth-0">
                               <div class="row valign-wrapper">
                                 <div class="col s4">
-                                  <img src="" alt="" id="foto" class="circle responsive-img"> 
+                                  <img src="{{ asset('images/user.jpg') }}" alt="" id="foto" class="circle responsive-img"> 
                                 </div>
                                 <div class="col s10">
                                   <span class="black-text" id="datos">
@@ -186,6 +186,7 @@
     function detalle(id){
         var form=$("#form");
         var url=form.attr('action').replace(':USER_ID',id);
+        var foto_default='{{asset('images/user.jpg')}}';
         $.get(url).done(function(data){
             var datos=JSON.parse(data);
             $("#datos").html(
@@ -228,7 +229,11 @@
             $("#clave").html(
                 "<span>"+datos.clave_bancaria+"</span>"
             );
-            $("#foto").attr("src",datos.ruta+"/"+datos.foto);
+            if(datos.foto!=""&&datos.foto!=null)
+                $("#foto").attr("src",datos.ruta+"/"+datos.foto);
+            else{
+                $("#foto").attr("src",foto_default);
+            }
             $("#detalles").openModal();
             
         });
