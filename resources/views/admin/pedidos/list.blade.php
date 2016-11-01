@@ -44,7 +44,7 @@
                                     <b>Cancelado</b>
                                 @endif
                             </td>
-                            <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $pedido->id }})"><i class="material-icons">receipt</i></a></td>
+                            <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $pedido->id }})"><i class="material-icons">receipt</i></a><a onclick="cambiar_e({{$pedido->id}})" data-position="right" data-delay="50" data-tooltip="Cambiar estado" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -72,7 +72,6 @@
                         </div>
                         <!-- Fin encabezado-->
                         <!-- Información de Contacto-->
-                        {!! Form::open(['route'=>['admin.pedidos.cambio'], 'method'=>'POST','id'=>'form_cambio']) !!}
                         <div class="col s12 m8 offset-m2 l6 offset-l3">
                             <div class="card-panel grey lighten-5 z-depth-2">
                               <div class="row valign-wrapper">
@@ -162,7 +161,6 @@
                                 </div>
                             </div>
                         </div>
-                        {!! Form::close() !!}
                         <!-- Fin información de contacto-->
                         <!-- Datos Generales -->
                         <div class="col s12 m8 offset-m2 l6 offset-l3">
@@ -219,6 +217,42 @@
                 </div>
             </div>
             <!-- Fin modal-->
+            {{-- Inicio de Modal cambio de estado --}}
+            {{-- {!! Form::open(['route'=>['admin.pedidos.cambio'], 'method'=>'POST','id'=>'form_cambio']) !!} --}}
+            <div id="cambiar_estado" class="modal">
+                <div class="modal-content center-align">
+                  <h4>Actualizar estado del pedido</h4>
+                  <div class="row">
+                    <div class="col s8 col-center divider"></div>
+                  </div>
+                  <div class="row">
+                        <div class="col l6 mt-0">
+                          {!! Form::select('metodo_pago',['1'=>'En espera','2'=>'Pagado','3'=>'Cancelado'],null,['id'=>'metodo_pago','placeholder'=>'Elige un metodo de pago','required'=>'required']) !!}
+                        </div>
+                        <div class="col l6 input-field m-0">
+                            {!! Form::label('confirmacion','Código de confirmación') !!}
+                            {!! Form::number('confirmacion',null,['class'=>'validate','id'=>'confirmacion','min'=>'0','required'=>'required']) !!}
+                        </div>
+                  </div>
+                  <div class="row">
+                    <div class="col l12 input-field">
+                            {!! Form::label('detalle_m','Detalles') !!}
+                            {!! Form::textarea('detalle_m',null,['class'=>'materialize-textarea','id'=>'detalle_m','required'=>'required']) !!}
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" id="pedido_id" name="pedido_id" value="">
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col l12">
+                            {!! Form::submit('Actualizar',['class'=>'btn waves-effect waves-light']) !!} 
+                            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Volver</a>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            {{-- {!! Form::close() !!} --}}
+            {{-- Fin de modal cambio de estado --}}
             <div class="center-align">
                 {!! (new Landish\Pagination\Materialize($pedidos))->render() !!}
             </div>
@@ -285,5 +319,9 @@
             );
             $("#detalles").openModal();
         });
+    }
+    function cambiar_e(id){
+        $('#pedido_id').val(id);
+        $('#cambiar_estado').openModal();
     }
 @endsection

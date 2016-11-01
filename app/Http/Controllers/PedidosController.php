@@ -234,4 +234,7 @@ class PedidosController extends Controller
         $sucursal=$paciente->users[0]->sucursales[0]->id;
         return json_encode($paciente->users[0]->sucursales[0]->producto_sucursal);
     }
+    public function estado(Request $request){
+        
+    }
 }
