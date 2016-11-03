@@ -27,7 +27,7 @@ class PedidosController extends Controller
      */
     public function index()
     {  
-        $pedidos=Pedido::orderBy("fecha_pedido","asc")->paginate(10);
+        $pedidos=Pedido::orderBy("fecha_pedido","desc")->paginate(10);
         return view('admin.pedidos.list')->with("pedidos",$pedidos);
     }
 
@@ -235,6 +235,29 @@ class PedidosController extends Controller
         return json_encode($paciente->users[0]->sucursales[0]->producto_sucursal);
     }
     public function estado(Request $request){
-        
+        $id=$request->pedido_id;
+        $detalle=$request->detalle_m;
+        $estado=$request->estado_m;
+        $confirmacion=$request->confirmacion;
+        $pedido=Pedido::find($id);
+        if($pedido){//si existe el pedido se prosigue a guardar la información
+            $pedido->detalle=$detalle;
+            $pedido->status=$estado;
+            $pedido->confirmacion=$confirmacion;
+            $tiempo=Carbon::now();//objeto para obtener la fecha y hora actual
+            $pedido->fecha_pago=$tiempo;
+            if($pedido->save()){
+                Flash::overlay('Operación existosa', '¡Alta Exitosa!');
+                return redirect()->route('admin.pedidos.index');
+            }
+            else{
+                Flash::overlay('No fue posible cambiar el estado del pedido', '¡Ocurrio un problema!');
+                return redirect()->route("admin.pedidos.index");
+            }
+        }
+        else{
+            Flash::overlay('No fue posible encontrar el pedido solicitado', '¡Ocurrio un problema!');
+            return redirect()->route("admin.pedidos.index");
+        }
     }
 }

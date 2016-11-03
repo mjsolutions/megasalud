@@ -153,7 +153,6 @@
                         "<td><div class=\"col l4 s12 offset-l4\"><input type=\"number\" class=\"validate mb-0 center-align tooltipped\" data-position=\"right\" data-delay=\"50\" data-tooltip=\"Ingrese la cantidad\" id=\""+datos[i].id+"\" min=\"0\" max=\""+datos[i].pivot.existencia+"\" name=\""+datos[i].id+"\" value=\"0\"></div></td>"
                     +"</tr>"
                 );
-                console.log(datos[i]);
             }
         });
     }
