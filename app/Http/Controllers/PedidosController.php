@@ -12,7 +12,7 @@ use MegaSalud\Producto;
 
 use MegaSalud\Paciente;
 
-use megaSalud\Sucursal;
+use MegaSalud\Sucursal;
 
 use Carbon\Carbon;
 
