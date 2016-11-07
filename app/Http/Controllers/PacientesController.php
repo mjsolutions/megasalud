@@ -134,7 +134,7 @@ class PacientesController extends Controller
             if($request->file('foto')){//comprobamos si se sube una fotografía
                 $path=public_path()."/images/paciente/";//ruta donde se almacenan
                 $foto_file=$request->file('foto');//obtenemos el objeto de la imagen
-                if(Storage::disk('local')->has('images/paciente/'.$foto_name)){//comprobamos si ya hay una foto de ese paciente, si existe, borramos el archivo y ponemos el nuevo
+                if(Storage::disk('local')->has('images/paciente/'.$foto_name)&&$foto_name!=""){//comprobamos si ya hay una foto de ese paciente, si existe, borramos el archivo y ponemos el nuevo
                     $foto_file->move($path,$foto_name);
                     $paciente->foto=$foto_name;
                 }

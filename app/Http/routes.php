@@ -155,4 +155,12 @@ Route::group(['prefix'=>'sucursal'],function(){
 	| Rutas pacientes
 	*/
 	Route::resource('pacientes','PacientesSucursalController');
+	Route::get('pacientes/{id}/destroy',[
+	'uses'	=>	'PacientesSucursalController@destroy',
+	'as'	=>	'sucursal.pacientes.destroy'
+	]);
+	/*
+	| Rutas productos
+	*/
+	Route::resource('productos','ProductosSucursalController');
 });
