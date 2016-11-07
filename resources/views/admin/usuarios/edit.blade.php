@@ -381,11 +381,11 @@ $.get('{!! route('admin.usuarios.banco') !!}').done(function(datos){
             });
 
 
-        $('form').submit(function(){
-          // alert(date);
-          alert($(this).serialize());
-          return false;
-        })
+        // $('form').submit(function(){
+        //   // alert(date);
+        //   alert($(this).serialize());
+        //   return false;
+        // })
     
   </script>
 @endsection
