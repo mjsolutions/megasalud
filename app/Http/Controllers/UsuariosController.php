@@ -82,8 +82,8 @@ class UsuariosController extends Controller
             if($request->has("sucursal")) {
                 $id = $request->sucursal;
                 // dd($id);
-                $sucursal = Sucursal::find($id);            
-                $usuario->sucursales()->attach($sucursal);
+                // $sucursal = Sucursal::find($id);            
+                $usuario->sucursales()->attach($id);
                 $validate = true;
             }else {
                 $validate = true;
@@ -150,18 +150,9 @@ class UsuariosController extends Controller
         if($usuario->tipo_usuario == "Administrador de sucursal"){
             $sucursal = UsuariosController::adminsucursal();
             $sucursal[$usuario->sucursales[0]->id] = $usuario->sucursales[0]->razon_social;
-        // }elseif ($usuario->tipo_usuario == "Medico"){
-        //     $sucursal = UsuariosController::medicos();
         }else{
             $sucursal = UsuariosController::medicos();
-            // $sucursal = null;
-            // if($usuario->sucursales->isEmpty()){
-                
-            // }else{
-            //    dd($usuario->sucursales[0]); 
-            // }
-        }
-        
+        }       
 
         //compact pasa las variables con sus nombres sin necesidad de referenciarlas
         //es lo mismo que hacer whth(array ('usuario'=>$usuario, 'sucursal'=>$sucursal))
@@ -179,8 +170,14 @@ class UsuariosController extends Controller
     public function update(UserRequest $request, $id)
     {
         $usuario = User::find($id);
+        
         $usuario->fill($request->all());//funcion para sustituir datos diferentes
         if ($usuario->save()) {//guardamos los cambios en la tabla de pacientes
+            if($usuario->sucursales->isEmpty() && $request->has("sucursal")){//no tiene asociada sucursal aun y se envio registro
+                $id = $request->sucursal;            
+                $usuario->sucursales()->attach($sucursal);
+            }
+
             Flash::overlay('Se actualizó a  '.$usuario->nombre.' de forma exitosa.', 'Operación exitosa');
         }else{
             Flash::overlay('Ha ocurrido un error al editar al usuario  '.$usuario->nombre, 'Error');
