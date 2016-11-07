@@ -150,15 +150,23 @@ class UsuariosController extends Controller
         if($usuario->tipo_usuario == "Administrador de sucursal"){
             $sucursal = UsuariosController::adminsucursal();
             $sucursal[$usuario->sucursales[0]->id] = $usuario->sucursales[0]->razon_social;
-        }elseif ($usuario->tipo_usuario == "Medico"){
-            $sucursal = UsuariosController::medicos();
+        // }elseif ($usuario->tipo_usuario == "Medico"){
+        //     $sucursal = UsuariosController::medicos();
         }else{
-            $sucursal = array();
+            $sucursal = UsuariosController::medicos();
+            // $sucursal = null;
+            // if($usuario->sucursales->isEmpty()){
+                
+            // }else{
+            //    dd($usuario->sucursales[0]); 
+            // }
         }
+        
 
         //compact pasa las variables con sus nombres sin necesidad de referenciarlas
         //es lo mismo que hacer whth(array ('usuario'=>$usuario, 'sucursal'=>$sucursal))
         return view('admin.usuarios.edit', compact('usuario', 'sucursal'));
+        // return view('admin.usuarios.edit')->with('usuario', $usuario);
     }
 
     /**

@@ -248,7 +248,13 @@
         {{-- En caso de seleccionar Administrador de sucursal se mostrara la lista de sucusales --}}
         <div class="input-field">
           <i class="material-icons prefix">perm_identity</i>
-          {!! Form::select('sucursal', $sucursal,  $usuario->sucursales[0]->id, ['class' => 'select-dropdown', 'id' => 'sucursal', 'placeholder' => 'Seleccione una opción']) !!} 
+          @if($usuario->tipo_usuario == "Administrador")
+          {{-- {{"es admin"}} --}}
+             {!! Form::select('sucursal', $sucursal, null, ['class' => 'select-dropdown', 'id' => 'sucursal', 'placeholder' => 'Seleccione una opción']) !!}
+          @else
+            {!! Form::select('sucursal', $sucursal, $usuario->sucursales[0]->id, ['class' => 'select-dropdown', 'id' => 'sucursal', 'placeholder' => 'Seleccione una opción']) !!}
+           {{-- {{"otro"}} --}}
+          @endif
           {!! Form::label('sucursal','Sucursal') !!}
         </div>
       </div>
@@ -284,6 +290,11 @@
     @endforeach
   @endif
 
+   {{-- Si es administrador ocultamos el div --}}
+  @if($usuario->tipo_usuario == 'Administrador')
+    $(".sucursal-div").hide();
+  @endif
+
 $("select#tipo_usuario").change(function() {
   
   let tipo = $(this).val();
@@ -302,20 +313,23 @@ $("select#tipo_usuario").change(function() {
         $("#sucursal").material_select('destroy');
         $("#sucursal").html("<option value=''>Selecciona una opcion</option>");
         $.each(data, function(i, elem){
-        
-        //si el tipo de usuario corresponde con el que es actualmente pondra como seleccionada su sucursal actual
-        if(tipo == '{{ $usuario->tipo_usuario }}'){
-          
-          if(i == {{ $usuario->sucursales[0]->id }}){
-            $("#sucursal").append("<option value='" + i + "' selected='selected'>"+ elem +"</option>");
-          }else{
-            $("#sucursal").append("<option value='" + i + "'>"+ elem +"</option>");          
-          }
 
-        }else{
+        //si el tipo de usuario corresponde con el que es actualmente pondra como seleccionada su sucursal actual
+        @if($usuario->tipo_usuario == 'Administrador')
           $("#sucursal").append("<option value='" + i + "'>"+ elem +"</option>");
-        }
+        @else
+          if(tipo == '{{ $usuario->tipo_usuario }}'){
           
+            if(i == {{ $usuario->sucursales[0]->id }}){
+              $("#sucursal").append("<option value='" + i + "' selected='selected'>"+ elem +"</option>");
+            }else{
+              $("#sucursal").append("<option value='" + i + "'>"+ elem +"</option>");          
+            }
+
+          }else{
+            $("#sucursal").append("<option value='" + i + "'>"+ elem +"</option>");
+          }
+        @endif          
 
         });
         $("#sucursal").material_select('update');
