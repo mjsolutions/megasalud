@@ -1,7 +1,7 @@
 @extends('main')
 @section('title','Pacientes')
 @section('nav')
-	@include('admin.nav')
+	@include('sucursal.nav')
 @endsection
 @section('content')
     <div class="container">
@@ -11,7 +11,7 @@
                     <h4>Pacientes</h4>
                 </div>
                 <div class="col pull-s1 s1">
-                    <a class="btn-floating btn-large waves-effect waves-light green modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Nuevo Paciente" href="{!! route('admin.pacientes.create') !!}"><i class="material-icons">add</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light green modal-trigger tooltipped" href="{!! route('sucursal.pacientes.create') !!}" data-position="right" data-delay="50" data-tooltip="Nuevo Paciente" ><i class="material-icons">add</i></a>
                 </div>
             </div>
             <div class="row">
@@ -22,7 +22,7 @@
                   <tr>
                     <th data-field="id">Id</th>
                     <th data-field="name">Nombre</th>
-                    <th data-field="sucursal">Sucursal</th>
+                    <th data-field="city">Ciudad</th>
                     <th data-field="telefono">Telefono</th>
                     <th data-field="option">Opciones</th>
                   </tr>
@@ -32,16 +32,16 @@
                         <tr>
                             <td>{{ $paciente->id }}</td>
                             <td>{{ $paciente->nombre.' '.$paciente->apellido_p.' '.$paciente->apellido_m }}</td>
-                            <td>{{$paciente->users[0]->sucursales[0]->razon_social}}</td>
-                            <!--//$paciente->users[0]->sucursales[0]->razon_social-->
+                            <td>{{$paciente->municipio}}</td>
                             <td>{{ "(".substr($paciente->telefono_a, 0, 3).") ".substr($paciente->telefono_a, 3, 3)."-".substr($paciente->telefono_a,6)." y "."(".substr($paciente->telefono_b, 0, 3).") ".substr($paciente->telefono_b, 3, 3)."-".substr($paciente->telefono_b,6) }}</td>
-                            <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $paciente->id }})"><i class="material-icons">receipt</i></a><a href="{!! route('admin.pacientes.edit', $paciente->id) !!}" data-position="right" data-delay="50" data-tooltip="Editar" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('admin.pacientes.destroy', $paciente->id) !!}" data-position="right" data-delay="50" data-tooltip="Eliminar" class="tooltipped btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
+                            <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $paciente->id }})"><i class="material-icons">receipt</i></a><a href="{!! route('sucursal.pacientes.edit', $paciente->id) !!}" data-position="right" data-delay="50" data-tooltip="Editar" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('sucursal.pacientes.destroy', $paciente->id) !!}" data-position="right" data-delay="50" data-tooltip="Eliminar" class="tooltipped btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             {!! Form::open(['route'=>['admin.pacientes.detalles',':USER_ID'], 'method'=>'GET','id'=>'form']) !!}
             {!! Form::close() !!}
+            {{-- Inicio Modal de detalles  --}}
             <div id="detalles" class="modal">
                 <div class="modal-footer">
                     <div class="plr-5" id="contenido">
@@ -176,6 +176,7 @@
                     <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
                 </div>
             </div>
+            {{-- Fin modal de detalles --}}
             <div class="center-align">
                 {!! (new Landish\Pagination\Materialize($pacientes))->render() !!}
             </div>

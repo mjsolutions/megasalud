@@ -13,7 +13,9 @@
 Route::get('/', function () {
 	return view('welcome');
 });
-
+/*
+| Rutas para administrador
+*/
 Route::group(['prefix'=>'admin'],function(){
 
 	Route::get('/', function(){
@@ -120,6 +122,10 @@ Route::group(['prefix'=>'admin'],function(){
 	/*
 	| Rutas pedidos
 	*/
+	Route::post('pedidos/estado',[
+		'uses' 	=>	'PedidosController@estado',
+		'as'	=>	'admin.pedidos.estado'
+		]);
 	Route::get('pedidos/{data}/productos',[
 		'uses'	=>	'PedidosController@productos',
 		'as'	=>	'admin.pedidos.productos'
@@ -138,4 +144,20 @@ Route::group(['prefix'=>'admin'],function(){
 			'as'	=>	'admin.pedidos.busqueda_pacientes'
 		]);
 	Route::resource('pedidos','PedidosController');
+});
+
+/*
+| Rutas para administrador de Sucursal
+*/
+Route::group(['prefix'=>'sucursal'],function(){
+	/*
+	*	Ruta principal
+	*/
+	Route::get('/', function(){
+		return view('sucursal.index');
+	});
+	/*
+	| Rutas pacientes
+	*/
+	Route::resource('pacientes','PacientesSucursalController');
 });
