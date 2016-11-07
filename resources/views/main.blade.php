@@ -57,6 +57,6 @@
 		});
 		@yield('functions')
 	</script>
-	@yield('scripts-2')
+		@yield('scripts-2')
 </body>
 </html>

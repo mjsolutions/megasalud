@@ -5604,7 +5604,7 @@ function DatePicker( picker, settings ) {
             set( 'highlight', calendar.item.now )
     }
 
-
+    // calendar.set( 'select', new Date('2010-03-03 GMT-6'));
     // The keycode to movement mapping.
     calendar.key = {
         40: 7, // Down

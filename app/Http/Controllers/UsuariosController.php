@@ -82,8 +82,8 @@ class UsuariosController extends Controller
             if($request->has("sucursal")) {
                 $id = $request->sucursal;
                 // dd($id);
-                $sucursal = Sucursal::find($id);            
-                $usuario->sucursales()->attach($sucursal);
+                // $sucursal = Sucursal::find($id);            
+                $usuario->sucursales()->attach($id);
                 $validate = true;
             }else {
                 $validate = true;
@@ -146,7 +146,18 @@ class UsuariosController extends Controller
     public function edit($id)
     {
         $usuario = User::find($id);
-        return view('admin.usuarios.edit')->with('usuario', $usuario);
+        //si es administrador de sucursal se busca las sucursales que aun no tengan admin
+        if($usuario->tipo_usuario == "Administrador de sucursal"){
+            $sucursal = UsuariosController::adminsucursal();
+            $sucursal[$usuario->sucursales[0]->id] = $usuario->sucursales[0]->razon_social;
+        }else{
+            $sucursal = UsuariosController::medicos();
+        }       
+
+        //compact pasa las variables con sus nombres sin necesidad de referenciarlas
+        //es lo mismo que hacer whth(array ('usuario'=>$usuario, 'sucursal'=>$sucursal))
+        return view('admin.usuarios.edit', compact('usuario', 'sucursal'));
+        // return view('admin.usuarios.edit')->with('usuario', $usuario);
     }
 
     /**
@@ -159,8 +170,14 @@ class UsuariosController extends Controller
     public function update(UserRequest $request, $id)
     {
         $usuario = User::find($id);
+        
         $usuario->fill($request->all());//funcion para sustituir datos diferentes
         if ($usuario->save()) {//guardamos los cambios en la tabla de pacientes
+            if($usuario->sucursales->isEmpty() && $request->has("sucursal")){//no tiene asociada sucursal aun y se envio registro
+                $id = $request->sucursal;            
+                $usuario->sucursales()->attach($sucursal);
+            }
+
             Flash::overlay('Se actualizó a  '.$usuario->nombre.' de forma exitosa.', 'Operación exitosa');
         }else{
             Flash::overlay('Ha ocurrido un error al editar al usuario  '.$usuario->nombre, 'Error');
@@ -235,6 +252,24 @@ class UsuariosController extends Controller
         //regresar los id y nombre de las sucursales que aun no tienen administrador asignado
         
         return DB::table('sucursales')->select('id', 'razon_social')->whereNotIn('id', DB::table('user_sucursal')->join('users', 'users.id', '=', 'user_sucursal.user_id')->select('user_sucursal.sucursal_id')->where('users.tipo_usuario', '=', 'Administrador de sucursal'))->pluck('razon_social','id');
+    }
+
+    public function adminsucursal_edit($id){
+        //buscar el usuario para saber si regresar la sucursal que es admin actual o solo la lista de sucursales
+        //en caso de no ser admin de sucursal acutalmente
+        $usuario = User::find($id);
+        if($usuario->tipo_usuario == "Administrador de sucursal"){
+             //regresar los id y nombre de las sucursales que aun no tienen administrador asignado mas la sucursal del id que se recibe en caso de ser admin de sucursal
+            $sucursal = DB::table('sucursales')->select('id', 'razon_social')->whereNotIn('id', DB::table('user_sucursal')->join('users', 'users.id', '=', 'user_sucursal.user_id')->select('user_sucursal.sucursal_id')->where('users.tipo_usuario', '=', 'Administrador de sucursal'))->pluck('razon_social','id');
+
+            $sucursal[$usuario->sucursales[0]->id] = $usuario->sucursales[0]->razon_social;
+        }else {
+            //regresar los id y nombre de las sucursales que aun no tienen administrador asignado
+            $sucursal = DB::table('sucursales')->select('id', 'razon_social')->whereNotIn('id', DB::table('user_sucursal')->join('users', 'users.id', '=', 'user_sucursal.user_id')->select('user_sucursal.sucursal_id')->where('users.tipo_usuario', '=', 'Administrador de sucursal'))->pluck('razon_social','id');
+
+        }
+
+        return $sucursal;
     }
 
     public function clave($estado,$id,$tipo){
