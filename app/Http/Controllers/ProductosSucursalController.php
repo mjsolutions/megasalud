@@ -5,7 +5,14 @@ namespace MegaSalud\Http\Controllers;
 use Illuminate\Http\Request;
 
 use MegaSalud\Http\Requests;
+
 use MegaSalud\Http\Controllers\Controller;
+
+use MegaSalud\Producto;
+
+use MegaSalud\Sucursal;
+
+use Laracasts\Flash\Flash;
 
 class ProductosSucursalController extends Controller
 {
@@ -16,7 +23,10 @@ class ProductosSucursalController extends Controller
      */
     public function index()
     {
-        //
+        $sucursal_id=1;//obtenido de la sesión
+        $sucursal=Sucursal::find($sucursal_id);
+        $productos=$sucursal->producto_sucursal;
+        return view('sucursal.productos.list')->with('productos',$productos);
     }
 
     /**

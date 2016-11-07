@@ -1,7 +1,7 @@
 @extends('main')
 @section('title','Pacientes | Editar')
 @section('nav')
-	@include('admin.nav')
+	@include('sucursal.nav')
 @endsection
 @section('content')
     {!! Form::open(['route'=>['sucursal.pacientes.update',$paciente->id], 'method'=>'PUT','files'=>true]) !!}
