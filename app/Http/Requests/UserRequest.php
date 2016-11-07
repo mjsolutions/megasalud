@@ -44,6 +44,11 @@ class UserRequest extends Request
                     'nombre' => 'required',
                     'email' => 'unique:users,email,'.$this->segment(3),
                     'tipo_usuario' => 'required',
+                    'cp' => 'numeric',
+                    'telefono_a' => 'numeric',
+                    'telefono_b' => 'numeric|different:telefono_a',
+                    'curp' => 'regex:/^([a-z]{4})([0-9]{6})([a-z]{6})([0-9]{2})$/i',
+                    'sucursal' => 'required_if:tipo_usuario,Administrador de sucursal|required_if:tipo_usuario,Medico'
                 ];
             }
         }

@@ -146,7 +146,19 @@ class UsuariosController extends Controller
     public function edit($id)
     {
         $usuario = User::find($id);
-        return view('admin.usuarios.edit')->with('usuario', $usuario);
+        //si es administrador de sucursal se busca las sucursales que aun no tengan admin
+        if($usuario->tipo_usuario == "Administrador de sucursal"){
+            $sucursal = UsuariosController::adminsucursal();
+            $sucursal[$usuario->sucursales[0]->id] = $usuario->sucursales[0]->razon_social;
+        }elseif ($usuario->tipo_usuario == "Medico"){
+            $sucursal = UsuariosController::medicos();
+        }else{
+            $sucursal = array();
+        }
+
+        //compact pasa las variables con sus nombres sin necesidad de referenciarlas
+        //es lo mismo que hacer whth(array ('usuario'=>$usuario, 'sucursal'=>$sucursal))
+        return view('admin.usuarios.edit', compact('usuario', 'sucursal'));
     }
 
     /**
@@ -235,6 +247,24 @@ class UsuariosController extends Controller
         //regresar los id y nombre de las sucursales que aun no tienen administrador asignado
         
         return DB::table('sucursales')->select('id', 'razon_social')->whereNotIn('id', DB::table('user_sucursal')->join('users', 'users.id', '=', 'user_sucursal.user_id')->select('user_sucursal.sucursal_id')->where('users.tipo_usuario', '=', 'Administrador de sucursal'))->pluck('razon_social','id');
+    }
+
+    public function adminsucursal_edit($id){
+        //buscar el usuario para saber si regresar la sucursal que es admin actual o solo la lista de sucursales
+        //en caso de no ser admin de sucursal acutalmente
+        $usuario = User::find($id);
+        if($usuario->tipo_usuario == "Administrador de sucursal"){
+             //regresar los id y nombre de las sucursales que aun no tienen administrador asignado mas la sucursal del id que se recibe en caso de ser admin de sucursal
+            $sucursal = DB::table('sucursales')->select('id', 'razon_social')->whereNotIn('id', DB::table('user_sucursal')->join('users', 'users.id', '=', 'user_sucursal.user_id')->select('user_sucursal.sucursal_id')->where('users.tipo_usuario', '=', 'Administrador de sucursal'))->pluck('razon_social','id');
+
+            $sucursal[$usuario->sucursales[0]->id] = $usuario->sucursales[0]->razon_social;
+        }else {
+            //regresar los id y nombre de las sucursales que aun no tienen administrador asignado
+            $sucursal = DB::table('sucursales')->select('id', 'razon_social')->whereNotIn('id', DB::table('user_sucursal')->join('users', 'users.id', '=', 'user_sucursal.user_id')->select('user_sucursal.sucursal_id')->where('users.tipo_usuario', '=', 'Administrador de sucursal'))->pluck('razon_social','id');
+
+        }
+
+        return $sucursal;
     }
 
     public function clave($estado,$id,$tipo){

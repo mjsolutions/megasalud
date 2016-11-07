@@ -105,6 +105,11 @@ Route::group(['prefix'=>'admin'],function(){
 		'as' => 'admin.usuarios.adminsucursal'
 		]);
 
+	Route::get('usuarios/{id}/adminsucursal_edit', [
+		'uses' => 'UsuariosController@adminsucursal_edit',
+		'as' => 'admin.usuarios.adminsucursal_edit'
+		]);
+
 	Route::resource('usuarios','UsuariosController');
 
 	Route::get('usuarios/{id}/destroy', [

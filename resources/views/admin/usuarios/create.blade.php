@@ -274,17 +274,17 @@
     </div>
   </div>
 
-  <div id="add_sucursal" class="modal">
-      <div class="modal-footer">
-          <div class="plr-5" id="contenido">
-             <h5>Agregar Sucursal</h5>
-             <div class="divider"></div>
-          </div>
-          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
-      </div>
-  </div>
 </div>
 {!! Form::close() !!}
+<div id="add_sucursal" class="modal">
+    <div class="modal-footer">
+        <div class="plr-5" id="contenido">
+           <h5>Agregar Sucursal</h5>
+           <div class="divider"></div>
+        </div>
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+</div>
 @endsection
 @section('scripts')
   @if($errors)
@@ -361,6 +361,12 @@ $.get('{!! route('admin.usuarios.banco') !!}').done(function(datos){
         max: [date.getFullYear(), date.getMonth(), date.getDate()],
         hiddenName: true, //enviar con el formato dado (no necesita input hidden)
             });
+
+    // $('form').submit(function(){
+    //       // alert(date);
+    //       alert($(this).serialize());
+    //       return false;
+    //     })
     
   </script>
 @endsection

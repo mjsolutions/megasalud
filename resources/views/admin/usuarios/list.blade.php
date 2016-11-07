@@ -279,13 +279,11 @@ $("#rfc").html(
 $("#mail").html(
 "<span>"+datos.email+"</span>"
 );
+
 var options = {weekday: "long", year: "numeric", month: "long", day: "numeric"};
-var fecha = datos.fecha_nacimiento;
-var from = fecha.split("-");
-{{-- from[2] += 1; --}}
-var f = new Date(from[0], from[1] - 1, from[2], 1, 1, 0, 000 );
+var fecha = datos.fecha_nacimiento + " GMT-6";
+var f = new Date(fecha);
 var nva = f.toLocaleDateString("es-ES", options);
-{{-- var nva = from[0]+" "+from[1]+" "+from[2]; --}}
 
 $("#fecha").html(
 "<span>"+nva+"</span>"
