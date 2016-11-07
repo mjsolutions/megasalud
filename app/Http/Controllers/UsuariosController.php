@@ -168,20 +168,62 @@ class UsuariosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, $id)
-    {
-        $usuario = User::find($id);
-        
-        $usuario->fill($request->all());//funcion para sustituir datos diferentes
-        if ($usuario->save()) {//guardamos los cambios en la tabla de pacientes
-            if($usuario->sucursales->isEmpty() && $request->has("sucursal")){//no tiene asociada sucursal aun y se envio registro
-                $id = $request->sucursal;            
-                $usuario->sucursales()->attach($sucursal);
+    {   
+        $validate = false;
+
+        DB::beginTransaction();
+
+        try {
+
+            $usuario = User::find($id);
+            $usuario->fill($request->all());
+            if ($usuario->save()) {
+
+               if($usuario->sucursales->isEmpty()){
+                    //no tiene asociada sucursal aun y se envio registro
+                    if($request->has("sucursal")){
+                        $id = $request->sucursal;            
+                        $usuario->sucursales()->attach($id);                    
+                    }
+
+                }else{
+                    //tiene sucursal asociada y cambio a Administrador                    
+                    if($request->tipo_usuario == "Administrador"){
+                        //eliminar registro
+                        
+                        $usuario->sucursales()->detach($usuario->sucursales[0]->id);
+
+                    }else{
+                        //ya tiene sucursal asociada y el id enviado es diferente
+                        if($usuario->sucursales[0]->id != $request->sucursal){
+                            //update a registro
+                            $usuario->sucursales()->updateExistingPivot($request->sucursal);
+
+                        }
+                    }
+
+                }
+                $validate = true;
+
+            }else{
+                $validate = false;
             }
 
-            Flash::overlay('Se actualizó a  '.$usuario->nombre.' de forma exitosa.', 'Operación exitosa');
-        }else{
-            Flash::overlay('Ha ocurrido un error al editar al usuario  '.$usuario->nombre, 'Error');
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $validate = false;
+            $fail = $e;
+            // throw $e;
         }
+
+        if($validate) {
+            Flash::overlay('Se ha actualizado '.$usuario->nombre.' de forma exitosa.', 'Modificación exitosa');
+        }else{
+            Flash::overlay('Ha ocurrido un error al actualizar al usuario  '.$usuario->nombre." : ".$fail, 'Error');            
+        }
+        
         return redirect()->route('admin.usuarios.index');
 
     }
