@@ -31,7 +31,7 @@
                             <td>{{ $producto->descripcion }}</td>
                             <td>{{ $producto->precio }}</td>
                             <td>{{ $producto->pivot->existencia }}</td>
-                            <td><a href="{!! route('admin.productos.edit', $producto->id) !!}" data-position="right" data-delay="50" data-tooltip="Editar" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('admin.productos.destroy', $producto->id) !!}" data-position="right" data-delay="50" data-tooltip="Eliminar" class="tooltipped btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
+                            <td><a href="#" data-position="right" data-delay="50" onclick="cambiar({{$producto->id}},'{{$producto->nombre}}')" data-tooltip="Agregar existencias" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">playlist_add</i></a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -40,16 +40,35 @@
                 {{-- {!! (new Landish\Pagination\Materialize($productos))->render() !!} --}}
             </div>
             {{-- Inicio Modal --}}
-            <div id="modal1" class="modal">
+            <div id="existencia" class="modal">
+              {!! Form::open(['route'=>'sucursal.productos.store', 'method'=>'POST','files'=>true]) !!}
                 <div class="modal-content">
-                  <h4>Modal Header</h4>
-                  <p>A bunch of text</p>
+                  <h4>Cambiar existencias</h4>
+                  <div class="row">
+                    <div class="col l6 input-field">
+                      <i class="material-icons prefix">store</i>
+                      {!! Form::label('producto','Producto') !!}
+                      {!! Form::text('producto',null,['class'=>'validate', 'disabled'=>'disabled','id'=>'producto']) !!}
+                    </div>
+                    <div class="col l6 input-field">
+                      <i class="material-icons prefix">store</i>
+                      {!! Form::label('existencia','Existencias') !!}
+                      {!! Form::number('existencia',0,['class'=>'validate','id'=>'existencia','min'=>'0']) !!}
+                    </div>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
                 </div>
-              </div>
+              {!! Form::close() !!}
+            </div>
             {{-- Fin modal actualización --}}
     	</div>
     </div>
+@endsection
+@section('functions')
+  function cambiar(id,nombre){
+    $('#producto').html(nombre);
+    $('#existencia').openModal();
+  }
 @endsection
