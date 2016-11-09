@@ -161,8 +161,27 @@ Route::group(['prefix'=>'sucursal'],function(){
 	Route::get('/', function(){
 		return view('sucursal.index');
 	});
+	Route::get('inicio', function(){
+		return view('sucursal.index');
+	})->name('sucursal.inicio');
 	/*
 	| Rutas pacientes
 	*/
 	Route::resource('pacientes','PacientesSucursalController');
+	Route::get('pacientes/{id}/destroy',[
+	'uses'	=>	'PacientesSucursalController@destroy',
+	'as'	=>	'sucursal.pacientes.destroy'
+	]);
+	/*
+	| Rutas Usuarios
+	*/
+	Route::resource('usuarios','UsuariosSucursalController');
+	/*
+	| Rutas productos
+	*/
+	Route::resource('productos','ProductosSucursalController');
+	/*
+	| Rutas pedidos
+	*/
+	Route::resource('pedidos','PedidosSucursalController');
 });
