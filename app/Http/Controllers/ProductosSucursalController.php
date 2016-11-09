@@ -14,6 +14,8 @@ use MegaSalud\Sucursal;
 
 use Laracasts\Flash\Flash;
 
+use MegaSalud\Http\Requests\ProductoSucursalRequest;
+
 class ProductosSucursalController extends Controller
 {
     /**
@@ -45,9 +47,15 @@ class ProductosSucursalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductoSucursalRequest $request)
     {
-        //
+        $sucursal=1;//obtenida de la sesión
+        $sucursal=Sucursal::find($sucursal);
+        $producto=Producto::find($request->producto_id);
+        $antiguo=$producto->producto_sucursal->find($sucursal)->pivot->existencia;
+        $sucursal->producto_sucursal()->updateExistingPivot($request->producto_id,['existencia'=>$antiguo+$request->existencia]);
+        Flash::overlay('Se han agregado '.$request->existencia.' productos', 'Operación exitosa');
+        return redirect()->route('sucursal.productos.index');
     }
 
     /**

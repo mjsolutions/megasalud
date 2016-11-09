@@ -40,35 +40,68 @@
                 {{-- {!! (new Landish\Pagination\Materialize($productos))->render() !!} --}}
             </div>
             {{-- Inicio Modal --}}
-            <div id="existencia" class="modal">
-              {!! Form::open(['route'=>'sucursal.productos.store', 'method'=>'POST','files'=>true]) !!}
+            <div id="existencia_actualizar" class="modal">
+              {!! Form::open(['route'=>'sucursal.productos.store', 'method'=>'POST','id'=>'form']) !!}
+                <input type="hidden" id="producto_id" name="producto_id">
                 <div class="modal-content">
                   <h4>Cambiar existencias</h4>
                   <div class="row">
                     <div class="col l6 input-field">
                       <i class="material-icons prefix">store</i>
+                      {!! Form::text('producto',' ',['class'=>'validate', 'disabled'=>'disabled','id'=>'producto']) !!}
                       {!! Form::label('producto','Producto') !!}
-                      {!! Form::text('producto',null,['class'=>'validate', 'disabled'=>'disabled','id'=>'producto']) !!}
                     </div>
                     <div class="col l6 input-field">
                       <i class="material-icons prefix">store</i>
                       {!! Form::label('existencia','Existencias') !!}
-                      {!! Form::number('existencia',0,['class'=>'validate','id'=>'existencia','min'=>'0']) !!}
+                      {!! Form::number('existencia',0,['class'=>'validate','id'=>'existencia','min'=>'1']) !!}
                     </div>
                   </div>
                 </div>
+                <div class="divider"></div>
                 <div class="modal-footer">
-                  <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                  <a href="#!" onclick="confirmar()" class=" modal-action waves-effect waves-green btn-flat">Agregar</a>
                 </div>
-              {!! Form::close() !!}
+              
             </div>
             {{-- Fin modal actualización --}}
+            {{-- Inicio Modal confirmacion --}}
+            <div id="confirmacion" class="modal">
+                <div class="modal-content center" id="existencia_mod">
+                  
+                </div>
+                <div class="divider"></div>
+                <div class="center mb-10 mt-10">
+                  <a onclick="enviar()" class="center waves-effect  btn-flat green lighten-1">confirmar</a>
+                  <a href="#!" onclick="cancelar()" class="waves-effect btn-flat">Volver</a>
+                </div>
+
+            </div>
+            {!! Form::close() !!}
+            {{-- Fin modal confirmacion --}}
     	</div>
     </div>
 @endsection
 @section('functions')
   function cambiar(id,nombre){
-    $('#producto').html(nombre);
-    $('#existencia').openModal();
+    $('#form')[0].reset();
+    $('#producto').val(nombre);
+    $('#producto_id').val(id);
+    $('#existencia_actualizar').openModal();
+  }
+  function confirmar(){
+      if($('#existencia').val()==0||$('#existencia').val()==0){
+      Materialize.toast('Debes agregar al menos un producto', 4000);
+      return false;
+    }
+    $("#existencia_mod").html('<h4>Se agregará la cantidad de '+$('#existencia').val()+' al inventario</h4>');
+    $("#confirmacion").openModal();
+  }
+  function cancelar(){
+    $('#existencia_actualizar').closeModal();
+    $('#confirmacion').closeModal();
+  }
+  function enviar(){
+    $("#form").submit();
   }
 @endsection
