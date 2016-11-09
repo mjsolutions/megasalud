@@ -59,7 +59,12 @@
         {{ 'N/A' }}
       @endforelse
     </td>
-    <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $usuario->id }})"><i class="material-icons">receipt</i></a><a href="{!! route('admin.usuarios.edit', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-10 tooltipped" data-position="right" data-delay="50" data-tooltip="Editar"><i class="material-icons">edit</i></a><a href="{!! route('admin.usuarios.destroy', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1 tooltipped" data-position="right" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a></td>
+    <td>
+      <a class="tooltipped btn-floating btn-small waves-effect waves-light mr-5" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $usuario->id }})"><i class="material-icons">receipt</i></a>
+      <a href="{!! route('admin.usuarios.edit', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-5 tooltipped" data-position="right" data-delay="50" data-tooltip="Editar"><i class="material-icons">edit</i></a>
+      <a href="{!! route('admin.usuarios.destroy', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1 mr-5 tooltipped" data-position="right" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a>
+      <a class="btn-floating btn-small waves-effect waves-light  grey darken-1 tooltipped" data-position="right" data-delay="50" data-tooltip="Cambiar Contraseña" onclick="change_password({{ $usuario->id }}, '{{ $usuario->nombre }}')"><i class="material-icons">vpn_key</i></a>
+    </td>
     </tr>
     @endforeach
 </tbody>
@@ -219,6 +224,49 @@
   </div>
 </div>{{-- End modal --}}
 
+<div id="change_password" class="modal plr-10">
+  <div class="modal-content">
+    <div class="row">
+      <div class="col l5 center">
+        <h5>Cambiar contraseña para <span id="cp_nombre"></span></h5>
+        <div class="divider"></div>     
+      </div>
+      <div class="col l7">
+        {!! Form::open(['route' => ['admin.usuarios.change_password', ':USER_ID'], 'method' => 'POST', 'id' => 'form_changep']) !!}
+        
+        <div class="input-field">
+          <i class="material-icons prefix">vpn_key</i>
+          {!! Form::label('admin_pw','Contraseña de Administrador') !!}
+          {!! Form::password('admin_pw', null, ['class'=>'validate','required']) !!}
+        </div>
+
+        <div class="input-field">
+          <i class="material-icons prefix">account_circle</i>
+          {!! Form::label('password','Nueva contraseña') !!}
+          {!! Form::password('password', null, ['class'=>'validate','required']) !!}
+        </div>
+
+        <div class="input-field">
+          <i class="material-icons prefix">account_circle</i>
+          {!! Form::label('password_confirmation','Confirme nueva contraseña') !!}
+          {!! Form::password('password_confirmation', null, ['class'=>'validate','required']) !!}
+        </div>
+
+          {!! Form::hidden('id', null, ['id' => 'id']) !!}
+
+        <div class="input-field right-align">
+          <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">Cerrar</button>
+          {!! Form::submit('Guardar',['class'=>'btn waves-effect waves-light green']) !!}
+        </div>
+      {!! Form::close() !!}
+      </div>
+    </div>
+      {{-- <div class="divider"></div> --}}
+      
+
+  </div>
+</div>
+
 <div class="center-align">
  {!! (new Landish\Pagination\Materialize($usuarios))->render() !!}
 </div>
@@ -314,5 +362,17 @@ $('#detalles').openModal();
 
 
 }
+
+function change_password(id, nombre) {
+  $("#cp_nombre").html(nombre);
+  $('#id').val(id);
+  $("#change_password").openModal();
+
+}
+
+$("#form_changep").submit(function(){
+  alert($(this).serialize());
+  return false;
+});
 
 @endsection

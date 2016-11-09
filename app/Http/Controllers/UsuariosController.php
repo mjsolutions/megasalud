@@ -190,7 +190,7 @@ class UsuariosController extends Controller
                     //tiene sucursal asociada y cambio a Administrador                    
                     if($request->tipo_usuario == "Administrador"){
                         //eliminar registro
-                        
+
                         $usuario->sucursales()->detach($usuario->sucursales[0]->id);
 
                     }else{
@@ -312,6 +312,10 @@ class UsuariosController extends Controller
         }
 
         return $sucursal;
+    }
+
+    public function change_password($id){
+        dd($id);
     }
 
     public function clave($estado,$id,$tipo){
