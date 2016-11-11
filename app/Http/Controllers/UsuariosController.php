@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 
 use MegaSalud\Http\Requests\UserRequest;
 
+use MegaSalud\Http\Requests\CPRequest;
+
 class UsuariosController extends Controller
 {
     /**
@@ -314,8 +316,15 @@ class UsuariosController extends Controller
         return $sucursal;
     }
 
-    public function change_password($id){
-        dd($id);
+    public function change_password(CPRequest $req){
+        $usuario = User::find($req->id);
+        $msg = "empty";
+
+        if( bcrypt($req->password) == $usuario->password ){
+            $msg = "Correcto";
+        }
+        Flash::overlay('Cambio de contraseña exitoso para el usuario ' . $usuario->password . " enviado: ".bcrypt($req->password), 'Exito');
+        return redirect()->route('admin.usuarios.index');
     }
 
     public function clave($estado,$id,$tipo){

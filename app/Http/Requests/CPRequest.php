@@ -13,7 +13,7 @@ class CPRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class CPRequest extends Request
     public function rules()
     {
         return [
-            //
+            'password' => 'confirmed|required',
+            'password_admin' => 'required'
         ];
     }
 }

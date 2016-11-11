@@ -53,7 +53,7 @@
       <div class="col l6">
         <div class="input-field">
           <i class="material-icons prefix">perm_contact_calendar</i>
-          {!! Form::label('fecha','Fecha de nacimiento') !!}
+          {!! Form::label('fecha_nacimiento','Fecha de nacimiento') !!}
           {!! Form::date('fecha_nacimiento', null, ['class'=>'datepicker']) !!}
         </div>
       </div>

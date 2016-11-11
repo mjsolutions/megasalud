@@ -232,12 +232,12 @@
         <div class="divider"></div>     
       </div>
       <div class="col l7">
-        {!! Form::open(['route' => ['admin.usuarios.change_password', ':USER_ID'], 'method' => 'POST', 'id' => 'form_changep']) !!}
+        {!! Form::open(['route' => ['admin.usuarios.change_password'], 'method' => 'POST', 'id' => 'form_changep']) !!}
         
         <div class="input-field">
           <i class="material-icons prefix">vpn_key</i>
-          {!! Form::label('admin_pw','Contraseña de Administrador') !!}
-          {!! Form::password('admin_pw', null, ['class'=>'validate','required']) !!}
+          {!! Form::label('password_admin','Contraseña de Administrador') !!}
+          {!! Form::password('password_admin', null, ['class'=>'validate','required']) !!}
         </div>
 
         <div class="input-field">
@@ -274,6 +274,15 @@
 </div>
 
 @endsection
+
+@section('scripts')
+  @if($errors)
+    @foreach($errors->all() as $error)
+      Materialize.toast('{{ $error }}', 4000);
+    @endforeach
+  @endif
+@endsection
+
 @section('functions')
 function detalle(id) {
 var form = $('#form');
@@ -370,9 +379,6 @@ function change_password(id, nombre) {
 
 }
 
-$("#form_changep").submit(function(){
-  alert($(this).serialize());
-  return false;
-});
+
 
 @endsection

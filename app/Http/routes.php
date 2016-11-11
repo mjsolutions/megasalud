@@ -112,7 +112,7 @@ Route::group(['prefix'=>'admin'],function(){
 		'as' => 'admin.usuarios.adminsucursal_edit'
 		]);
 
-	Route::post('usuarios/change_password/{id}', [
+	Route::post('usuarios/change_password', [
 		'uses' => 'UsuariosController@change_password',
 		'as' => 'admin.usuarios.change_password'
 		]);
