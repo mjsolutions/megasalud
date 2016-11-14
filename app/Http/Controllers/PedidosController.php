@@ -213,7 +213,7 @@ class PedidosController extends Controller
             $sucursal=Sucursal::find($sucursal);
             foreach ($sucursal->producto_sucursal as $producto){
                 //dd($producto->pivot->existencia);
-                if(session()->has($producto->id)){//comprobamos que el producto este en el carrito
+                if(session()->has($producto->id)&&session($producto->id)>0){//comprobamos que el producto este en el carrito
                     $actual=$producto->pivot->existencia;
                     if($producto->producto_sucursal()->updateExistingPivot($sucursal->id,['existencia'=>$actual-session($producto->id)])){//se realiza la reducción del inventario del producto
                         $producto->pedidos()->attach($pedido[0]->id,['cantidad'=>session($producto->id)]);// se crea el registro del producto a su respectivo pedido

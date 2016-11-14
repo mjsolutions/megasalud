@@ -25,7 +25,7 @@ class ProductosSucursalController extends Controller
      */
     public function index()
     {
-        $sucursal_id=1;//obtenido de la sesión
+        $sucursal_id=2;//obtenido de la sesión
         $sucursal=Sucursal::find($sucursal_id);
         $productos=$sucursal->producto_sucursal;
         return view('sucursal.productos.list')->with('productos',$productos);
@@ -49,7 +49,7 @@ class ProductosSucursalController extends Controller
      */
     public function store(ProductoSucursalRequest $request)
     {
-        $sucursal=1;//obtenida de la sesión
+        $sucursal=2;//obtenida de la sesión
         $sucursal=Sucursal::find($sucursal);
         $producto=Producto::find($request->producto_id);
         $antiguo=$producto->producto_sucursal->find($sucursal)->pivot->existencia;
