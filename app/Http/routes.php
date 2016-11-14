@@ -11,7 +11,7 @@
 |
 */
 Route::get('/', function () {
-	return view('welcome');
+	return view('login');
 });
 /*
 | Rutas para administrador
@@ -185,3 +185,10 @@ Route::group(['prefix'=>'sucursal'],function(){
 	*/
 	Route::resource('pedidos','PedidosSucursalController');
 });
+
+/*
+| Rutas para login
+*/
+Route::get('/login', 'Auth\AuthController@getLogin');
+Route::post('/login', 'Auth\AuthController@postLogin');
+Route::get('/logout', 'Auth\AuthController@getLogout');
