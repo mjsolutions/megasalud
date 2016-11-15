@@ -183,5 +183,17 @@ Route::group(['prefix'=>'sucursal'],function(){
 	/*
 	| Rutas pedidos
 	*/
+	Route::post('pedidos/estado',[
+		'uses' 	=>	'PedidosSucursalController@estado',
+		'as'	=>	'sucursal.pedidos.estado'
+		]);
+	Route::post('pedidos/estado',[
+		'uses' 	=>	'PedidosSucursalController@estado',
+		'as'	=>	'sucursal.pedidos.estado'
+		]);
+	Route::get('pedidos/{data}/busqueda_pacientes',[
+		'uses'	=>	'PedidosSucursalController@busqueda_pacientes',
+		'as'	=>	'sucursal.pedidos.busqueda_pacientes'
+		]);
 	Route::resource('pedidos','PedidosSucursalController');
 });

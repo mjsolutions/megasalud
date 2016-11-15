@@ -16,6 +16,8 @@ use Laracasts\Flash\Flash;
 
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 class PedidosSucursalController extends Controller
 {
     /**
@@ -23,19 +25,35 @@ class PedidosSucursalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($data=0)
     {
         $sucursal=2;
-        $pedidos=DB::table('pedidos')
-                    ->join('users','users.id','=','pedidos.user_id')
-                    ->join('user_sucursal','user_sucursal.user_id','=','users.id')
-                    ->join('pacientes','pacientes.id','=','pedidos.paciente_id')
-                    ->select('pedidos.id','pacientes.nombre','pacientes.apellido_p','pacientes.apellido_m','pedidos.fecha_pedido','pedidos.status')
-                    ->where('user_sucursal.sucursal_id',$sucursal)
-                    ->orderBy('fecha_pedido','DESC')
-                    ->paginate(10);
-        return view('sucursal.pedidos.list')->with('pedidos',$pedidos);
-
+        if($data){
+            $pedidos=DB::table('pedidos')
+                        ->join('users','users.id','=','pedidos.user_id')
+                        ->join('user_sucursal','user_sucursal.user_id','=','users.id')
+                        ->join('pacientes','pacientes.id','=','pedidos.paciente_id')
+                        ->select('pedidos.id','pacientes.nombre','pacientes.apellido_p','pacientes.apellido_m','pedidos.fecha_pedido','pedidos.status')
+                        ->where('user_sucursal.sucursal_id',$sucursal)
+                        ->orwhere('pacientes.apellido_p','like',$data.'%')
+                        ->orwhere('pacientes.apellido_m','like',$data.'%')
+                        ->orwhere('pacientes.id','like',$data.'%')
+                        ->orwhere('pacientes.clave_bancaria','like',$data.'%')
+                        ->orderBy('fecha_pedido','DESC')
+                        ->paginate(10);
+            return view('sucursal.pedidos.list')->with('pedidos',$pedidos);
+        }
+        else{
+            $pedidos=DB::table('pedidos')
+                        ->join('users','users.id','=','pedidos.user_id')
+                        ->join('user_sucursal','user_sucursal.user_id','=','users.id')
+                        ->join('pacientes','pacientes.id','=','pedidos.paciente_id')
+                        ->select('pedidos.id','pacientes.nombre','pacientes.apellido_p','pacientes.apellido_m','pedidos.fecha_pedido','pedidos.status')
+                        ->where('user_sucursal.sucursal_id',$sucursal)
+                        ->orderBy('fecha_pedido','DESC')
+                        ->paginate(10);
+            return view('sucursal.pedidos.list')->with('pedidos',$pedidos);
+        }
     }
 
     /**
@@ -45,7 +63,16 @@ class PedidosSucursalController extends Controller
      */
     public function create()
     {
-        //
+        $sucursal=1;
+        $productos=Producto::all();
+        $pacientes=DB::table('pacientes')
+                        ->join('paciente_user','paciente_user.paciente_id','=','pacientes.id')
+                        ->join('users','users.id','=','paciente_user.user_id')
+                        ->join('user_sucursal','userS.id','=','user_sucursal.user_id')
+                        ->where('user_sucursal.user_id',$sucursal)
+                        ->select('pacientes.id','pacientes.nombre','pacientes.apellido_p','pacientes.apellido_m','pacientes.telefono_a','pacientes.telefono_b')
+                        ->get();
+        return view('sucursal.pedidos.create')->with("productos",$productos)->with('pacientes',$pacientes);
     }
 
     /**
@@ -115,5 +142,60 @@ class PedidosSucursalController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function estado(Request $request){
+        $id=$request->pedido_id;
+        $detalle=$request->detalle_m;
+        $estado=$request->estado_m;
+        $confirmacion=$request->confirmacion;
+        $pedido=Pedido::find($id);
+        if($pedido){//si existe el pedido se prosigue a guardar la información
+            $pedido->detalle=$detalle;
+            $pedido->status=$estado;
+            $pedido->confirmacion=$confirmacion;
+            $tiempo=Carbon::now();//objeto para obtener la fecha y hora actual
+            $pedido->fecha_pago=$tiempo;
+            if($pedido->save()){
+                Flash::overlay('Operación existosa', '¡Alta Exitosa!');
+                return redirect()->route('sucursal.pedidos.index');
+            }
+            else{
+                Flash::overlay('No fue posible cambiar el estado del pedido', '¡Ocurrio un problema!');
+                return redirect()->route("sucursal.pedidos.index");
+            }
+        }
+        else{
+            Flash::overlay('No fue posible encontrar el pedido solicitado', '¡Ocurrio un problema!');
+            return redirect()->route("sucursal.pedidos.index");
+        }
+    }
+    public function busqueda_pacientes($data)
+    {
+        $sucursal=2;
+        $pacientes=DB::table('pacientes')
+                        ->join('paciente_user','paciente_user.paciente_id','=','pacientes.id')
+                        ->join('users','users.id','=','paciente_user.user_id')
+                        ->join('user_sucursal','userS.id','=','user_sucursal.user_id')
+                        ->where('user_sucursal.user_id',$sucursal)
+                        ->orwhere('pacientes.status',1)
+                        ->orwhere('pacientes.apellido_p','like',$data.'%')
+                        ->orwhere('pacientes.apellido_m','like',$data.'%')
+                        ->orwhere('pacientes.id','like',$data.'%')
+                        ->orwhere('pacientes.clave_bancaria','like',$data.'%')
+                        ->take(10)
+                        ->select('pacientes.nombre','pacientes.apellido_p','pacientes.apellido_m','pacientes.id','pacientes.telefono_a','pacientes.telefono_b')
+                        ->get();
+        // $pacientes=Paciente::where('nombre','like',$data.'%')
+        //             ->orwhere('apellido_p','like',$data.'%')
+        //             ->orwhere('apellido_m','like',$data.'%')
+        //             ->orwhere('id','like',$data.'%')
+        //             ->orwhere('clave_bancaria','like',$data.'%')
+        //             ->take(10)
+        //             ->get();
+        // foreach ($pacientes as $paciente) {
+        //     $paciente->users;
+        //     $paciente->users[0]->sucursales;
+        // }
+        return json_encode($pacientes);
     }
 }

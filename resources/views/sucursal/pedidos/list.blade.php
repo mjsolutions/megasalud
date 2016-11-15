@@ -11,17 +11,20 @@
                     <h4>Pedidos</h4>
                 </div>
                 <div class="col pull-s1 s1">
-                    <a class="btn-floating btn-large waves-effect waves-light green modal-trigger tooltipped" href="{!! route('admin.pedidos.create') !!}" data-position="right" data-delay="50" data-tooltip="Nuevo Pedido" ><i class="material-icons">add</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light green modal-trigger tooltipped" href="{!! route('sucursal.pedidos.create') !!}" data-position="right" data-delay="50" data-tooltip="Nuevo Pedido" ><i class="material-icons">add</i></a>
                 </div>
             </div>
             <div class="row">
                 <div class="col s8 col-center divider"></div>
             </div>
             <div class="row">
-                <div class="col l6 offset-l6 input-field">
+                <div class="col l6 offset-l4 input-field">
                     <i class="material-icons prefix">search</i>
-                    {!! Form::text('busca_pedido', null, ['class'=>'validate','id'=>'busca_pedido']) !!}
-                    <label for="icon_prefix2">Buscar pedido (Nombre de Paciente, Identificador, Clave bancaria)</label>
+                    {!! Form::text('data', null, ['class'=>'validate','id'=>'data']) !!}
+                    <label for="icon_prefix2">Buscar (Nombre de Paciente, Identificador, Clave bancaria)</label>
+                </div>
+                <div class="col l2">
+                    <a class="waves-effect waves-light btn" onclick="buscar()">Buscar</a>
                 </div>
             </div>
             <table class="responsive-table centered">
@@ -50,7 +53,7 @@
                                 @endif
                             </td>
                             <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $pedido->id }})"><i class="material-icons">receipt</i></a>
-                            @if($pedido->status==3)
+                            @if($pedido->status==3||$pedido->status==2)
                             {{-- En caso de que se quiera deshabilitar basta con poner clase diable --}}
                                <a onclick="cambiar_e({{$pedido->id}},0)" data-position="right" data-delay="50" data-tooltip="Cambiar estado" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10 disabled" id="camibar_ico"><i class="material-icons">edit</i></a>
                             @else
@@ -271,6 +274,9 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+
+@endsection
 @section('functions')
     function detalle(id){
         var form=$("#form");
@@ -340,6 +346,13 @@
         }
         else{
             return false;
+        }
+    }
+    function buscar(){
+        if($("#data").val()!=""){
+            var form=$("#buscar");
+            var url=form.attr('action').replace(':DATA',$("#data").val());
+            form.submit();
         }
     }
 @endsection
