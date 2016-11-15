@@ -6,6 +6,16 @@ use Illuminate\Http\Request;
 
 use MegaSalud\Http\Requests;
 
+use MegaSalud\Producto;
+
+use MegaSalud\Sucursal;
+
+use MegaSalud\Pedido;
+
+use Laracasts\Flash\Flash;
+
+use Illuminate\Support\Facades\DB;
+
 class PedidosSucursalController extends Controller
 {
     /**
@@ -15,7 +25,17 @@ class PedidosSucursalController extends Controller
      */
     public function index()
     {
-        //
+        $sucursal=2;
+        $pedidos=DB::table('pedidos')
+                    ->join('users','users.id','=','pedidos.user_id')
+                    ->join('user_sucursal','user_sucursal.user_id','=','users.id')
+                    ->join('pacientes','pacientes.id','=','pedidos.paciente_id')
+                    ->select('pedidos.id','pacientes.nombre','pacientes.apellido_p','pacientes.apellido_m','pedidos.fecha_pedido','pedidos.status')
+                    ->where('user_sucursal.sucursal_id',$sucursal)
+                    ->orderBy('fecha_pedido','DESC')
+                    ->paginate(10);
+        return view('sucursal.pedidos.list')->with('pedidos',$pedidos);
+
     }
 
     /**
@@ -47,7 +67,20 @@ class PedidosSucursalController extends Controller
      */
     public function show($id)
     {
-        //
+        $pedidos=Pedido::find($id);
+        $pedidos->productos;
+        $pedidos->paciente;
+        $pedidos->user;
+        $pedidos->user->sucursales;
+        $pedidos->paciente->telefono_a="(".substr($pedidos->paciente->telefono_a, 0, 3).") ".substr($pedidos->paciente->telefono_a, 3, 3)."-".substr($pedidos->paciente->telefono_a,6);
+        $pedidos->paciente->telefono_b="(".substr($pedidos->paciente->telefono_b, 0, 3).") ".substr($pedidos->paciente->telefono_b, 3, 3)."-".substr($pedidos->paciente->telefono_b,6);
+        setlocale(LC_MONETARY,'en_US');
+        $pedidos->importe=money_format("%(#10n",$pedidos->importe);
+        $pedidos->impuesto=money_format("%(#10n",$pedidos->impuesto);
+        $pedidos->total=money_format("%(#10n",$pedidos->total);
+        for($i=0;$i<sizeof($pedidos->productos);$i++)
+            $pedidos->productos[$i]->precio=money_format('%(#10n',$pedidos->productos[$i]->precio);
+        return json_encode($pedidos);
     }
 
     /**
