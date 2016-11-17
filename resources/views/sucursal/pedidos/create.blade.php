@@ -4,7 +4,7 @@
 	@include('sucursal.nav')
 @endsection
 @section('content')
-    {!! Form::open(['route'=>'admin.pedidos.forma_pago','id'=>'formulario', 'method'=>'POST']) !!}
+    {!! Form::open(['route'=>'sucursal.pedidos.forma_pago','id'=>'formulario', 'method'=>'POST']) !!}
     <div class="container">
     	<div class="card-panel">
             <div class="center-align">

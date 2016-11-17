@@ -18,14 +18,16 @@
                 <div class="col s8 col-center divider"></div>
             </div>
             <div class="row">
+            {!! Form::open(['route'=>['sucursal.pedidos.busqueda_index'], 'method'=>'POST']) !!}
                 <div class="col l6 offset-l4 input-field">
                     <i class="material-icons prefix">search</i>
-                    {!! Form::text('data', null, ['class'=>'validate','id'=>'data']) !!}
+                    {!! Form::text('data', null, ['class'=>'validate','id'=>'data','required'=>'required']) !!}
                     <label for="icon_prefix2">Buscar (Nombre de Paciente, Identificador, Clave bancaria)</label>
                 </div>
                 <div class="col l2">
-                    <a class="waves-effect waves-light btn" onclick="buscar()">Buscar</a>
+                    {!! Form::submit('Buscar',['class'=>'btn waves-effect waves-light']) !!}
                 </div>
+            {!! Form::close() !!}
             </div>
             <table class="responsive-table centered">
                 <thead>
@@ -348,12 +350,4 @@
             return false;
         }
     }
-    function buscar(){
-        if($("#data").val()!=""){
-            var form=$("#buscar");
-            var url=form.attr('action').replace(':DATA',$("#data").val());
-            form.submit();
-        }
-    }
-    function 
 @endsection

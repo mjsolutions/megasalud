@@ -195,6 +195,18 @@ Route::group(['prefix'=>'sucursal'],function(){
 		'uses'	=>	'PedidosSucursalController@busqueda_pacientes',
 		'as'	=>	'sucursal.pedidos.busqueda_pacientes'
 		]);
+	Route::POST('pedidos/forma_pago', [
+		'uses'	=>	'PedidosSucursalController@forma_pago',
+		'as'	=>	'sucursal.pedidos.forma_pago'
+		]);
+	Route::POST('pedidos/confirmar',[
+		'uses'	=>	'PedidosSucursalController@confirmacion',
+		'as'	=>	'sucursal.pedidos.confirmacion'
+		]);
+	Route::POST('busqueda_index',[
+		'uses'	=>	'PedidosSucursalController@busqueda_index',
+		'as'	=>	'sucursal.pedidos.busqueda_index'
+		]);
 	Route::resource('pedidos','PedidosSucursalController');
 });
 
