@@ -53,6 +53,7 @@
 			}
 			$('.modal-trigger').leanModal();
 			$('select').material_select();
+			$(".dropdown-button").dropdown();
 			@yield('scripts')
 		});
 		@yield('functions')

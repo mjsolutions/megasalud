@@ -189,6 +189,17 @@ Route::group(['prefix'=>'sucursal'],function(){
 /*
 | Rutas para login
 */
-Route::get('/login', 'Auth\AuthController@getLogin');
-Route::post('/login', 'Auth\AuthController@postLogin');
-Route::get('/logout', 'Auth\AuthController@getLogout');
+Route::get('/login', [
+	'uses' 	=>	'Auth\AuthController@getLogin',
+	'as'	=>	'login'
+	]);
+
+Route::post('/login', [
+	'uses' 	=>	'Auth\AuthController@postLogin',
+	'as'	=>	'login'
+	]);
+
+Route::get('/logout', [
+	'uses' 	=>	'Auth\AuthController@getLogout',
+	'as'	=>	'logout'
+	]);

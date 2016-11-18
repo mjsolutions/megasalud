@@ -91,7 +91,7 @@
 
 
 			<div class="row">
-				{!! Form::open(['method' => 'POST', 'class' => 'col s12 m10 l4 offset-l4 z-depth-2']) !!}
+				{!! Form::open(['route' => 'login', 'method' => 'POST', 'class' => 'col s12 m10 l4 offset-l4 z-depth-2']) !!}
 				<div class="row">
 					<div class="col s8 offset-s2">
 						<img src="{{ asset('images/Logo.svg') }}" alt="" id="foto" class="responsive-img">

@@ -1,3 +1,9 @@
+<ul id="user_options" class="dropdown-content">
+  <li><a href="#!">Perfil</a></li>
+  <li><a href="#!">other</a></li>
+  <li class="divider"></li>
+  <li><a href="{{ route('logout') }}">Salir</a></li>
+</ul>
 <nav>
   <div class="nav-wrapper blue darken-1">
     <div class="container">
@@ -10,6 +16,7 @@
         <li><a href="">Sucursales</a></li>
         <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
         <li><a href="{{ route('admin.pedidos.index') }}">Pedidos</a></li>
+        <li><a class="dropdown-button" href="#!" data-activates="user_options">{{ Auth::user()->nombre }}<i class="material-icons right">arrow_drop_down</i></a></li>
       </ul>
     </div>
     <ul class="center-align side-nav" id="mobile-demo">
