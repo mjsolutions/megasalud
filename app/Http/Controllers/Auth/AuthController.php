@@ -28,7 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    // protected $redirectTo = '/admin';
 
     /**
      * Create a new authentication controller instance.
@@ -52,7 +52,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-        ]);
+            ]);
     }
 
     /**
@@ -67,7 +67,7 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-        ]);
+            ]);
     }
 
     protected function getLogin()
@@ -75,9 +75,14 @@ class AuthController extends Controller
         return view('login');
     }
 
-    // protected function getLogout()
-    // {
-    //     Auth::logout();
-    //     return view('login');
-    // }
+
+    public function redirectPath()
+    {
+    // Logic that determines where to send the user
+        if (\Auth::user()->tipo_usuario == 'Administrador') {
+            return '/admin';
+        }
+
+        return '/sucursal';
+    }
 }

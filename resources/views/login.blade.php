@@ -132,5 +132,14 @@
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="{{asset('js/materialize.js')}}"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			@if($errors)
+				@foreach($errors->all() as $error)
+					Materialize.toast('{{ $error }}', 4000);
+				@endforeach
+			@endif
+		});
+	</script>
 </body>
 </html>
