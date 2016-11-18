@@ -311,12 +311,13 @@ class PedidosSucursalController extends Controller
                         ->join('pacientes','pacientes.id','=','pedidos.paciente_id')
                         ->select('pedidos.id','pacientes.nombre','pacientes.apellido_p','pacientes.apellido_m','pedidos.fecha_pedido','pedidos.status')
                         ->where('user_sucursal.sucursal_id',$sucursal)
-                        ->orwhere('pacientes.apellido_p','like',$data.'%')
-                        ->orwhere('pacientes.apellido_m','like',$data.'%')
-                        ->orwhere('pacientes.id','like',$data.'%')
-                        ->orwhere('pacientes.clave_bancaria','like',$data.'%')
+                        ->orwhere('pacientes.apellido_p','like','%'.$data.'%')
+                        ->orwhere('pacientes.apellido_m','like','%'.$data.'%')
+                        ->orwhere('pacientes.id','like','%'.$data.'%')
+                        ->orwhere('pacientes.clave_bancaria','like','%'.$data.'%')
                         ->orderBy('fecha_pedido','DESC')
                         ->paginate(10);
+                        dd($pedidos);
             return view('sucursal.pedidos.list')->with('pedidos',$pedidos);
     }
 }
