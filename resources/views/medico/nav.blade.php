@@ -1,3 +1,9 @@
+<ul id="user_options" class="dropdown-content">
+  <li><a href="#!">Perfil</a></li>
+  <li><a href="#!">other</a></li>
+  <li class="divider"></li>
+  <li><a href="{{ route('logout') }}">Salir</a></li>
+</ul>
 <nav>
   <div class="nav-wrapper blue darken-1">
     <a href="#!" class="brand-logo"><img class="responsive-img" width="320px" src="{{asset('images/Logo_Blanco.svg')}}"></a>
@@ -7,6 +13,7 @@
       <li><a href="badges.html">Pacientes</a></li>
       <li><a href="mobile.html">Pedidos</a></li>
       <li><a href="mobile.html">Información</a></li>
+      <li><a class="dropdown-button" href="#!" data-activates="user_options">{{ Auth::user()->nombre }}<i class="material-icons right">arrow_drop_down</i></a></li>
     </ul>
     <ul class="side-nav" id="mobile-demo">
       <div class="row mb-0">

@@ -81,6 +81,8 @@ class AuthController extends Controller
     // Logic that determines where to send the user
     if (\Auth::user()->tipo_usuario == 'Administrador') {
         return '/admin';
+    } elseif (\Auth::user()->tipo_usuario == 'Medico') {
+        return '/medico';
     }
 
     return '/sucursal';

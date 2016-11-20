@@ -49,5 +49,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \MegaSalud\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin' => \MegaSalud\Http\Middleware\Admin::class,
+        'medico' => \MegaSalud\Http\Middleware\Medico::class,
     ];
 }

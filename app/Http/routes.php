@@ -16,7 +16,7 @@ Route::get('/', function () {
 /*
 | Rutas para administrador
 */
-Route::group(['prefix'=>'admin'],function(){
+Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 
 	Route::get('/', function(){
 		return view('admin.index');
@@ -186,6 +186,18 @@ Route::group(['prefix'=>'sucursal'],function(){
 	Route::resource('pedidos','PedidosSucursalController');
 });
 
+/*
+| Rutas para Médico
+*/
+
+Route::group(['prefix' => 'medico', 'middleware' => ['auth', 'medico']], function(){
+	/*
+	*	Ruta principal
+	*/
+	Route::get('/', function(){
+		return view('medico.index');
+	})->name('medico');
+});
 /*
 | Rutas para login
 */

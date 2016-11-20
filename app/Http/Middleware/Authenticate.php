@@ -25,6 +25,12 @@ class Authenticate
             }
         }
 
+        // if(\Auth::user()->tipo_usuario == 'Administrador'){
+        //     return redirect()->route('admin/inicio');
+        // }elseif(\Auth::user()->tipo_usuario == 'Medico'){
+        //     return redirect()->route('medico');
+        // }
+
         return $next($request);
     }
 }

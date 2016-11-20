@@ -37,5 +37,12 @@ class User extends Authenticatable
     public function citas(){
         return $this->belongsToMany('MegaSalud\Paciente','citas')->withPivot('paciente_id','user_id','fecha','observacion','status')->withTimestamps();
     }
-    //pivote 
+    //Funciones para middlewares
+    public function isAdmin() {
+        return $this->tipo_usuario === 'Administrador';
+    }
+
+    public function isMedico() {
+        return $this->tipo_usuario === 'Medico';
+    }
 }
