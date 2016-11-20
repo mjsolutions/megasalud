@@ -45,4 +45,8 @@ class User extends Authenticatable
     public function isMedico() {
         return $this->tipo_usuario === 'Medico';
     }
+
+    public function isAdminSucursal() {
+        return $this->tipo_usuario === 'Administrador de sucursal';
+    }
 }

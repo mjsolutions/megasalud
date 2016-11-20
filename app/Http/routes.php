@@ -154,7 +154,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 /*
 | Rutas para administrador de Sucursal
 */
-Route::group(['prefix'=>'sucursal'],function(){
+Route::group(['prefix'=>'sucursal', 'middleware' => ['auth', 'sucursal']],function(){
 	/*
 	*	Ruta principal
 	*/

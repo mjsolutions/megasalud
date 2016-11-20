@@ -51,5 +51,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => \MegaSalud\Http\Middleware\Admin::class,
         'medico' => \MegaSalud\Http\Middleware\Medico::class,
+        'sucursal' => \MegaSalud\Http\Middleware\Sucursal::class,
     ];
 }

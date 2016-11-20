@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
             }elseif(\Auth::user()->tipo_usuario == 'Medico'){
                 return redirect('/medico');                
             }
-            return redirect('/');
+            return redirect('/sucursal');
         }
 
         return $next($request);
