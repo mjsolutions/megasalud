@@ -20,7 +20,7 @@ class Sucursal
         if(Auth::guard($guard)->user()->isAdminSucursal()){
             return $next($request);
         }else{
-            dd('No tienes permisos de administrador de sucursal');
+            return redirect()->back()->withErrors(array('message' => 'No tienes permisos para acceder a esta ruta'));
         }
     }
 }

@@ -19,7 +19,8 @@ class Admin
         if(Auth::guard($guard)->user()->isAdmin()) {
             return $next($request);
         }else{
-            dd("No tienes permisos de administrador");
+            // dd("No tienes permisos de administrador");
+            return redirect()->back()->withErrors(array('message' => 'No tienes permisos para acceder a esta ruta'));
         }
     }
 }

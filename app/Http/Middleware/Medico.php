@@ -19,7 +19,7 @@ class Medico
         if(Auth::guard($guard)->user()->isMedico()) {
             return $next($request);
         }else{
-            dd("No tienes permisos de Médico");
+            return redirect()->back()->withErrors(array('message' => 'No tienes permisos para acceder a esta ruta'));
         }
     }
 }

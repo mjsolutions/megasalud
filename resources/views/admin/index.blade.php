@@ -12,3 +12,10 @@
 </div>
 
 @endsection
+@section('scripts')
+  @if($errors)
+    @foreach($errors->all() as $error)
+      Materialize.toast('{{ $error }}', 4000);
+    @endforeach
+  @endif
+@endsection
