@@ -27,6 +27,11 @@ var defaults = {
     today: 'Hoy',
     clear: 'Limpiar',
     close: 'Cerrar',
+    onSet: function (ele) {
+                 if(ele.select){
+                     this.close();
+                 }
+             },
 
 };
 var opciones = $.extend(defaults, data); // concatenar las opciones con las de default

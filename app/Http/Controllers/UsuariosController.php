@@ -14,6 +14,8 @@ use MegaSalud\Http\Controllers\Controller;
 
 use Laracasts\Flash\Flash;
 
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash;
@@ -158,8 +160,8 @@ class UsuariosController extends Controller
             $sucursal[$usuario->sucursales[0]->id] = $usuario->sucursales[0]->razon_social;
         }else{
             $sucursal = UsuariosController::medicos();
-        }       
-
+        }
+        
         //compact pasa las variables con sus nombres sin necesidad de referenciarlas
         //es lo mismo que hacer whth(array ('usuario'=>$usuario, 'sucursal'=>$sucursal))
         return view('admin.usuarios.edit', compact('usuario', 'sucursal'));
