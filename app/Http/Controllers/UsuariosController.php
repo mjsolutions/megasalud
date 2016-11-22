@@ -16,6 +16,10 @@ use Laracasts\Flash\Flash;
 
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Auth;
+
 use MegaSalud\Http\Requests\UserRequest;
 
 use MegaSalud\Http\Requests\CPRequest;
@@ -318,13 +322,28 @@ class UsuariosController extends Controller
 
     public function change_password(CPRequest $req){
         $usuario = User::find($req->id);
-        $msg = "empty";
-
-        if( bcrypt($req->password) == $usuario->password ){
-            $msg = "Correcto";
+        $route = "";
+        //Comprobrar que coincida contraseña de administrador
+        if( Hash::check($req->password_admin, Auth::user()->password)){
+            $usuario->password = bcrypt($req->password);
+            if($usuario->save()){
+                Flash::overlay('Cambio de contraseña exitoso', 'Exito');
+            }else{
+                Flash::overlay('A ocurrido un error, intentelo de nuevo mas tarde ', 'Error');
+            }
+            $route = "admin.usuarios.index";
+        }else{
+            Flash::overlay('Contraseña de administrador incorrecta', 'Error');
         }
-        Flash::overlay('Cambio de contraseña exitoso para el usuario ' . $usuario->password . " enviado: ".bcrypt($req->password), 'Exito');
-        return redirect()->route('admin.usuarios.index');
+
+        $route = "admin.usuarios.index";
+
+        if($req->id == Auth::user()->id){
+            $route = "logout";
+             //Flash::overlay('Cambio de contraseña exitoso, vuelve a iniciar sesión', 'Exito');
+        }
+
+        return redirect()->route($route);
     }
 
     public function clave($estado,$id,$tipo){

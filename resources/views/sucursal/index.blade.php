@@ -19,7 +19,8 @@
 @section('scripts')
   @if($errors)
     @foreach($errors->all() as $error)
-      Materialize.toast('{{ $error }}', 4000);
+      {{-- Materialize.toast('{{ $error }}', 4000, 'red'); --}}
+      Materialize.toast('{{ $error }}', 4000, 'red');
     @endforeach
   @endif
 @endsection

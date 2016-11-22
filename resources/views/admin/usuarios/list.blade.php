@@ -62,7 +62,9 @@
     <td>
       <a class="tooltipped btn-floating btn-small waves-effect waves-light mr-5" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $usuario->id }})"><i class="material-icons">receipt</i></a>
       <a href="{!! route('admin.usuarios.edit', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light amber accent-3 mr-5 tooltipped" data-position="right" data-delay="50" data-tooltip="Editar"><i class="material-icons">edit</i></a>
+      @if(Auth::user()->id != $usuario->id)
       <a href="{!! route('admin.usuarios.destroy', $usuario->id) !!}" class="btn-floating btn-small waves-effect waves-light  red darken-1 mr-5 tooltipped" data-position="right" data-delay="50" data-tooltip="Eliminar"><i class="material-icons">delete</i></a>
+      @endif
       <a class="btn-floating btn-small waves-effect waves-light  grey darken-1 tooltipped" data-position="right" data-delay="50" data-tooltip="Cambiar Contraseña" onclick="change_password({{ $usuario->id }}, '{{ $usuario->nombre }}')"><i class="material-icons">vpn_key</i></a>
     </td>
     </tr>
@@ -256,7 +258,7 @@
 
         <div class="input-field right-align">
           <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">Cerrar</button>
-          {!! Form::submit('Guardar',['class'=>'btn waves-effect waves-light green']) !!}
+          {!! Form::submit('Guardar',['class'=>'btn waves-effect btn-block waves-light green']) !!}
         </div>
       {!! Form::close() !!}
       </div>
@@ -368,8 +370,6 @@ $("#cedula").html(
 $('#detalles').openModal();
 });
 {{-- alert(id); --}}
-
-
 }
 
 function change_password(id, nombre) {
@@ -378,7 +378,5 @@ function change_password(id, nombre) {
   $("#change_password").openModal();
 
 }
-
-
 
 @endsection

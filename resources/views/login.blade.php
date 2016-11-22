@@ -89,7 +89,6 @@
 		<section>
 			@include('flash::message')
 
-
 			<div class="row">
 				{!! Form::open(['route' => 'login', 'method' => 'POST', 'class' => 'col s12 m10 l4 offset-l4 z-depth-2']) !!}
 				<div class="row">
@@ -134,6 +133,7 @@
 	<script type="text/javascript" src="{{asset('js/materialize.js')}}"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
+
 			@if($errors)
 				@foreach($errors->all() as $error)
 					Materialize.toast('{{ $error }}', 4000);

@@ -270,7 +270,7 @@
     </div>
 
     <div class="input-field center-align">
-      {!! Form::submit('Guardar',['class'=>'btn btn-large waves-effect waves-light']) !!}
+      {!! Form::submit('Guardar',['class'=>'btn btn-large btn-block btn-block-large waves-effect waves-light']) !!}
     </div>
   </div>
 

@@ -52,7 +52,7 @@ class AuthController extends Controller
             // 'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-        ]);
+            ]);
     }
 
     /**
@@ -67,7 +67,7 @@ class AuthController extends Controller
             // 'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-        ]);
+            ]);
     }
 
     protected function getLogin()
@@ -77,14 +77,15 @@ class AuthController extends Controller
 
 
     public function redirectPath()
-{
+    {
     // Logic that determines where to send the user
-    if (\Auth::user()->tipo_usuario == 'Administrador') {
-        return '/admin';
-    } elseif (\Auth::user()->tipo_usuario == 'Medico') {
-        return '/medico';
+        if (\Auth::user()->tipo_usuario == 'Administrador') {
+            return '/admin';
+        } elseif (\Auth::user()->tipo_usuario == 'Medico') {
+            return '/medico';
+        }
+
+        return '/sucursal';
     }
 
-    return '/sucursal';
-}
 }

@@ -268,7 +268,7 @@
     </div>
 
     <div class="input-field center-align">
-      {!! Form::submit('Actualizar',['class'=>'btn waves-effect waves-light']) !!}
+      {!! Form::submit('Actualizar',['class'=>'btn btn-large btn-block btn-block-large waves-effect waves-light']) !!}
     </div>
   </div>
 </div>
