@@ -167,11 +167,15 @@ Route::group(['prefix'=>'sucursal', 'middleware' => ['auth', 'sucursal']],functi
 	/*
 	| Rutas pacientes
 	*/
+	Route::GET('pacientes/busqueda_index',[
+		'uses'	=>	'PacientesSucursalController@busqueda_index',
+		'as'	=>	'sucursal.pacientes.busqueda_index'
+		]);
 	Route::resource('pacientes','PacientesSucursalController');
 	Route::get('pacientes/{id}/destroy',[
-	'uses'	=>	'PacientesSucursalController@destroy',
-	'as'	=>	'sucursal.pacientes.destroy'
-	]);
+		'uses'	=>	'PacientesSucursalController@destroy',
+		'as'	=>	'sucursal.pacientes.destroy'
+		]);
 	/*
 	| Rutas Usuarios
 	*/
@@ -183,6 +187,30 @@ Route::group(['prefix'=>'sucursal', 'middleware' => ['auth', 'sucursal']],functi
 	/*
 	| Rutas pedidos
 	*/
+	Route::post('pedidos/estado',[
+		'uses' 	=>	'PedidosSucursalController@estado',
+		'as'	=>	'sucursal.pedidos.estado'
+		]);
+	Route::post('pedidos/estado',[
+		'uses' 	=>	'PedidosSucursalController@estado',
+		'as'	=>	'sucursal.pedidos.estado'
+		]);
+	Route::get('pedidos/{data}/busqueda_pacientes',[
+		'uses'	=>	'PedidosSucursalController@busqueda_pacientes',
+		'as'	=>	'sucursal.pedidos.busqueda_pacientes'
+		]);
+	Route::POST('pedidos/forma_pago', [
+		'uses'	=>	'PedidosSucursalController@forma_pago',
+		'as'	=>	'sucursal.pedidos.forma_pago'
+		]);
+	Route::POST('pedidos/confirmar',[
+		'uses'	=>	'PedidosSucursalController@confirmacion',
+		'as'	=>	'sucursal.pedidos.confirmacion'
+		]);
+	Route::GET('pedidos/busqueda_index',[
+		'uses'	=>	'PedidosSucursalController@busqueda_index',
+		'as'	=>	'sucursal.pedidos.busqueda_index'
+		]);
 	Route::resource('pedidos','PedidosSucursalController');
 });
 

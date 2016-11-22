@@ -17,6 +17,18 @@
             <div class="row">
                 <div class="col s8 col-center divider"></div>
             </div>
+            <div class="row">
+            {!! Form::open(['route'=>['sucursal.pacientes.busqueda_index'], 'method'=>'GET']) !!}
+                <div class="col l6 offset-l4 input-field">
+                    <i class="material-icons prefix">search</i>
+                    {!! Form::text('data', null, ['class'=>'validate','id'=>'data','required'=>'required']) !!}
+                    <label for="icon_prefix2">Buscar (Nombre de Paciente, Identificador, Clave bancaria)</label>
+                </div>
+                <div class="col l2">
+                    {!! Form::submit('Buscar',['class'=>'btn waves-effect waves-light']) !!}
+                </div>
+            {!! Form::close() !!}
+            </div>
             <table class="responsive-table centered">
                 <thead>
                   <tr>
@@ -24,6 +36,7 @@
                     <th data-field="name">Nombre</th>
                     <th data-field="city">Ciudad</th>
                     <th data-field="telefono">Telefono</th>
+                    <th data-field="Clave">Clave Bancaria</th>
                     <th data-field="option">Opciones</th>
                   </tr>
                 </thead>
@@ -34,6 +47,7 @@
                             <td>{{ $paciente->nombre.' '.$paciente->apellido_p.' '.$paciente->apellido_m }}</td>
                             <td>{{$paciente->municipio}}</td>
                             <td>{{ "(".substr($paciente->telefono_a, 0, 3).") ".substr($paciente->telefono_a, 3, 3)."-".substr($paciente->telefono_a,6)." y "."(".substr($paciente->telefono_b, 0, 3).") ".substr($paciente->telefono_b, 3, 3)."-".substr($paciente->telefono_b,6) }}</td>
+                            <td>{{$paciente->clave_bancaria}}</td>
                             <td><a class="tooltipped btn-floating btn-small waves-effect waves-light mr-10" data-position="right" data-delay="50" data-tooltip="Detalles" onclick="detalle({{ $paciente->id }})"><i class="material-icons">receipt</i></a><a href="{!! route('sucursal.pacientes.edit', $paciente->id) !!}" data-position="right" data-delay="50" data-tooltip="Editar" class="tooltipped btn-floating btn-small waves-effect waves-light amber accent-3 mr-10"><i class="material-icons">edit</i></a><a href="{!! route('sucursal.pacientes.destroy', $paciente->id) !!}" data-position="right" data-delay="50" data-tooltip="Eliminar" class="tooltipped btn-floating btn-small waves-effect waves-light  red darken-1"><i class="material-icons">delete</i></a></td>
                         </tr>
                     @endforeach
