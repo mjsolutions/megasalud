@@ -305,19 +305,25 @@ class PedidosSucursalController extends Controller
     {
         $sucursal=1;
         $data=$request->data;
+        $data=explode(" ",trim($data));
          $pedidos=DB::table('pedidos')
                         ->join('users','users.id','=','pedidos.user_id')
                         ->join('user_sucursal','user_sucursal.user_id','=','users.id')
                         ->join('pacientes','pacientes.id','=','pedidos.paciente_id')
                         ->select('pedidos.id','pacientes.nombre','pacientes.apellido_p','pacientes.apellido_m','pedidos.fecha_pedido','pedidos.status')
                         ->where('user_sucursal.sucursal_id',$sucursal)
-                        ->orwhere('pacientes.apellido_p','like','%'.$data.'%')
-                        ->orwhere('pacientes.apellido_m','like','%'.$data.'%')
-                        ->orwhere('pacientes.id','like','%'.$data.'%')
-                        ->orwhere('pacientes.clave_bancaria','like','%'.$data.'%')
+                        ->where(function($query)use ($data){
+                            //se realiza el ciclo para buscar todas las palabras en cada uno de los campos
+                            foreach ($data as $dato) {
+                                $query->where('pacientes.apellido_p','like','%'.$dato.'%')
+                                ->orwhere('pacientes.apellido_m','like','%'.$dato.'%')
+                                ->orwhere('pacientes.id','like','%'.$dato.'%')
+                                ->orwhere('pacientes.nombre','like','%'.$dato.'%')
+                                ->orwhere('pacientes.clave_bancaria','like','%'.$dato.'%');
+                            }
+                        })
                         ->orderBy('fecha_pedido','DESC')
                         ->paginate(10);
-                        dd($pedidos);
             return view('sucursal.pedidos.list')->with('pedidos',$pedidos);
     }
 }

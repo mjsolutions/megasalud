@@ -29,7 +29,7 @@ class PacientesSucursalController extends Controller
      */
     public function index()
     {
-        $sucursal=2;//obtenida de sesión
+        $sucursal=1;//obtenida de sesión
         $pacientes=DB::table('pacientes')
                         ->join('paciente_user','pacientes.id','=','paciente_user.paciente_id')
                         ->join('user_sucursal','user_sucursal.user_id','=','paciente_user.user_id')
@@ -46,7 +46,7 @@ class PacientesSucursalController extends Controller
      */
     public function create()
     {
-        $sucursal=2;//obtenida de sesión
+        $sucursal=1;//obtenida de sesión
         $sucursal=Sucursal::find($sucursal);
         $medicos=$sucursal->users->lists('nombre','id');
         return view('sucursal.pacientes.create')->with('medicos',$medicos);
@@ -111,7 +111,7 @@ class PacientesSucursalController extends Controller
      */
     public function edit($id)
     {
-        $sucursal=2;//obtenida de sesión
+        $sucursal=1;//obtenida de sesión
         $paciente=Paciente::find($id);
         $paciente->users;
         $sucursal=Sucursal::find($sucursal);
@@ -177,5 +177,29 @@ class PacientesSucursalController extends Controller
             Flash::overlay('Ha ocurrido un error al eliminar al paciente  '.$paciente->nombre, 'Error');
         }
         return redirect()->route('sucursal.pacientes.index');
+    }
+    public function busqueda_index(Request $request)
+    {
+        $sucursal=1;
+        $data=$request->data;
+        $data=explode(" ",trim($data));
+         $pacientes=DB::table('pacientes')
+                        ->select('nombre','apellido_p','apellido_m','id','municipio','telefono_a','telefono_b','clave_bancaria')
+                        ->join('paciente_user','paciente_user.paciente_id','=','pacientes.id')
+                        ->join('user_sucursal','user_sucursal.user_id','=','paciente_user.user_id')
+                        ->where('user_sucursal.sucursal_id',$sucursal)
+                        ->where(function($query)use($data){ 
+                            //se realiza el ciclo para buscar todas las palabras en cada uno de los campos
+                            foreach ($data as $dato) {
+                                $query->where('nombre','like','%'.$dato.'%')
+                            ->orwhere('apellido_m','like','%'.$dato.'%')
+                            ->orwhere('apellido_p','like','%'.$dato.'%')
+                            ->orwhere('clave_bancaria','like','%'.$dato.'%');
+                            }
+                        })
+                        ->where('user_sucursal.sucursal_id',$sucursal)
+                        ->orderBy('nombre','ASC')
+                        ->paginate(10);
+            return view('sucursal.pacientes.list')->with('pacientes',$pacientes);
     }
 }

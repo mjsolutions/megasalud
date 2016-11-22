@@ -167,11 +167,15 @@ Route::group(['prefix'=>'sucursal'],function(){
 	/*
 	| Rutas pacientes
 	*/
+	Route::GET('pacientes/busqueda_index',[
+		'uses'	=>	'PacientesSucursalController@busqueda_index',
+		'as'	=>	'sucursal.pacientes.busqueda_index'
+		]);
 	Route::resource('pacientes','PacientesSucursalController');
 	Route::get('pacientes/{id}/destroy',[
-	'uses'	=>	'PacientesSucursalController@destroy',
-	'as'	=>	'sucursal.pacientes.destroy'
-	]);
+		'uses'	=>	'PacientesSucursalController@destroy',
+		'as'	=>	'sucursal.pacientes.destroy'
+		]);
 	/*
 	| Rutas Usuarios
 	*/
@@ -203,7 +207,7 @@ Route::group(['prefix'=>'sucursal'],function(){
 		'uses'	=>	'PedidosSucursalController@confirmacion',
 		'as'	=>	'sucursal.pedidos.confirmacion'
 		]);
-	Route::POST('busqueda_index',[
+	Route::GET('pedidos/busqueda_index',[
 		'uses'	=>	'PedidosSucursalController@busqueda_index',
 		'as'	=>	'sucursal.pedidos.busqueda_index'
 		]);

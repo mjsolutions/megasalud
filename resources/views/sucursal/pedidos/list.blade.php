@@ -18,7 +18,7 @@
                 <div class="col s8 col-center divider"></div>
             </div>
             <div class="row">
-            {!! Form::open(['route'=>['sucursal.pedidos.busqueda_index'], 'method'=>'POST']) !!}
+            {!! Form::open(['route'=>['sucursal.pedidos.busqueda_index'], 'method'=>'GET']) !!}
                 <div class="col l6 offset-l4 input-field">
                     <i class="material-icons prefix">search</i>
                     {!! Form::text('data', null, ['class'=>'validate','id'=>'data','required'=>'required']) !!}
