@@ -348,6 +348,24 @@ class UsuariosController extends Controller
         return redirect()->route($route);
     }
 
+    public function busqueda(Request $req){
+
+        $data=$req->data;
+        $data=explode(" ",trim($data));
+        $usuarios = User::where(function($query) use ($data) {
+                        foreach ($data as $dato) {
+                            $query->where('users.nombre', 'like', '%'.$dato.'%')
+                            ->orwhere('users.apellido_p', 'like', '%'.$dato.'%')
+                            ->orwhere('users.apellido_m', 'like', '%'.$dato.'%')
+                            ->orwhere('users.id', 'like', '%'.$dato.'%')
+                            ->orwhere('users.tipo_usuario', 'like', '%'.$dato.'%')
+                            ->orwhere('users.clave_bancaria', 'like', '%'.$dato.'%');
+                        }
+                    })->orderBy('nombre', 'DESC')
+                    ->paginate(10);
+        return view('admin.usuarios.list')->with('usuarios',$usuarios);
+    }
+
     public function clave($estado,$id,$tipo){
         $prefijo = 0;
         switch ($estado) {

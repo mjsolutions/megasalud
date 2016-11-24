@@ -117,6 +117,11 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		'as' => 'admin.usuarios.change_password'
 		]);
 
+	Route::get('usuarios/busqueda', [
+		'uses' => 'UsuariosController@busqueda',
+		'as' => 'admin.usuarios.busqueda'
+		]);
+
 	Route::resource('usuarios','UsuariosController');
 
 	Route::get('usuarios/{id}/destroy', [
