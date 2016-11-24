@@ -12,7 +12,7 @@
       <ul class="right hide-on-med-and-down">
         <li><a href="{{ route('sucursal.inicio') }}">Inicio</a></li>
         <li><a href="{{ route('sucursal.pacientes.index') }}">Pacientes</a></li>
-        <li><a href="{{ route('sucursal.usuarios.index') }}">Médicos</a></li>
+        <li><a href="{{ route('sucursal.medicos.index') }}">Médicos</a></li>
         <li><a href="{{ route('sucursal.productos.index') }}">Productos</a></li>
         <li><a href="{{ route('sucursal.pedidos.index') }}">Pedidos</a></li>
         <li><a class="dropdown-button" href="#!" data-activates="user_options">{{ Auth::user()->nombre }}<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -31,7 +31,7 @@
       </div>
       <li><a href="{{ route('sucursal.inicio') }}">Inicio</a></li>
       <li><a href="{{ route('sucursal.pacientes.index') }}">Pacientes</a></li>
-      <li><a href="{{ route('sucursal.usuarios.index') }}">Médicos</a></li>
+      <li><a href="{{ route('sucursal.medicos.index') }}">Médicos</a></li>
       <li><a href="{{ route('sucursal.productos.index') }}">Productos</a></li>
       <li><a href="{{ route('sucursal.pedidos.index') }}">Pedidos</a></li>
     </ul>

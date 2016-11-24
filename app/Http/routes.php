@@ -117,6 +117,11 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		'as' => 'admin.usuarios.change_password'
 		]);
 
+	Route::get('usuarios/busqueda', [
+		'uses' => 'UsuariosController@busqueda',
+		'as' => 'admin.usuarios.busqueda'
+		]);
+
 	Route::resource('usuarios','UsuariosController');
 
 	Route::get('usuarios/{id}/destroy', [
@@ -177,9 +182,20 @@ Route::group(['prefix'=>'sucursal', 'middleware' => ['auth', 'sucursal']],functi
 		'as'	=>	'sucursal.pacientes.destroy'
 		]);
 	/*
-	| Rutas Usuarios
+	| Rutas Médicos
 	*/
-	Route::resource('usuarios','UsuariosSucursalController');
+	Route::get('medicos/busqueda', [
+		'uses' => 'Medicos@busqueda',
+		'as' => 'sucursal.medicos.busqueda'
+		]);
+
+	Route::resource('medicos','MedicosSucursalController');
+
+	Route::get('medicos/{id}/destroy',[
+		'uses'	=>	'MedicosSucursalController@destroy',
+		'as'	=>	'sucursal.medicos.destroy'
+		]);
+	/*
 	/*
 	| Rutas productos
 	*/

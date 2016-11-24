@@ -18,35 +18,47 @@
     <div class="row">
      <div class="col s8 col-center divider"></div>
    </div>
-   <table class="responsive-table centered">
-     <thead>
-      <tr>
-       <th data-field="id">Id</th>
-       <th data-field="name">Nombre</th>
-       <th data-field="sucursal">Email</th>
-       <th data-field="telefono">Rol</th>
-       <th data-field="sucursal">Sucursal</th>
-       <th data-field="option">Opciones</th>
-     </tr>
-   </thead>
-   <tbody>
-{{--     {{ $usuarios[5]->sucursales }}
-    {{ $usuarios[5]->tipo_usuario }} --}}
-    @foreach($usuarios as $usuario)
+   <div class="row">
+   {!! Form::open(['route'=>['admin.usuarios.busqueda'], 'method'=>'GET']) !!}
+    <div class="col l6 offset-l4 input-field mt-0">
+      <i class="material-icons prefix">search</i>
+      {!! Form::text('data', null, ['class'=>'validate','id'=>'data','required'=>'required']) !!}
+      <label for="icon_prefix2">(Nombre de Usuario, Identificador, Clave bancaria, Rol)</label>
+    </div>
+    <div class="col l2">
+      {!! Form::submit('Buscar',['class'=>'btn btn-block waves-effect waves-light']) !!}
+    </div>
+    {!! Form::close() !!}
+  </div>
+  <table class="responsive-table centered">
+   <thead>
     <tr>
-     <td>{{ $usuario->id }}</td>
-     <td>{{ $usuario->nombre }}</td>
-     <td>{{ $usuario->email }}</td>
-     <td>
-      @if ($usuario->tipo_usuario == "Administrador")
-        <span class="c-white-normal p-5 br-2 blue">{{ $usuario->tipo_usuario }}</span>
-      @elseif ($usuario->tipo_usuario == "Medico")
-        <span class="c-white-normal p-5 br-2 green">{{ $usuario->tipo_usuario }}</span>
-      @else
-        <span class="c-white-normal p-5 br-2 red">Admin. de Suc.</span>
-      @endif
-    </td>
-    <td>
+     <th data-field="id">Id</th>
+     <th data-field="name">Nombre</th>
+     <th data-field="sucursal">Email</th>
+     <th data-field="telefono">Rol</th>
+     <th data-field="sucursal">Sucursal</th>
+     <th data-field="option">Opciones</th>
+   </tr>
+ </thead>
+ <tbody>
+{{--     {{ $usuarios[5]->sucursales }}
+{{ $usuarios[5]->tipo_usuario }} --}}
+@foreach($usuarios as $usuario)
+<tr>
+ <td>{{ $usuario->id }}</td>
+ <td>{{ $usuario->nombre }}</td>
+ <td>{{ $usuario->email }}</td>
+ <td>
+  @if ($usuario->tipo_usuario == "Administrador")
+  <span class="c-white-normal p-5 br-2 blue">{{ $usuario->tipo_usuario }}</span>
+  @elseif ($usuario->tipo_usuario == "Medico")
+  <span class="c-white-normal p-5 br-2 green">{{ $usuario->tipo_usuario }}</span>
+  @else
+  <span class="c-white-normal p-5 br-2 red">Admin. de Suc.</span>
+  @endif
+</td>
+<td>
       {{-- @if( count($usuario->sucursales) )
       {{  $usuario->sucursales[0]->razon_social }}
       @else
@@ -54,9 +66,9 @@
       @endif --}}
 
       @forelse($usuario->sucursales as $sucursal)
-        {{ $sucursal->razon_social }}
+      {{ $sucursal->razon_social }}
       @empty
-        {{ 'N/A' }}
+      {{ 'N/A' }}
       @endforelse
     </td>
     <td>
@@ -67,8 +79,8 @@
       @endif
       <a class="btn-floating btn-small waves-effect waves-light  grey darken-1 tooltipped" data-position="right" data-delay="50" data-tooltip="Cambiar Contraseña" onclick="change_password({{ $usuario->id }}, '{{ $usuario->nombre }}')"><i class="material-icons">vpn_key</i></a>
     </td>
-    </tr>
-    @endforeach
+  </tr>
+  @endforeach
 </tbody>
 </table>
 {!! Form::open(['route' => ['admin.usuarios.show', ':USER_ID'], 'method' => 'GET', 'id' => 'form']) !!}
@@ -254,17 +266,17 @@
           {!! Form::password('password_confirmation', null, ['class'=>'validate','required']) !!}
         </div>
 
-          {!! Form::hidden('id', null, ['id' => 'id']) !!}
+        {!! Form::hidden('id', null, ['id' => 'id']) !!}
 
         <div class="input-field right-align">
           <button href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" type="reset">Cerrar</button>
           {!! Form::submit('Guardar',['class'=>'btn waves-effect btn-block waves-light green']) !!}
         </div>
-      {!! Form::close() !!}
+        {!! Form::close() !!}
       </div>
     </div>
-      {{-- <div class="divider"></div> --}}
-      
+    {{-- <div class="divider"></div> --}}
+
 
   </div>
 </div>
@@ -278,11 +290,11 @@
 @endsection
 
 @section('scripts')
-  @if($errors)
-    @foreach($errors->all() as $error)
-      Materialize.toast('{{ $error }}', 4000);
-    @endforeach
-  @endif
+@if($errors)
+@foreach($errors->all() as $error)
+Materialize.toast('{{ $error }}', 4000);
+@endforeach
+@endif
 @endsection
 
 @section('functions')
@@ -303,22 +315,22 @@ $("#telefonos").html(
 );
 var direccion = "";
 if(datos.direccion != ""){
-  direccion += datos.direccion + " ";
+direccion += datos.direccion + " ";
 }
 if(datos.colonia != ""){
-  direccion += datos.colonia + " ";
+direccion += datos.colonia + " ";
 }
 if(datos.municipio != ""){
-  direccion += datos.municipio + " ";
+direccion += datos.municipio + " ";
 }
 if(datos.estado != ""){
-  direccion += datos.estado + " ";
+direccion += datos.estado + " ";
 }
 if(datos.pais != ""){
-  direccion += datos.pais + " ";
+direccion += datos.pais + " ";
 }
 if(datos.cp != ""){
-  direccion += datos.cp + " ";
+direccion += datos.cp + " ";
 }
 $("#direccion").html(
 "<span>"+direccion+"</span>"
@@ -373,9 +385,9 @@ $('#detalles').openModal();
 }
 
 function change_password(id, nombre) {
-  $("#cp_nombre").html(nombre);
-  $('#id').val(id);
-  $("#change_password").openModal();
+$("#cp_nombre").html(nombre);
+$('#id').val(id);
+$("#change_password").openModal();
 
 }
 
