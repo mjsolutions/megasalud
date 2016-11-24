@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 
 use MegaSalud\Http\Requests;
 
-class UsuariosSucursalController extends Controller
+use MegaSalud\User;
+
+use MegaSalud\Http\Controllers\Controller;
+
+class MedicosSucursalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +19,8 @@ class UsuariosSucursalController extends Controller
      */
     public function index()
     {
-        //
+        $medicos=User::where('tipo_usuario', '=', 'Medico')->where(function($query){ $query->where('status', 1);})->orderBy('nombre','ASC')->paginate(10);
+        return view('sucursal.medicos.list')->with('medicos',$medicos);
     }
 
     /**

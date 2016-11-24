@@ -182,9 +182,20 @@ Route::group(['prefix'=>'sucursal', 'middleware' => ['auth', 'sucursal']],functi
 		'as'	=>	'sucursal.pacientes.destroy'
 		]);
 	/*
-	| Rutas Usuarios
+	| Rutas Médicos
 	*/
-	Route::resource('usuarios','UsuariosSucursalController');
+	Route::get('medicos/busqueda', [
+		'uses' => 'Medicos@busqueda',
+		'as' => 'sucursal.medicos.busqueda'
+		]);
+
+	Route::resource('medicos','MedicosSucursalController');
+
+	Route::get('medicos/{id}/destroy',[
+		'uses'	=>	'MedicosSucursalController@destroy',
+		'as'	=>	'sucursal.medicos.destroy'
+		]);
+	/*
 	/*
 	| Rutas productos
 	*/
