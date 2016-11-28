@@ -61,6 +61,9 @@
 </tbody>
 </table>
 
+{!! Form::open(['route' => ['sucursal.medicos.show', ':USER_ID'], 'method' => 'GET', 'id' => 'form']) !!}
+{!! Form::close() !!}
+
 <div id="detalles" class="modal">
 	<div class="modal-footer">
 		<div class="plr-5" id="contenido">
@@ -315,13 +318,6 @@ $("#cedula").html(
 $('#detalles').openModal();
 });
 {{-- alert(id); --}}
-}
-
-function change_password(id, nombre) {
-$("#cp_nombre").html(nombre);
-$('#id').val(id);
-$("#change_password").openModal();
-
 }
 
 @endsection

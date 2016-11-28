@@ -184,8 +184,27 @@ Route::group(['prefix'=>'sucursal', 'middleware' => ['auth', 'sucursal']],functi
 	/*
 	| Rutas Médicos
 	*/
+	Route::get('medicos/pais', [
+		'uses' => 'MedicosSucursalController@pais',
+		'as' => 'sucursal.medicos.pais'
+		]);
+
+	Route::get('medicos/estado', [
+		'uses' => 'MedicosSucursalController@estado',
+		'as' => 'sucursal.medicos.estado'
+		]);
+
+	Route::get('medicos/municipio', [
+		'uses' => 'MedicosSucursalController@municipio',
+		'as' => 'sucursal.medicos.municipio'
+		]);
+
+	Route::get('medicos/banco', [
+		'uses' => 'MedicosSucursalController@banco',
+		'as' => 'sucursal.medicos.banco'
+		]);
 	Route::get('medicos/busqueda', [
-		'uses' => 'Medicos@busqueda',
+		'uses' => 'MedicosSucursalController@busqueda',
 		'as' => 'sucursal.medicos.busqueda'
 		]);
 

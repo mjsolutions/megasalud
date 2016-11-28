@@ -321,6 +321,9 @@ $("select#tipo_usuario").change(function() {
   }
 });
 
+/*
+| Autocompletes del formulario
+*/
 $.get('{!! route('admin.usuarios.pais') !!}').done(function(datos){
   $('#pais.autocomplete').autocomplete({
     data:JSON.parse(datos)
@@ -344,11 +347,6 @@ $.get('{!! route('admin.usuarios.banco') !!}').done(function(datos){
     data:JSON.parse(datos)
   });
 });
-
-{{-- $('form').submit(function(e){
-  e.preventDefault();
-  alert($(this).serialize());
-}) --}}
 
 @endsection
 @section('scripts-2')
