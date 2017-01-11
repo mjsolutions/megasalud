@@ -100,7 +100,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 	Route::get('usuarios/medicos',[
 		'uses' => 'UsuariosController@medicos',
 		'as' => 'admin.usuarios.medicos'
- 		]);
+		]);
 	
 	Route::get('usuarios/adminsucursal', [
 		'uses' => 'UsuariosController@adminsucursal',
@@ -130,6 +130,22 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		]); // se debe declarar despues del resource
 
 	/*
+	| Rutas Sucursales
+	*/
+	Route::get('sucursales/busqueda', [
+		'uses' => 'SucursalesController@busqueda',
+		'as' => 'admin.sucursales.busqueda'
+		]);
+
+	Route::resource('sucursales','SucursalesController');
+
+	
+	Route::get('sucursales/{id}/destroy', [
+		'uses' => 'SucursalesController@destroy',
+		'as' => 'admin.sucursales.destroy'
+		]); // se debe declarar despues del resource
+
+	/*
 	| Rutas pedidos
 	*/
 	Route::post('pedidos/estado',[
@@ -150,8 +166,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'admin']],function(){
 		]);
 
 	Route::get('pedidos/{data}/busqueda_pacientes',[
-			'uses'	=>	'PedidosController@busqueda_pacientes',
-			'as'	=>	'admin.pedidos.busqueda_pacientes'
+		'uses'	=>	'PedidosController@busqueda_pacientes',
+		'as'	=>	'admin.pedidos.busqueda_pacientes'
 		]);
 	Route::resource('pedidos','PedidosController');
 });

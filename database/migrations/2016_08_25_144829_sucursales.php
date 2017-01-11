@@ -23,6 +23,7 @@ class Sucursales extends Migration
             $table->string('telefono');
             $table->string('cuenta_bancaria');
             $table->string('banco');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
         Schema::create('user_sucursal', function (Blueprint $table) {
