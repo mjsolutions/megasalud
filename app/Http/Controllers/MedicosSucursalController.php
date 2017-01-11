@@ -8,9 +8,13 @@ use MegaSalud\Http\Requests;
 
 use Laracasts\Flash\Flash;
 
+use Illuminate\Support\Facades\DB;
+
 use MegaSalud\User;
 
 use MegaSalud\Sucursal;
+
+use MegaSalud\Http\Requests\SucursalMedicoRequest;
 
 use MegaSalud\Http\Controllers\Controller;
 
@@ -44,9 +48,50 @@ class MedicosSucursalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SucursalMedicoRequest $request)
     {
-        //
+        $validate = false;
+
+        DB::beginTransaction();
+
+        try {
+
+            $usuario = new User($request->all());
+            $usuario->password = bcrypt($usuario->password);
+            $usuario->tipo_usuario = "Medico";
+            if($usuario->save()){
+                $usuario->clave_bancaria = claveBancaria($usuario->estado, $usuario->id, "D");
+                $usuario->save();
+            }
+
+            if($request->has("sucursal")) {
+                $id = $request->sucursal;            
+                $usuario->sucursales()->attach($id);
+                $validate = true;//validar que se hizo la operacion
+            }else {
+                $validate = true;// no tiene sucursal pero debe de validarse la primer operacion
+            }
+            //no se pone fuera el validate true porque se necesita saber que se agrego en tabla pivote
+            //en caso de existir sucursal
+
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $validate = false;
+            $fail = $e;
+            // throw $e;
+        }        
+
+
+        if($validate) {
+            Flash::overlay('Se ha registrado '.$usuario->nombre.' de forma exitosa.', 'Alta exitosa');
+        }else{
+            Flash::overlay('Ha ocurrido un error al registrar al usuario  '.$usuario->nombre." : ".$fail, 'Error');            
+        }
+
+        
+        return redirect()->route('sucursal.medicos.index');
     }
 
     /**
@@ -84,7 +129,9 @@ class MedicosSucursalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = User::find($id);
+        $sucursal = Sucursal::all()->pluck('razon_social', 'id');
+        return view('sucursal.medicos.edit', compact('usuario', 'sucursal'));
     }
 
     /**
@@ -94,9 +141,58 @@ class MedicosSucursalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SucursalMedicoRequest $request, $id)
     {
-        //
+        $validate = false;
+
+        DB::beginTransaction();
+
+        try {
+
+            $usuario = User::find($id);
+            $usuario->fill($request->all());
+            $usuario->tipo_usuario = "Medico";
+            if ($usuario->save()) {
+
+               if($usuario->sucursales->isEmpty()){
+                    //no tiene asociada sucursal aun y se envio registro
+                    if($request->has("sucursal")){
+                        $id = $request->sucursal;            
+                        $usuario->sucursales()->attach($id);                    
+                    }
+
+                }else{
+
+                    //ya tiene sucursal asociada y el id enviado es diferente
+                    if($usuario->sucursales[0]->id != $request->sucursal){
+                        //update a registro
+                        $usuario->sucursales()->updateExistingPivot($request->sucursal);
+
+                    }
+             
+                }
+                $validate = true;
+
+            }else{
+                $validate = false;
+            }
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $validate = false;
+            $fail = $e;
+            // throw $e;
+        }
+
+        if($validate) {
+            Flash::overlay('Se ha actualizado '.$usuario->nombre.' de forma exitosa.', 'Modificación exitosa');
+        }else{
+            Flash::overlay('Ha ocurrido un error al actualizar al usuario  '.$usuario->nombre." : ".$fail, 'Error');            
+        }
+        
+        return redirect()->route('sucursal.medicos.index');
     }
 
     /**
