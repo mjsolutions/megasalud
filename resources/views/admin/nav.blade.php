@@ -13,7 +13,7 @@
         <li><a href="{{ route('admin.inicio') }}">Inicio</a></li>
         <li><a href="{{ route('admin.pacientes.index') }}">Pacientes</a></li>
         <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
-        <li><a href="">Sucursales</a></li>
+        <li><a href="{{ route('admin.sucursales.index') }}">Sucursales</a></li>
         <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
         <li><a href="{{ route('admin.pedidos.index') }}">Pedidos</a></li>
         <li><a class="dropdown-button" href="#!" data-activates="user_options">{{ Auth::user()->nombre }}<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -33,7 +33,7 @@
       <li><a href="{{ route('admin.inicio') }}">Inicio</a></li>
       <li><a href="{{ route('admin.pacientes.index') }}">Pacientes</a></li>
       <li><a href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
-      <li><a href="">Sucursales</a></li>
+      <li><a href="{{ route('admin.sucursales.index') }}">Sucursales</a></li>
       <li><a href="{{ route('admin.productos.index') }}">Productos</a></li>
       <li><a href="{{ route('admin.pedidos.index') }}">Pedidos</a></li>
     </ul>

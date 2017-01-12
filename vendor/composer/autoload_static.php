@@ -809,9 +809,11 @@ class ComposerStaticInit60796eeada49df5660ef746f20908cd6
         'SebastianBergmann\\RecursionContext\\Exception' => __DIR__ . '/..' . '/sebastian/recursion-context/src/Exception.php',
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SucursalSeeder' => __DIR__ . '/../..' . '/database/seeds/SucursalSeeder.php',
         'Sucursales' => __DIR__ . '/../..' . '/database/migrations/2016_08_25_144829_sucursales.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'UsersSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
