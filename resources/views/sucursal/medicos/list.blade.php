@@ -23,7 +23,7 @@
 			<div class="col l6 offset-l4 input-field mt-0">
 				<i class="material-icons prefix">search</i>
 				{!! Form::text('data', null, ['class'=>'validate','id'=>'data','required'=>'required']) !!}
-				<label for="icon_prefix2">(Nombre de médico, Identificador, Clave bancaria, Rol)</label>
+				<label for="icon_prefix2">(Nombre de médico, Identificador, Clave bancaria)</label>
 			</div>
 			<div class="col l2">
 				{!! Form::submit('Buscar',['class'=>'btn btn-block waves-effect waves-light']) !!}

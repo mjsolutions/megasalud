@@ -53,7 +53,7 @@
 			}
 			$('.modal-trigger').leanModal();
 			$('select').material_select();
-			$(".dropdown-button").dropdown();
+			$(".dropdown-button").dropdown(); //puede funcionar sin esta declaracion
 			@yield('scripts')
 		});
 		@yield('functions')

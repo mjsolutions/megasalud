@@ -49,6 +49,7 @@ function userBancos(){
 
 function claveBancaria($estado,$id,$tipo){
 	$prefijo = 0;
+	$posfijo = 0;
 	switch ($estado) {
 		case "Aguascalientes":
 		$clave = "AG";
