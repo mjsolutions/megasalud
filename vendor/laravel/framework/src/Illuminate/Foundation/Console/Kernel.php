@@ -2,15 +2,12 @@
 
 namespace Illuminate\Foundation\Console;
 
-use Closure;
 use Exception;
 use Throwable;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Console\Application as Artisan;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Console\Kernel as KernelContract;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
@@ -45,25 +42,19 @@ class Kernel implements KernelContract
     protected $commands = [];
 
     /**
-     * Indicates if the Closure commands have been loaded.
-     *
-     * @var bool
-     */
-    protected $commandsLoaded = false;
-
-    /**
      * The bootstrap classes for the application.
      *
      * @var array
      */
     protected $bootstrappers = [
-        \Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables::class,
-        \Illuminate\Foundation\Bootstrap\LoadConfiguration::class,
-        \Illuminate\Foundation\Bootstrap\HandleExceptions::class,
-        \Illuminate\Foundation\Bootstrap\RegisterFacades::class,
-        \Illuminate\Foundation\Bootstrap\SetRequestForConsole::class,
-        \Illuminate\Foundation\Bootstrap\RegisterProviders::class,
-        \Illuminate\Foundation\Bootstrap\BootProviders::class,
+        'Illuminate\Foundation\Bootstrap\DetectEnvironment',
+        'Illuminate\Foundation\Bootstrap\LoadConfiguration',
+        'Illuminate\Foundation\Bootstrap\ConfigureLogging',
+        'Illuminate\Foundation\Bootstrap\HandleExceptions',
+        'Illuminate\Foundation\Bootstrap\RegisterFacades',
+        'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
+        'Illuminate\Foundation\Bootstrap\RegisterProviders',
+        'Illuminate\Foundation\Bootstrap\BootProviders',
     ];
 
     /**
@@ -95,7 +86,7 @@ class Kernel implements KernelContract
     protected function defineConsoleSchedule()
     {
         $this->app->instance(
-            Schedule::class, $schedule = new Schedule($this->app[Cache::class])
+            'Illuminate\Console\Scheduling\Schedule', $schedule = new Schedule
         );
 
         $this->schedule($schedule);
@@ -112,12 +103,6 @@ class Kernel implements KernelContract
     {
         try {
             $this->bootstrap();
-
-            if (! $this->commandsLoaded) {
-                $this->commands();
-
-                $this->commandsLoaded = true;
-            }
 
             return $this->getArtisan()->run($input, $output);
         } catch (Exception $e) {
@@ -161,34 +146,6 @@ class Kernel implements KernelContract
     }
 
     /**
-     * Register the Closure based commands for the application.
-     *
-     * @return void
-     */
-    protected function commands()
-    {
-        //
-    }
-
-    /**
-     * Register a Closure based command with the application.
-     *
-     * @param  string  $signature
-     * @param  Closure  $callback
-     * @return \Illuminate\Foundation\Console\ClosureCommand
-     */
-    public function command($signature, Closure $callback)
-    {
-        $command = new ClosureCommand($signature, $callback);
-
-        Artisan::starting(function ($artisan) use ($command) {
-            $artisan->add($command);
-        });
-
-        return $command;
-    }
-
-    /**
      * Register the given command with the console application.
      *
      * @param  \Symfony\Component\Console\Command\Command  $command
@@ -204,20 +161,13 @@ class Kernel implements KernelContract
      *
      * @param  string  $command
      * @param  array  $parameters
-     * @param  \Symfony\Component\Console\Output\OutputInterface  $outputBuffer
      * @return int
      */
-    public function call($command, array $parameters = [], $outputBuffer = null)
+    public function call($command, array $parameters = [])
     {
         $this->bootstrap();
 
-        if (! $this->commandsLoaded) {
-            $this->commands();
-
-            $this->commandsLoaded = true;
-        }
-
-        return $this->getArtisan()->call($command, $parameters, $outputBuffer);
+        return $this->getArtisan()->call($command, $parameters);
     }
 
     /**
@@ -225,11 +175,13 @@ class Kernel implements KernelContract
      *
      * @param  string  $command
      * @param  array   $parameters
-     * @return \Illuminate\Foundation\Bus\PendingDispatch
+     * @return void
      */
     public function queue($command, array $parameters = [])
     {
-        return QueuedCommand::dispatch(func_get_args());
+        $this->app['Illuminate\Contracts\Queue\Queue']->push(
+            'Illuminate\Foundation\Console\QueuedJob', func_get_args()
+        );
     }
 
     /**
@@ -289,17 +241,6 @@ class Kernel implements KernelContract
     }
 
     /**
-     * Set the Artisan application instance.
-     *
-     * @param  \Illuminate\Console\Application  $artisan
-     * @return void
-     */
-    public function setArtisan($artisan)
-    {
-        $this->artisan = $artisan;
-    }
-
-    /**
      * Get the bootstrap classes for the application.
      *
      * @return array
@@ -317,7 +258,7 @@ class Kernel implements KernelContract
      */
     protected function reportException(Exception $e)
     {
-        $this->app[ExceptionHandler::class]->report($e);
+        $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->report($e);
     }
 
     /**
@@ -329,6 +270,6 @@ class Kernel implements KernelContract
      */
     protected function renderException($output, Exception $e)
     {
-        $this->app[ExceptionHandler::class]->renderForConsole($output, $e);
+        $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->renderForConsole($output, $e);
     }
 }
