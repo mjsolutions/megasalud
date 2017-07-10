@@ -11,17 +11,14 @@
 |
 */
 
-$factory->define(MegaSalud\User::class, function (Faker\Generator $faker) {
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\User::class, function (Faker\Generator $faker) {
+    static $password;
+
     return [
-        'nombre' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt('aser56'),
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-    ];
-});
-$factory->define(MegaSalud\Paciente::class, function (Faker\Generator $faker) {
-    return [
-        'nombre' => $faker->name,
-        'email' => $faker->safeEmail,
     ];
 });
