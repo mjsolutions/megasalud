@@ -1,16 +1,12 @@
-# Easy Flash Messages for Your Laravel App
-
-This composer package offers a Twitter Bootstrap optimized flash messaging setup for your Laravel applications.
+# Easy Flash Messages
 
 ## Installation
 
-Begin by pulling in the package through Composer.
+First, pull in the package through Composer.
 
-```bash
-composer require laracasts/flash
-```
+Run `composer require laracasts/flash`
 
-Next, if using Laravel 5, include the service provider within your `config/app.php` file.
+And then, if using Laravel 5, include the service provider within `config/app.php`.
 
 ```php
 'providers' => [
@@ -18,36 +14,75 @@ Next, if using Laravel 5, include the service provider within your `config/app.p
 ];
 ```
 
-Finally, as noted above, the default CSS classes for your flash message are optimized for Twitter Bootstrap. As such, pull in the Bootstrap's CSS within your HTML or layout file.
+And, for convenience, add a facade alias to this same file at the bottom:
 
-```html
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+```php
+'aliases' => [
+    'Flash' => Laracasts\Flash\Flash::class,
+];
 ```
 
 ## Usage
 
-Within your controllers, before you perform a redirect, make a call to the `flash()` function.
+Within your controllers, before you perform a redirect...
 
 ```php
 public function store()
 {
-    flash('Welcome Aboard!');
+    Flash::message('Welcome Aboard!');
 
-    return home();
+    return Redirect::home();
 }
 ```
 
 You may also do:
 
-- `flash('Message')->success()`: Set the flash theme to "success".
-- `flash('Message')->error()`: Set the flash theme to "danger".
-- `flash('Message')->warning()`: Set the flash theme to "warning".
-- `flash('Message')->overlay()`: Render the message as an overlay.
-- `flash()->overlay('Modal Message', 'Modal Title')`: Display a modal overlay with a title.
-- `flash('Message')->important()`: Add a close button to the flash message.
-- `flash('Message')->error()->important()`: Render a "danger" flash message that must be dismissed.
+- `Flash::info('Message')`
+- `Flash::success('Message')`
+- `Flash::error('Message')`
+- `Flash::warning('Message')`
+- `Flash::overlay('Modal Message', 'Modal Title')`
 
-With this message flashed to the session, you may now display it in your view(s). Because flash messages and overlays are so common, we provide a template out of the box to get you started. You're free to use - and even modify to your needs - this template how you see fit.
+Again, if using Laravel, this will set a few keys in the session:
+
+- 'flash_notification.message' - The message you're flashing
+- 'flash_notification.level' - A string that represents the type of notification (good for applying HTML class names)
+
+Alternatively, again, if you're using Laravel, you may reference the `flash()` helper function, instead of the facade. Here's an example:
+
+```php
+/**
+ * Destroy the user's session (logout).
+ *
+ * @return Response
+ */
+public function destroy()
+{
+    Auth::logout();
+
+    flash()->success('You have been logged out.');
+
+    return home();
+}
+```
+
+Or, for a general information flash, just do: `flash('Some message');`.
+
+With this message flashed to the session, you may now display it in your view(s). Maybe something like:
+
+```html
+@if (Session::has('flash_notification.message'))
+    <div class="alert alert-{{ Session::get('flash_notification.level') }}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+        {{ Session::get('flash_notification.message') }}
+    </div>
+@endif
+```
+
+> Note that this package is optimized for use with Twitter Bootstrap.
+
+Because flash messages and overlays are so common, if you want, you may use (or modify) the views that are included with this package. Simply append to your layout view:
 
 ```html
 @include('flash::message')
@@ -71,10 +106,10 @@ With this message flashed to the session, you may now display it in your view(s)
     <p>Welcome to my website...</p>
 </div>
 
-<!-- If using flash()->important() or flash()->overlay(), you'll need to pull in the JS for Twitter Bootstrap. -->
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+<!-- This is only necessary if you do Flash::overlay('...') -->
 <script>
     $('#flash-overlay-modal').modal();
 </script>
@@ -86,60 +121,33 @@ With this message flashed to the session, you may now display it in your view(s)
 If you need to modify the flash message partials, you can run:
 
 ```bash
-php artisan vendor:publish --provider="Laracasts\Flash\FlashServiceProvider"
+php artisan vendor:publish
 ```
 
-The two package views will now be located in the `resources/views/vendor/flash/` directory.
+The two package views will now be located in the `app/views/packages/laracasts/flash/` directory.
 
 ```php
-flash('Welcome Aboard!');
+Flash::message('Welcome aboard!');
 
-return home();
+return Redirect::home();
 ```
 
 ![https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/message.png](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/message.png)
 
 ```php
-flash('Sorry! Please try again.')->error();
+Flash::error('Sorry! Please try again.');
 
-return home();
+return Redirect::home();
 ```
 
 ![https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/error.png](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/error.png)
 
 ```php
-flash()->overlay('You are now a Laracasts member!', 'Yay');
+Flash::overlay('You are now a Laracasts member!');
 
-return home();
+return Redirect::home();
 ```
 
 ![https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/overlay.png](https://dl.dropboxusercontent.com/u/774859/GitHub-Repos/flash/overlay.png)
 
 > [Learn exactly how to build this very package on Laracasts!](https://laracasts.com/lessons/flexible-flash-messages)
-
-## Hiding Flash Messages
-
-A common desire is to display a flash message for a few seconds, and then hide it. To handle this, write a simple bit of JavaScript. For example, using jQuery, you might add the following snippet just before the closing `</body>` tag.
-
-```html
-<script>
-$('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-</script>
-```
-
-This will find any alerts - excluding the important ones, which should remain until manually closed by the user - wait three seconds, and then fade them out.
-
-## Multiple Flash Messages
-
-Need to flash multiple flash messages to the session? No problem.
-
-```php
-flash('Message 1');
-flash('Message 2')->important();
-
-return redirect('somewhere');
-```
-
-Done! You'll now see two flash messages upon redirect.
-
-

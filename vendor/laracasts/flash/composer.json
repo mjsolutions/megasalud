@@ -13,8 +13,7 @@
         "illuminate/support": "~5.0"
     },
     "require-dev": {
-        "mockery/mockery": "dev-master",
-        "phpunit/phpunit": "^6.1"
+        "mockery/mockery": "dev-master"
     },
     "autoload": {
         "psr-0": {
@@ -24,15 +23,5 @@
             "src/Laracasts/Flash/functions.php"
         ]
     },
-    "minimum-stability": "stable",
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Laracasts\\Flash\\FlashServiceProvider"
-            ],
-            "aliases": {
-                "Flash": "Laracasts\\Flash\\Flash"
-            }
-        }
-    }
+    "minimum-stability": "stable"
 }
