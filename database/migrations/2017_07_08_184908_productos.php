@@ -13,7 +13,14 @@ class Productos extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('productos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->float('precio');
+            $table->timestamps();
+            $table->boolean('status')->default(1);
+        });
     }
 
     /**
