@@ -269,7 +269,7 @@ Route::group(['prefix'=>'sucursal', 'middleware' => ['auth', 'sucursal']],functi
 | Rutas para Médico
 */
 
-Route::group(['prefix' => 'medico', 'middleware' => ['auth', 'medico']], function(){
+Route::group(['prefix' => 'medico'], function(){
 	/*
 	*	Ruta principal
 	*/

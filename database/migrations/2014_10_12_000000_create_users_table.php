@@ -30,8 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('cp');
             $table->string('rfc');
             $table->string('curp');
-            $table->string('telefono_a');
-            $table->string('telefono_b');
+            $table->string('telefono');
             $table->string('clave_bancaria');
             $table->enum('tipo_usuario',['Administrador', 'Administrador de sucursal','Medico']);
             $table->string('cedula');

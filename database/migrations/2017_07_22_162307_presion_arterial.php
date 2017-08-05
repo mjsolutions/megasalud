@@ -13,7 +13,17 @@ class PresionArterial extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('presion_arterial', function (Blueprint $table) {
+            $table->increments('id');
+            $table->date('fecha');
+            $table->string('horario');
+            $table->string('posicion');
+            $table->string('alta');
+            $table->string('baja');
+            $table->integer('paciente_id')->unsigned();
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +33,6 @@ class PresionArterial extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('presion_arterial');
     }
 }

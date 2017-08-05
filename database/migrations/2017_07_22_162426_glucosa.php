@@ -17,6 +17,8 @@ class Glucosa extends Migration
             $table->increments('id');
             $table->date('fecha');
             $table->string('glucosa');
+            $table->integer("paciente_id")->unsigned();
+            $table->foreign('paciente_id')->references('id')->on('pacientes')->onDelete('cascade');
             $table->timestamps();
         });
     }

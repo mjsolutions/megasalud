@@ -30,6 +30,6 @@ class Productos extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('productos');
     }
 }

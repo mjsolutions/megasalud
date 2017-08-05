@@ -5,18 +5,17 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-theme.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('css/styles.css')}}">
-	<link href="https://file.myfontastic.com/p33ryNdn2ug99gf3MgkiUK/icons.css" rel="stylesheet">
+	<!--<link href="https://file.myfontastic.com/p33ryNdn2ug99gf3MgkiUK/icons.css" rel="stylesheet">-->
 </head>
 <body>
 	<header>
 		@yield('nav')
 	</header>
 	<main>
-		<section>
+		<section class="container">
 			@include('flash::message')
 			@yield('content')
 		</section>
@@ -25,11 +24,8 @@
 		<div>
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-12">
 						Todos los derechos reservados.	    			
-					</div>
-					<div class="col-md-6 right-align">
-						© {!! date('Y') !!}
 					</div>
 				</div>
 			</div>

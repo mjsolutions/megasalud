@@ -7,7 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Paciente extends Model
 {
     protected $table="pacientes";
-    protected $fillable=['nombre','apellido_p','apellido_m','email','fecha_nacimiento','sexo','municipio_o','estado_o','pais_o','municipio','estado','pais','direccion','colonia','cp','rfc','curp','telefono_a','telefono_b','clave_bancaria','religion','ocupacion','foto','status'];
+    protected $fillable=['nombre','apellido_p','apellido_m','email','fecha_nacimiento','sexo','municipio','estado','pais','direccion','colonia','cp','rfc','curp','telefono_a','clave_bancaria','religion','ocupacion','foto','status'];
+
+    public function presion_arterial(){
+        return $this->belongsToMany('App\Presion_Arterial');
+    }
+    public function glucosas(){
+        return $this->belongsToMany('App\Glucosa');
+    }
+
+
+
+    //anteriores
     public function pedido(){
     	return $this->hasMany('App\Pedido');
     }
